@@ -2,9 +2,8 @@
 
 void CGround::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_GROUND)->Render(x, y);
-	//RenderBoundingBox();
+	CSprites* s = CSprites::GetInstance();
+	s->Get(ID_SPRITE_GROUND)->Draw(x,y);
 }
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)

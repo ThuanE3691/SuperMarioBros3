@@ -47,7 +47,7 @@ ground.txt
 1	352	164
 
 #GROUNDS
-6	50	140
+6	60	130
 
 #COIN
 4	100	120

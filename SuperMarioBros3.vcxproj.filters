@@ -78,6 +78,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -149,6 +152,9 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brick.txt">
@@ -178,6 +184,9 @@
     <Text Include="scene0005.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="ground.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\bbox.png">
@@ -190,6 +199,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\misc.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\misc_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\misc_1_transparent.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

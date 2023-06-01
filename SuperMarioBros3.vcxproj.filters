@@ -163,21 +163,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="brick.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="cloud.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="coin.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="goomba.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="mario.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="mario-sample.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -191,9 +176,6 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="ground.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="background.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

@@ -187,6 +187,9 @@
     <Text Include="ground.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="background.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\bbox.png">

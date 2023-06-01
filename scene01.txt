@@ -15,11 +15,16 @@ background.txt
 
 # Background
 # extra: sprite_id_background
+
+## BUSH
 6	75	155	72000
 
-6	170	179	71000
-6	186	179	71000
-6	202	179	71000
+6	165	179	71000
+6	181	179	71000
+6	197	179	71000
+
+## CLOUD WITH EYES
+6	145	65	55000
 
 # MARIO
 0	40	171
@@ -27,11 +32,6 @@ background.txt
 # BRICKS
 
 #COIN
-4	100	120
-4	120	120
-4	140	120
-4	160	120
-4	180	120
 
 #Goomba
 

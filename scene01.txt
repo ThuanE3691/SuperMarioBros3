@@ -40,7 +40,7 @@ background.txt
 #type	x	y	width	height	length	id_begin	id_middle	id_end
 
 ##GROUNDS
-5	5	193	16	16	40	61000	62000	63000
+5	5	193	16	15	40	61000	62000	63000
 
 #Portal 
 

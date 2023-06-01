@@ -192,6 +192,7 @@
   <ItemGroup>
     <Image Include="textures\bbox.png" />
     <Image Include="textures\enemies.png" />
+    <Image Include="textures\ground.png" />
     <Image Include="textures\mario.png" />
     <Image Include="textures\misc.png" />
     <Image Include="textures\misc_1.png" />

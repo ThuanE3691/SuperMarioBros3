@@ -12,7 +12,7 @@ ground.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	20	10
+0	20	171
 
 # BRICKS
 
@@ -30,7 +30,7 @@ ground.txt
 #type	x	y	width	height	length	id_begin	id_middle	id_end
 
 ##GROUNDS
-5	8	195	16	16	20	61000	62000	63000
+5	17	195	16	16	40	61000	62000	63000
 
 #Portal 
 

@@ -204,5 +204,8 @@
     <Image Include="textures\misc_2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="textures\ground.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

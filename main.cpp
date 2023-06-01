@@ -47,7 +47,7 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 #define MAIN_WINDOW_TITLE L"Super Mario Bros 3"
 #define WINDOW_ICON_PATH L"mario.ico"
 
-#define BACKGROUND_COLOR D3DXCOLOR(156.0f/255, 252.0f/255, 240.0f/255, 0.0f)
+#define BACKGROUND_COLOR D3DXCOLOR(181.0f/255, 235.0f/255, 242.0f/255, 0.95f)
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
@@ -151,7 +151,7 @@ int Run()
 	MSG msg;
 	int done = 0;
 	ULONGLONG frameStart = GetTickCount64();
-	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+	DWORD tickPerFrame = 500 / MAX_FRAME_RATE;
 
 	while (!done)
 	{

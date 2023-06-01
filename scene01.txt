@@ -5,6 +5,7 @@ Assets/brick.txt
 Assets/coin.txt
 Assets/goomba.txt
 Assets/ground.txt
+Assets/cloud.txt
 Assets/background.txt
 #
 [OBJECTS]
@@ -36,10 +37,10 @@ Assets/background.txt
 
 #Platform
 #type	x	y	width	height	length	id_begin	id_middle	id_end
+##CLOUDS
 
 ##GROUNDS
 5	5	193	16	15	40	61000	62000	63000
-5	650	178	16	15	20	61000	62000	63000
 
 #Portal 
 

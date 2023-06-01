@@ -7,7 +7,7 @@ void CBackground::Render()
 }
 
 
-void CBackground::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-	left = right = x;
-	top = bottom = y;
+void CBackground::GetBoundingBox(float& l, float& t, float& r, float& b) {
+	l = r = 0;
+	t = b = 0;
 }

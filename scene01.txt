@@ -1,11 +1,11 @@
 # list of object assets to load in this scene
 [ASSETS]
-mario.txt
-brick.txt
-coin.txt
-goomba.txt
-ground.txt
-background.txt
+Assets/mario.txt
+Assets/brick.txt
+Assets/coin.txt
+Assets/goomba.txt
+Assets/ground.txt
+Assets/background.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -41,6 +41,7 @@ background.txt
 
 ##GROUNDS
 5	5	193	16	15	40	61000	62000	63000
+5	650	178	16	15	20	61000	62000	63000
 
 #Portal 
 

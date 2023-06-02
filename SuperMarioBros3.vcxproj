@@ -182,6 +182,7 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Assets\Platform\box.txt" />
     <Text Include="ground.txt" />
     <Text Include="mario-sample.txt" />
     <Text Include="scene0005.txt" />

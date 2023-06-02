@@ -178,6 +178,9 @@
     <Text Include="ground.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Assets\Platform\box.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\bbox.png">

@@ -19,29 +19,7 @@ protected:
 	int spriteIdBegin, spriteIdMiddle, spriteIdEnd;
 	int drawDirection;
 public: 
-	CPlatform(float x, float y,
-		float cell_width, float cell_height, int length,
-		int sprite_id_begin, int sprite_id_middle, int sprite_id_end, int drawDirection = 1) :CGameObject(x, y)
-	{
-		this->length = length;
-		this->cellWidth = cell_width;
-		this->cellHeight = cell_height;
-		this->spriteIdBegin = sprite_id_begin;
-		this->spriteIdMiddle = sprite_id_middle;
-		this->spriteIdEnd = sprite_id_end;
-		this->drawDirection = drawDirection;
-
-		switch (this->spriteIdBegin) {
-			case(ID_SPRITE_CLOUD_BEGIN): {
-				this->SetSolid(true);
-				break;
-			}
-			case(ID_SPRITE_BOX_PINK_BEGIN): {
-				this->SetSolid(true);
-				break;
-			}
-		}
-	}
+	CPlatform(float x, float y,float cell_width, float cell_height, int length,int sprite_id_begin, int sprite_id_middle, int sprite_id_end, int drawDirection);
 
 	void Render();
 	void Update(DWORD dt) {}

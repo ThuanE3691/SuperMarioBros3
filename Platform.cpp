@@ -5,6 +5,34 @@
 
 #include "Textures.h"
 
+CPlatform::CPlatform(float x, float y,
+	float cell_width, float cell_height, int length,
+	int sprite_id_begin, int sprite_id_middle, int sprite_id_end, int drawDirection = 1) :CGameObject(x, y)
+{
+	this->length = length;
+	this->cellWidth = cell_width;
+	this->cellHeight = cell_height;
+	this->spriteIdBegin = sprite_id_begin;
+	this->spriteIdMiddle = sprite_id_middle;
+	this->spriteIdEnd = sprite_id_end;
+	this->drawDirection = drawDirection;
+
+	switch (this->spriteIdBegin) {
+		case(ID_SPRITE_CLOUD_BEGIN): {
+			this->SetSolid(true);
+			break;
+		}
+		case(ID_SPRITE_BOX_PINK_BEGIN): {
+			this->SetSolid(true);
+			break;
+		}
+		case(ID_SPRITE_BOX_BLUE_BEGIN): {
+			this->SetSolid(true);
+			break;
+		}
+	}
+}
+
 void CPlatform::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
@@ -90,7 +118,7 @@ void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
 		}
 		case TOP_TO_BOTTOM:{
 			l = x + 1 - this->cellWidth * 2;
-			t = y - this->cellHeight / 2 - 1;
+			t = y - float(this->cellHeight / 2) - 1;
 			r = x + this->cellWidth * 2;
 			b = t + this->cellHeight * this->length;
 			break;

@@ -4,8 +4,9 @@ Assets/mario.txt
 Assets/brick.txt
 Assets/coin.txt
 Assets/goomba.txt
-Assets/ground.txt
-Assets/cloud.txt
+Assets/Platform/ground.txt
+Assets/Platform/cloud.txt
+Assets/Platform/box.txt
 Assets/background.txt
 #
 [OBJECTS]
@@ -25,6 +26,17 @@ Assets/background.txt
 ## CLOUD WITH EYES
 6	145	65	0	1	55000
 
+##BOXS
+
+# PINK BOX
+5	270	150	12	16	3	81000	82000	83000	2
+
+# BOX SHADOW
+6	299	153	0	1	80100
+6	299	163	11	2	80200	2
+6	299	185	0	1	80300
+
+
 # MARIO
 0	40	171
 
@@ -36,11 +48,15 @@ Assets/background.txt
 
 
 #Platform
-#type	x	y	width	height	length	id_begin	id_middle	id_end
+#type	x	y	width	height	length	id_begin	id_middle	id_end	draw_direction
 ##CLOUDS
+
+
 
 ##GROUNDS
 5	5	193	16	15	40	61000	62000	63000
+
+
 
 #Portal 
 

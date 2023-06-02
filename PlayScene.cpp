@@ -130,11 +130,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_begin = atoi(tokens[6].c_str());
 		int sprite_middle = atoi(tokens[7].c_str());
 		int sprite_end = atoi(tokens[8].c_str());
+		int draw_direction = 1;
 
+		if (tokens.size() == 10) {
+			draw_direction = atoi(tokens[9].c_str());
+		}
+		
 		obj = new CPlatform(
 			x, y,
 			cell_width, cell_height, length,
-			sprite_begin, sprite_middle, sprite_end
+			sprite_begin, sprite_middle, sprite_end, draw_direction
 		);
 
 		break;
@@ -142,10 +147,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	case OBJECT_TYPE_BACKGROUND:
 	{
-		int cell_width = atoi(tokens[3].c_str());
+		int cell = atoi(tokens[3].c_str());
 		int length = atoi(tokens[4].c_str());
 		int sprite_background = atoi(tokens[5].c_str());
-		obj = new CBackground(x, y, cell_width, length, sprite_background);
+
+		int draw_direction = 1;
+
+		if (tokens.size() == 7) {
+			draw_direction = atoi(tokens[6].c_str());
+		}
+
+		obj = new CBackground(x, y, cell, length, sprite_background, draw_direction);
 		break;
 	}
 

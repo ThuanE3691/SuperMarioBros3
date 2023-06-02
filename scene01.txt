@@ -11,7 +11,7 @@ Assets/background.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 5 = Platform, 6 = Background
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 4 = Coin, 5 = Platform, 6 = Background
 # See OBJECT_TYPE constants in AssetIDs.h
 
 
@@ -48,7 +48,14 @@ Assets/background.txt
 
 # BRICKS
 
+
 #COIN
+
+4	100	120
+4	120	120
+4	140	120
+4	160	120
+4	180	120
 
 #Goomba
 
@@ -61,6 +68,7 @@ Assets/background.txt
 
 ##GROUNDS
 5	5	193	16	15	40	61000	62000	63000
+
 
 
 

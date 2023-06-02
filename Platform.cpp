@@ -128,7 +128,12 @@ void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 int CPlatform::IsDirectionColliable(float nx, float ny)
 {
+	// First case with platform has type solid (can go through from 2 side and bottom)
 	if (nx == 0 && ny == -1) {
+		return 1;
+	}
+	// Second case with platform has type not solid (can only stand on platform, can't go through from any side)
+	else if (nx != 0 && this->GetSolid() == 0) {
 		return 1;
 	}
 	else return 0;

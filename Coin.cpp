@@ -6,17 +6,21 @@ void CCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		if (y_start_up - y > COIN_UP_DISTANCE) {
 			vy = -vy;
 		}
-		else if (vy > 0 && y + 5 > y_start_up) {
+		else if (vy > 0 && y + 2 > y_start_up) {
 			CGameObject::SetState(COIN_DISAPPEAR);
+			disappear_time = GetTickCount64();
 			return;
 		}
 		y += vy * dt;
 	}
-	else if (state == COIN_DISAPPEAR) {
+	else if (state == COIN_DISAPPEAR && GetTickCount64() - disappear_time > COIN_DISAPPEAR_TIME_ANIMATION) {
 		isDeleted = true;
 		return;
 	}
-	CGameObject::Update(dt, coObjects);
+
+	if (state == COIN_HIDDEN_STATE) {
+		CGameObject::Update(dt, coObjects);
+	}
 }
 
 void CCoin::Render()
@@ -25,9 +29,11 @@ void CCoin::Render()
 	if (state == COIN_DISAPPEAR) {
 		id_ani = ID_ANI_COIN_DISAPPEAR;
 	}
-	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(id_ani)->Render(x, y);
 
+	if (state != COIN_HIDDEN_STATE) {
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(id_ani)->Render(x, y);
+	}
 	//RenderBoundingBox();
 }
 
@@ -44,6 +50,5 @@ void CCoin::SetState(int state) {
 	if (state == COIN_UP_STATE) {
 		y_start_up = y;
 		vy = -COIN_SPEED_MOVE;
-		up_start_time = GetTickCount64();
 	}
 }

@@ -25,7 +25,7 @@ private:
 	CCoin* coin;
 	ULONGLONG up_start;
 public:
-	CQuestionBlock(float x, float y) : CGameObject(x, y) { up_start = -1; CGameObject::SetState(QUESTION_BLOCK_STATE); coin = NULL; }
+	CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

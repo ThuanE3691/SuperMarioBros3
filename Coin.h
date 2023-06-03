@@ -9,11 +9,14 @@
 #define ID_ANI_COIN_DISAPPEAR 11100
 
 #define COIN_NORMAL_STATE 1
-#define COIN_UP_STATE 2
-#define COIN_DISAPPEAR 3
+#define COIN_HIDDEN_STATE 2
+#define COIN_UP_STATE 3
+#define COIN_DISAPPEAR 4
 
 #define COIN_UP_DISTANCE 40
 #define COIN_SPEED_MOVE 0.25f
+
+#define COIN_DISAPPEAR_TIME_ANIMATION 50
 
 #define	COIN_WIDTH 10
 #define COIN_BBOX_WIDTH 10
@@ -21,12 +24,12 @@
 
 class CCoin : public CGameObject {
 private:
-	ULONGLONG up_start_time;
+	ULONGLONG disappear_time;
 	float y_start_up;
 public:
 	CCoin(float x, float y) : CGameObject(x, y) { 
 		y_start_up = -1;
-		up_start_time = -1; 
+		disappear_time = -1;
 		CGameObject::SetState(COIN_NORMAL_STATE); 
 		
 	}

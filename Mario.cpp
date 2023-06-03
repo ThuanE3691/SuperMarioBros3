@@ -95,8 +95,11 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
-	coin++;
+	int coin_state = e->obj->GetState();
+	if (coin_state == COIN_NORMAL_STATE){
+		e->obj->Delete();
+		coin++;
+	}
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -109,7 +112,6 @@ void CMario::OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e) {
 	CQuestionBlock* qb = (CQuestionBlock*)e->obj;
 	if (e->ny > 0) {
 		qb->SetState(EMPTY_BLOCK_STATE);
-
 		coin++;
 	}
 }

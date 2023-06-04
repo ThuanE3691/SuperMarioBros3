@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Platform.h"
 #include "QuestionBlock.h"
+#include "PowerUp.h"
 
 #include "Collision.h"
 
@@ -22,8 +23,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
+		if (isTransform) {
+			if (level == MARIO_LEVEL_SMALL) {
+				isTransform = false;
+				level = MARIO_LEVEL_BIG;
+			}
+		}
 		untouchable_start = 0;
 		untouchable = 0;
+	}
+	else if (isTransform) {
+		this->SetState(MARIO_STATE_TRANSFORM);
 	}
 
 	isOnPlatform = false;
@@ -57,6 +67,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CQuestionBlock*>(e->obj))
 		OnCollisionWithQuestionBlock(e);
+	else if (dynamic_cast<CPowerUp*>(e->obj)) {
+		OnCollisionWithPowerUp(e);
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -116,13 +129,27 @@ void CMario::OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e) {
 	}
 }
 
+void CMario::OnCollisionWithPowerUp(LPCOLLISIONEVENT e) {
+	CPowerUp* pu = (CPowerUp*)e->obj;
+	if (pu->GetState() == MUSHROOM_WALKING_STATE) {
+		StartUntouchable();
+		isTransform = true;
+		this->SetState(MARIO_STATE_TRANSFORM);
+		SetLevel(MARIO_LEVEL_BIG);
+		pu->Delete();
+	}
+}
+
 //
 // Get animation ID for small Mario
 //
 int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
-	if (!isOnPlatform)
+	if (this->state == MARIO_STATE_TRANSFORM) {
+		aniId = ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_RIGHT;
+	}
+	else if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
@@ -139,7 +166,7 @@ int CMario::GetAniIdSmall()
 				aniId = ID_ANI_MARIO_SMALL_JUMP_WALK_LEFT;
 		}
 	}
-	else
+	else {
 		if (isSitting)
 		{
 			if (nx > 0)
@@ -147,7 +174,7 @@ int CMario::GetAniIdSmall()
 			else
 				aniId = ID_ANI_MARIO_SIT_LEFT;
 		}
-		else
+		else {
 			if (vx == 0)
 			{
 				if (nx > 0) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
@@ -171,6 +198,8 @@ int CMario::GetAniIdSmall()
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_SMALL_WALKING_LEFT;
 			}
+		}
+	}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
@@ -250,8 +279,8 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
-
 	animations->Get(aniId)->Render(x, y);
+
 
 	//RenderBoundingBox();
 	
@@ -262,8 +291,10 @@ void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return; 
+	CGameObject::SetState(state);
 
-	switch (state)
+
+	switch (this->state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
@@ -333,9 +364,14 @@ void CMario::SetState(int state)
 		vx = 0;
 		ax = 0;
 		break;
+	case MARIO_STATE_TRANSFORM:
+		vy = 0;
+		vx = 0;
+		ax = 0;
+		break;
 	}
 
-	CGameObject::SetState(state);
+
 }
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -369,10 +405,15 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 void CMario::SetLevel(int l)
 {
 	// Adjust position to avoid falling off platform
-	if (this->level == MARIO_LEVEL_SMALL)
+	if (this->level == MARIO_LEVEL_SMALL && isTransform == false)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
-	level = l;
+	else if (this->level == MARIO_LEVEL_SMALL && isTransform == true) {
+		y -=  MARIO_SMALL_BBOX_HEIGHT / 2;
+	}
+	if (!isTransform) {
+		level = l;
+	}
 }
 

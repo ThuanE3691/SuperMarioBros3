@@ -84,6 +84,9 @@
     <ClCompile Include="QuestionBlock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -161,6 +164,9 @@
     <ClInclude Include="QuestionBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -179,6 +185,9 @@
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="Assets\Platform\box.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Assets\mario.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

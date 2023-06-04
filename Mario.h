@@ -33,6 +33,8 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_TRANSFORM	700
+
 
 #pragma region ANIMATION_ID
 
@@ -78,6 +80,10 @@
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1600
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1601
 
+#define ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_LEFT	1700
+#define ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_RIGHT	1701
+
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -99,7 +105,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 
-#define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_UNTOUCHABLE_TIME 800
 
 class CMario : public CGameObject
 {
@@ -111,6 +117,7 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	BOOLEAN isTransform;
 	BOOLEAN isOnPlatform;
 	int coin; 
 
@@ -118,6 +125,7 @@ class CMario : public CGameObject
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e);
+	void OnCollisionWithPowerUp(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -134,6 +142,7 @@ public:
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
+		isTransform = false;
 		coin = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

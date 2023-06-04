@@ -11,6 +11,7 @@
 #include "Platform.h"
 #include "Background.h"
 #include "QuestionBlock.h"
+#include "PowerUp.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -121,7 +122,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_QUESTION_BLOCK: obj = new CQuestionBlock(x, y, objects); break;
+	case OBJECT_TYPE_QUESTION_BLOCK:
+	{
+		int type_block = atoi(tokens[3].c_str());
+		obj = new CQuestionBlock(x, y, objects, type_block); 
+		break; 
+	}
+
+	case OBJECT_TYPE_POWER_UP:
+	{
+		obj = new CPowerUp(x, y);
+		break;
+	}
 
 	case OBJECT_TYPE_PLATFORM:
 	{

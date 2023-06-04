@@ -134,6 +134,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Pipe.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="Brick.h" />

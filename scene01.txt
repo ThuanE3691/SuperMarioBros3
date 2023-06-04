@@ -7,6 +7,7 @@ Assets/goomba.txt
 Assets/qblock.txt
 Assets/powerup.txt
 Assets/background.txt
+Assets/pipe.txt
 Assets/Platform/ground.txt
 Assets/Platform/cloud.txt
 Assets/Platform/box.txt
@@ -58,7 +59,8 @@ Assets/Platform/box.txt
 
 # POWERUP
 
-
+# Pipe
+9	370	163
 
 #COIN
 

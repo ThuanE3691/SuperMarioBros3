@@ -12,6 +12,7 @@
 #include "Background.h"
 #include "QuestionBlock.h"
 #include "PowerUp.h"
+#include "Pipe.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -122,6 +123,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_PIPE: obj = new CPipe(x, y); break;
 	case OBJECT_TYPE_QUESTION_BLOCK:
 	{
 		int type_block = atoi(tokens[3].c_str());

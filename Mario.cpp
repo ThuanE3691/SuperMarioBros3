@@ -28,6 +28,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				isTransform = false;
 				level = MARIO_LEVEL_BIG;
 			}
+			else if (level == MARIO_LEVEL_BIG) {
+				isTransform = false;
+				level = MARIO_LEVEL_SMALL;
+			}
 		}
 		untouchable_start = 0;
 		untouchable = 0;
@@ -93,8 +97,9 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
 					StartUntouchable();
+					isTransform = true;
+					this->SetState(MARIO_STATE_TRANSFORM);
 				}
 				else
 				{
@@ -218,7 +223,13 @@ int CMario::GetAniIdSmall()
 int CMario::GetAniIdBig()
 {
 	int aniId = -1;
-	if (!isOnPlatform)
+	if (this->state == MARIO_STATE_TRANSFORM) {
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_BIG_TRANSFORM_TO_SMALL_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_BIG_TRANSFORM_TO_SMALL_LEFT;
+	}
+	else if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
@@ -365,7 +376,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
-		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		vy = -MARIO_DIE_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
 		break;

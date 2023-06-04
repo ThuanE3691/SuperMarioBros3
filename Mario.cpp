@@ -124,8 +124,10 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e) {
 	CQuestionBlock* qb = (CQuestionBlock*)e->obj;
 	if (e->ny > 0) {
+		if (qb->GetTypeBlock() == QBLOCK_TYPE_COIN && qb->GetState() != EMPTY_BLOCK_STATE) {
+			coin++;
+		}
 		qb->SetState(EMPTY_BLOCK_STATE);
-		coin++;
 	}
 }
 

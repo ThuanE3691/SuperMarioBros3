@@ -4,6 +4,7 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 	up_start = -1;
 	this->type_block = type_block;
 	CGameObject::SetState(QUESTION_BLOCK_STATE);
+	coin = NULL;
 	switch (type_block) {
 		case QBLOCK_TYPE_COIN:
 			coin = new CCoin(x, y - 20);

@@ -5,6 +5,7 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 	this->type_block = type_block;
 	CGameObject::SetState(QUESTION_BLOCK_STATE);
 	coin = NULL;
+	pu = NULL;
 	switch (type_block) {
 		case QBLOCK_TYPE_COIN:
 			coin = new CCoin(x, y - 20);
@@ -12,7 +13,11 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 			objects.push_back(coin);
 			break;
 		case QBLOCK_TYPE_POWERUP:
+			pu = new CPowerUp(x - 1.15f, y);
+			pu->SetState(POWER_UP_HIDDEN_STATE);
+			objects.push_back(pu);
 			break;
+			
 	}
 }
 
@@ -21,13 +26,22 @@ void CQuestionBlock::SetState(int state) {
 	CGameObject::SetState(state);
 
 	if (old_state == QUESTION_BLOCK_STATE && state == EMPTY_BLOCK_STATE) {
-		if (type_block == QBLOCK_TYPE_COIN) {
-			coin->SetState(COIN_UP_STATE);
-		}
 		y -= BLOCK_UP_DISTANCE;
 		up_start = GetTickCount64();
+		
 	}
 	
+}
+
+void CQuestionBlock::ActiveEvents() {
+	switch (this->type_block) {
+	case QBLOCK_TYPE_COIN:
+		coin->SetState(COIN_UP_STATE);
+		break;
+	case QBLOCK_TYPE_POWERUP:
+		pu->SetState(MUSHROOM_UP_STATE);
+		break;
+	}
 }
 
 void CQuestionBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -35,6 +49,7 @@ void CQuestionBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if ((this->state == EMPTY_BLOCK_STATE) && (up_start != -1) && (GetTickCount64() - up_start > BLOCK_UP_TIME_OUT)) {
 		y += BLOCK_UP_DISTANCE;
 		up_start = -1;
+		ActiveEvents();
 	}
 
 	CGameObject::Update(dt, coObjects);

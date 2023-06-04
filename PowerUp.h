@@ -6,16 +6,21 @@
 #define ID_ANI_MUSHROOM 14000
 
 #define MUSHROOM_WALKING_STATE	1
+#define POWER_UP_HIDDEN_STATE 2
+#define MUSHROOM_UP_STATE 3
+
 #define POWER_UP_MUSHROOM_TYPE	1
 
 #define MUSHROOM_WALKING_SPEED	0.05f
+#define MUSHROOM_UP_SPEED 0.02f
 
-#define MUSHROOM_BBOX_WIDTH 16
+#define MUSHROOM_BBOX_WIDTH 14
 #define MUSHROOM_BBOX_HEIGHT 11
 
 class CPowerUp : public CGameObject
 {
 protected:
+	float y_target;
 	float ax;
 	float ay;
 

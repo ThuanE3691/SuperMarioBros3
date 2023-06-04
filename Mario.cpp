@@ -149,7 +149,10 @@ int CMario::GetAniIdSmall()
 {
 	int aniId = -1;
 	if (this->state == MARIO_STATE_TRANSFORM) {
-		aniId = ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_RIGHT;
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_LEFT;
 	}
 	else if (!isOnPlatform)
 	{

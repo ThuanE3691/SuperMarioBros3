@@ -78,7 +78,8 @@ Assets/Platform/box.txt
 5	546	179	16	18	6	89000	89100	89200
 
 # MARIO
-0	40	171
+#0	40	171
+0	520	160
 
 # QUESTIONS BLOCK
 7	180	135	1
@@ -102,7 +103,7 @@ Assets/Platform/box.txt
 2	120	175
 
 #Koopa
-3	500	150
+3	560	130
 
 #Platform
 #type	x	y	width	height	length	id_begin	id_middle	id_end	draw_direction

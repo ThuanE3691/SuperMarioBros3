@@ -37,6 +37,11 @@ CPlatform::CPlatform(float x, float y,
 		case(ID_SPRITE_BOX_GREEN_BEGIN):
 			canStanding = true;
 			this->SetSolid(true);
+			break;
+		case(ID_SPRITE_BOX_WHITE_BEGIN):
+			canStanding = true;
+			this->SetSolid(true);
+			break;
 	}
 }
 

@@ -134,6 +134,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Koopa.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="QuestionBlock.h" />
@@ -197,6 +199,8 @@
   <ItemGroup>
     <Image Include="textures\bbox.png" />
     <Image Include="textures\enemies.png" />
+    <Image Include="textures\enemies_2.png" />
+    <Image Include="textures\enemies_3.png" />
     <Image Include="textures\ground.png" />
     <Image Include="textures\mario.png" />
     <Image Include="textures\misc.png" />

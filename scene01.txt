@@ -4,6 +4,7 @@ Assets/mario.txt
 Assets/brick.txt
 Assets/coin.txt
 Assets/goomba.txt
+Assets/koopa.txt
 Assets/qblock.txt
 Assets/powerup.txt
 Assets/background.txt
@@ -99,6 +100,9 @@ Assets/Platform/box.txt
 
 #Goomba
 2	120	175
+
+#Koopa
+3	500	150
 
 #Platform
 #type	x	y	width	height	length	id_begin	id_middle	id_end	draw_direction

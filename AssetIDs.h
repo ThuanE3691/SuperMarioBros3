@@ -153,3 +153,5 @@
 #pragma endregion
 
 #define ID_SPRITE_PIPE 100000
+
+#define ID_SPRITE_KOOPA	101000

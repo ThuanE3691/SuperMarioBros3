@@ -90,6 +90,9 @@
     <ClCompile Include="Pipe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Koopa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -173,6 +176,9 @@
     <ClInclude Include="Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Koopa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="mario-sample.txt">
@@ -223,6 +229,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="textures\misc_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\enemies_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="textures\enemies_3.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

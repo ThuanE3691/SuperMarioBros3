@@ -118,7 +118,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
 
 	// jump on top >> koopa transform to shell and deflect a bit 
-	if (e->ny < 0)
+	if (e->ny < 0 && koopa->GetState() != KOOPA_STATE_SHELL_ROTATE)
 	{
 		if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE)
 		{

@@ -271,9 +271,6 @@
     <Text Include="Assets\Platform\box.txt">
       <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
-    <Text Include="ground.txt">
-      <Filter>Resource Files\Assets\Platform</Filter>
-    </Text>
     <Text Include="scene01.txt">
       <Filter>Resource Files\Scene</Filter>
     </Text>
@@ -285,6 +282,12 @@
     </Text>
     <Text Include="Assets\mario.txt">
       <Filter>Resource Files\Assets</Filter>
+    </Text>
+    <Text Include="Assets\Platform\ground.txt">
+      <Filter>Resource Files\Assets\Platform</Filter>
+    </Text>
+    <Text Include="Assets\Platform\cloud.txt">
+      <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

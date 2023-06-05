@@ -22,6 +22,9 @@ CPlatform::CPlatform(float x, float y,
 		case(ID_SPRITE_GROUND_BEGIN):
 			canStanding = true;
 			break;
+		case(ID_SPRITE_GROUND_BOTTOM_BEGIN):
+			canStanding = true;
+			break;
 		case(ID_SPRITE_CLOUD_BEGIN):
 			canStanding = true;
 			this->SetSolid(true);

@@ -10,6 +10,7 @@
 #include "Platform.h"
 #include "QuestionBlock.h"
 #include "PowerUp.h"
+#include "Koopa.h"
 
 #include "Collision.h"
 
@@ -65,6 +66,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -109,6 +112,54 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+}
+
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+
+	// jump on top >> koopa transform to shell and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE)
+		{
+			koopa->SetState(KOOPA_STATE_SHELL_IDLE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
+			koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
+		}
+	} // Kick shell
+	else if (e->nx != 0 && koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
+		float vx, vy;
+		koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
+		koopa->GetSpeed(vx, vy);
+		if (e->nx < 0) {
+			if (vx < 0) koopa->SetSpeed(-vx, vy);
+		}
+		else if (e->nx > 0) {
+			if (vx > 0) koopa->SetSpeed(-vx, vy);
+		}
+	}
+	else  // hit by koopa
+	{
+		if (untouchable == 0)
+		{
+			if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE && koopa->GetState() != KOOPA_STATE_SHELL_TRANSFORM_WALKING) {
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					StartUntouchable();
+					isTransform = true;
+					this->SetState(MARIO_STATE_TRANSFORM);
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+	
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

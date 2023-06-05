@@ -4,7 +4,7 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
-	die_start = -1;
+	shell_wait_rotate_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -12,17 +12,11 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 {
 	switch (state)
 	{
-		case KOOPA_STATE_DIE:
-			left = x - KOOPA_BBOX_WIDTH / 2;
-			top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
-			right = left + KOOPA_BBOX_WIDTH;
-			bottom = top + KOOPA_BBOX_HEIGHT_DIE;
-			break;
 		case KOOPA_STATE_WALKING:
 			left = x - KOOPA_BBOX_WIDTH / 2;
 			top = y - KOOPA_BBOX_HEIGHT / 2;
 			right = left + KOOPA_BBOX_WIDTH;
-			bottom = top + KOOPA_BBOX_HEIGHT;
+			bottom = top + KOOPA_BBOX_HEIGHT ;
 			break;
 		case KOOPA_STATE_SHELL_IDLE:
 			left = x - KOOPA_BBOX_WIDTH / 2;
@@ -35,6 +29,12 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			top = y - KOOPA_BBOX_HEIGHT_SHELL / 2;
 			right = left + KOOPA_BBOX_WIDTH;
 			bottom = top + KOOPA_BBOX_HEIGHT_SHELL;
+			break;
+		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT_SHELL_TRANSFORM / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT_SHELL_TRANSFORM;
 			break;
 	}
 }
@@ -76,11 +76,18 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT))
-	{
-		isDeleted = true;
-		return;
+	if (state == KOOPA_STATE_SHELL_IDLE && shell_wait_rotate_start != -1 && GetTickCount64() - shell_wait_rotate_start > KOOPA_SHELL_WAIT_ROTATE_TIME_OUT) {
+		SetState(KOOPA_STATE_SHELL_TRANSFORM_WALKING);
 	}
+	else if (state == KOOPA_STATE_SHELL_TRANSFORM_WALKING && shell_transform_start != -1 && GetTickCount64() - shell_transform_start > KOOPA_SHELL_TRANSFORM_WALKING_TIME_OUT) {
+		SetState(KOOPA_STATE_WALKING);
+		y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_SHELL_TRANSFORM) / 2;
+	}
+	else if (state == KOOPA_STATE_SHELL_TRANSFORM_WALKING) {
+		vx = -vx;
+	}
+
+	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -101,6 +108,9 @@ int CKoopa::GetAni() {
 		case KOOPA_STATE_SHELL_ROTATE:
 			aniId = ID_ANI_KOOPA_SHELL_ROTATE;
 			break;
+		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
+			aniId = ID_ANI_KOOPA_SHELL_TRANSFORM_WALKING;
+			break;
 	}
 	return aniId;
 }
@@ -118,21 +128,23 @@ void CKoopa::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case KOOPA_STATE_DIE:
-		die_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
-		vx = 0;
-		vy = 0;
-		ay = 0;
-		break;
-	case KOOPA_STATE_WALKING:
-		vx = -KOOPA_WALKING_SPEED;
-		break;
-	case KOOPA_STATE_SHELL_IDLE:
-		vx = 0;
-		break;
-	case KOOPA_STATE_SHELL_ROTATE:
-		vx = -KOOPA_ROTATE_SPEED;
-		break;
+		case KOOPA_STATE_WALKING:
+			shell_transform_start = -1;
+			vx = -KOOPA_WALKING_SPEED;
+			vy = 0;
+			break;
+		case KOOPA_STATE_SHELL_IDLE:
+			vx = 0;
+			shell_wait_rotate_start = GetTickCount64();
+			break;
+		case KOOPA_STATE_SHELL_ROTATE:
+			shell_wait_rotate_start = -1;
+			vx = -KOOPA_ROTATE_SPEED;
+			break;
+		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
+			shell_wait_rotate_start = -1;
+			shell_transform_start = GetTickCount64();
+			vx = -KOOPA_TRANSFORM_SPEED;
+			break;
 	}
 }

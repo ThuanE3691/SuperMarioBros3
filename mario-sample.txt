@@ -22,3 +22,4 @@ height	240
 23	textures\misc_3.png
 24	textures\ground.png
 25	textures\enemies_3.png
+26	textures\enemies_2.png

@@ -10,19 +10,32 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_DIE)
+	switch (state)
 	{
-		left = x - KOOPA_BBOX_WIDTH / 2;
-		top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
-		right = left + KOOPA_BBOX_WIDTH;
-		bottom = top + KOOPA_BBOX_HEIGHT_DIE;
-	}
-	else
-	{
-		left = x - KOOPA_BBOX_WIDTH / 2;
-		top = y - KOOPA_BBOX_HEIGHT / 2;
-		right = left + KOOPA_BBOX_WIDTH;
-		bottom = top + KOOPA_BBOX_HEIGHT;
+		case KOOPA_STATE_DIE:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT_DIE;
+			break;
+		case KOOPA_STATE_WALKING:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT;
+			break;
+		case KOOPA_STATE_SHELL_IDLE:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT_SHELL / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT_SHELL;
+			break;
+		case KOOPA_STATE_SHELL_ROTATE:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT_SHELL / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT_SHELL;
+			break;
 	}
 }
 
@@ -41,9 +54,11 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
 
-	// If go end then reverse
-	if ((x < left && vx < 0) || (x > right && vx > 0)) {
-		vx = -vx;
+	// If go end then reverse in walking state
+	if (state == KOOPA_STATE_WALKING) {
+		if ((x < left && vx < 0) || (x > right && vx > 0)) {
+			vx = -vx;
+		}
 	}
 
 	if (e->ny != 0)
@@ -71,18 +86,28 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
+int CKoopa::GetAni() {
+	int aniId = -1;
+	switch (state) {
+		case KOOPA_STATE_WALKING:
+			if (vx < 0)
+				aniId = ID_ANI_KOOPA_WALKING_LEFT;
+			else 
+				aniId = ID_ANI_KOOPA_WALKING_RIGHT;
+			break;
+		case KOOPA_STATE_SHELL_IDLE:
+			aniId = ID_ANI_KOOPA_SHELL_IDLE;
+			break;
+		case KOOPA_STATE_SHELL_ROTATE:
+			aniId = ID_ANI_KOOPA_SHELL_ROTATE;
+			break;
+	}
+	return aniId;
+}
 
 void CKoopa::Render()
 {
-	int aniId = -1;
-	if (state == KOOPA_STATE_WALKING) {
-		if (vx < 0) {
-			aniId = ID_ANI_KOOPA_WALKING_LEFT;
-		}
-		else {
-			aniId = ID_ANI_KOOPA_WALKING_RIGHT;
-		}
-	}
+	int aniId = GetAni();
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
@@ -102,6 +127,12 @@ void CKoopa::SetState(int state)
 		break;
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
+		break;
+	case KOOPA_STATE_SHELL_IDLE:
+		vx = 0;
+		break;
+	case KOOPA_STATE_SHELL_ROTATE:
+		vx = -KOOPA_ROTATE_SPEED;
 		break;
 	}
 }

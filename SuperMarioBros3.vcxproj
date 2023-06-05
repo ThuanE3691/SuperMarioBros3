@@ -188,6 +188,8 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Assets\goomba.txt" />
+    <Text Include="Assets\koopa.txt" />
     <Text Include="Assets\mario.txt" />
     <Text Include="Assets\Platform\box.txt" />
     <Text Include="ground.txt" />

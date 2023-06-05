@@ -1,4 +1,6 @@
 #include "Koopa.h"
+#include "QuestionBlock.h"
+#include "Mario.h"
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
@@ -49,6 +51,13 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
+
+	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
+		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
+		if (state == KOOPA_STATE_SHELL_ROTATE) {
+			qb->SetState(EMPTY_BLOCK_STATE);
+		}
+	}
 
 	float left, right, top, bottom;
 

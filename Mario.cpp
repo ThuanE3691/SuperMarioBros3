@@ -25,12 +25,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		if (isTransform) {
+			isTransform = false;
 			if (level == MARIO_LEVEL_SMALL) {
-				isTransform = false;
 				level = MARIO_LEVEL_BIG;
 			}
 			else if (level == MARIO_LEVEL_BIG) {
-				isTransform = false;
 				level = MARIO_LEVEL_SMALL;
 			}
 		}

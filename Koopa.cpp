@@ -51,6 +51,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	if (dynamic_cast<CMario*>(e->obj)) return;
 
 	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
 		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
@@ -95,8 +96,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else if (state == KOOPA_STATE_SHELL_TRANSFORM_WALKING) {
 		vx = -vx;
 	}
-
-	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -144,11 +143,13 @@ void CKoopa::SetState(int state)
 			break;
 		case KOOPA_STATE_SHELL_IDLE:
 			vx = 0;
+			vy = -KOOPA_GRAVITY;
 			shell_wait_rotate_start = GetTickCount64();
 			break;
 		case KOOPA_STATE_SHELL_ROTATE:
 			shell_wait_rotate_start = -1;
 			vx = -KOOPA_ROTATE_SPEED;
+			vy = -KOOPA_GRAVITY;
 			break;
 		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
 			shell_wait_rotate_start = -1;

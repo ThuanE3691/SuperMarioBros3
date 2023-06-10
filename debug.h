@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <stdlib.h>
+#include <fstream>
 
 #define _W(x)  __W(x)
 #define __W(x)  L##x

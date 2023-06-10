@@ -11,6 +11,17 @@ void DebugOut(const wchar_t* fmt, ...)
 	vswprintf_s(dbg_out, fmt, argp);
 	va_end(argp);
 	OutputDebugString(dbg_out);
+
+	std::wstring wideStr(dbg_out);
+	std::string narrowStr(wideStr.begin(), wideStr.end());
+
+	// Write the debug information to a log file
+	std::ofstream logFile("DEBUG.LOG", std::ios_base::app);
+	if (logFile.is_open())
+	{
+		logFile << narrowStr << std::endl;
+		logFile.close();
+	}
 }
 
 void DebugOutTitle(const wchar_t* fmt, ...)

@@ -53,7 +53,8 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
 	if (tex == NULL)
 	{
-		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		if (texID != ID_TEX_BBOX)
+			DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 		return; 
 	}
 

@@ -38,6 +38,7 @@ void CPowerUp::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (x > m_x) {
 			power_up_direction = -power_up_direction;
 		}
+		return;
 	}
 
 	if (e->ny != 0)

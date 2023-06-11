@@ -8,7 +8,6 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
 	shell_wait_rotate_start = -1;
-	shell_idle_to_rotate_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -99,9 +98,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (shell_idle_to_rotate_start != -1 && GetTickCount64() - shell_idle_to_rotate_start > KOOPA_SHELL_TRANSFORM_ROTATE_TIME_OUT) {
-		// ay = KOOPA_GRAVITY;
-	}
 	if (state == KOOPA_STATE_SHELL_IDLE && shell_wait_rotate_start != -1 && GetTickCount64() - shell_wait_rotate_start > KOOPA_SHELL_WAIT_ROTATE_TIME_OUT) {
 		SetState(KOOPA_STATE_SHELL_TRANSFORM_WALKING);
 	}

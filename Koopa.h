@@ -37,7 +37,6 @@ protected:
 
 	ULONGLONG shell_wait_rotate_start;
 	ULONGLONG shell_transform_start;
-	ULONGLONG shell_idle_to_rotate_start;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

@@ -218,6 +218,12 @@ int CMario::GetAniIdSmall()
 		else
 			aniId = ID_ANI_MARIO_SMALL_TRANSFORM_TO_BIG_LEFT;
 	}
+	else if (this->state == MARIO_STATE_KICK) {
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_SMALL_KICK_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_SMALL_KICK_LEFT;
+	}
 	else if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
@@ -287,6 +293,12 @@ int CMario::GetAniIdBig()
 			aniId = ID_ANI_MARIO_BIG_TRANSFORM_TO_SMALL_RIGHT;
 		else
 			aniId = ID_ANI_MARIO_BIG_TRANSFORM_TO_SMALL_LEFT;
+	}
+	else if (this->state == MARIO_STATE_KICK) {
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_BIG_KICK_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_BIG_KICK_LEFT;
 	}
 	else if (!isOnPlatform)
 	{
@@ -427,6 +439,11 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			y -= MARIO_SIT_HEIGHT_ADJUST;
 		}
+		break;
+
+	case MARIO_STATE_KICK:
+		vx = 0.0f;
+		ax = 0.0f;
 		break;
 
 	case MARIO_STATE_IDLE:

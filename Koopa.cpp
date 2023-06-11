@@ -57,18 +57,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
 
-	if (dynamic_cast<CMario*>(e->obj)) {
-		DebugOut(L"[INFO] [COLLISION] KOOPA HAS COLLISION WITH MARIO IN STATE %d", state);
-		DebugOut(L"[INFO] [COLLISION] X = %f;Y = %f;VX = %f;VY = %f;AX = %f;AY = %f;\n", x,y,vx,vy,ax,ay);
-	}
-
-	if (dynamic_cast<CPlatform*>(e->obj)) {
-		if (state == KOOPA_STATE_SHELL_IDLE || state == KOOPA_STATE_SHELL_ROTATE) {
-			DebugOut(L"[INFO] [COLLISION] KOOPA HAS COLLISION WITH PLATFORM IN STATE %d", state);
-			DebugOut(L"[INFO] [COLLISION] X = %f;Y = %f;VX = %f;VY = %f;AX = %f;AY = %f;\n", x, y, vx, vy, ax, ay);
-		}
-	}
-
 	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
 		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
 		if (state == KOOPA_STATE_SHELL_ROTATE) {

@@ -9,12 +9,13 @@
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 22
-#define KOOPA_BBOX_HEIGHT_SHELL 14
+#define KOOPA_BBOX_HEIGHT_SHELL 13
 #define KOOPA_BBOX_HEIGHT_SHELL_TRANSFORM 12
 
 
 #define KOOPA_SHELL_WAIT_ROTATE_TIME_OUT 2000
 #define KOOPA_SHELL_TRANSFORM_WALKING_TIME_OUT	1000
+#define KOOPA_SHELL_TRANSFORM_ROTATE_TIME_OUT 200
 
 #define KOOPA_STATE_WALKING 100
 #define KOOPA_STATE_SHELL_IDLE	200
@@ -36,6 +37,7 @@ protected:
 
 	ULONGLONG shell_wait_rotate_start;
 	ULONGLONG shell_transform_start;
+	ULONGLONG shell_idle_to_rotate_start;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

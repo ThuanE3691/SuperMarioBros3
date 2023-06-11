@@ -119,25 +119,21 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	// jump on top >> koopa transform to shell and deflect a bit 
 	if (e->ny < 0)
 	{
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		if (koopa->GetState() != KOOPA_STATE_SHELL_ROTATE) {
 			if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE)
 			{
 				koopa->SetState(KOOPA_STATE_SHELL_IDLE);
-				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
-			else {
-
-			}
-			/*else if (koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
+			else if (koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
 				koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
-			}*/
+			}
 		}
 		else {
 			koopa->SetState(KOOPA_STATE_SHELL_IDLE);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	} // Kick shell
-	if (e->nx != 0 && koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
+	else if (e->nx != 0 && koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
 		float vx, vy;
 		koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
 		koopa->GetSpeed(vx, vy);

@@ -1,12 +1,14 @@
 #include "Koopa.h"
 #include "QuestionBlock.h"
 #include "Mario.h"
+#include "Platform.h"
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
 	shell_wait_rotate_start = -1;
+	shell_idle_to_rotate_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -51,7 +53,22 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
-	if (dynamic_cast<CMario*>(e->obj)) return;
+
+	float left, right, top, bottom;
+
+	e->obj->GetBoundingBox(left, top, right, bottom);
+
+	if (dynamic_cast<CMario*>(e->obj)) {
+		DebugOut(L"[INFO] [COLLISION] KOOPA HAS COLLISION WITH MARIO IN STATE %d", state);
+		DebugOut(L"[INFO] [COLLISION] X = %f;Y = %f;VX = %f;VY = %f;AX = %f;AY = %f;\n", x,y,vx,vy,ax,ay);
+	}
+
+	if (dynamic_cast<CPlatform*>(e->obj)) {
+		if (state == KOOPA_STATE_SHELL_IDLE || state == KOOPA_STATE_SHELL_ROTATE) {
+			DebugOut(L"[INFO] [COLLISION] KOOPA HAS COLLISION WITH PLATFORM IN STATE %d", state);
+			DebugOut(L"[INFO] [COLLISION] X = %f;Y = %f;VX = %f;VY = %f;AX = %f;AY = %f;\n", x, y, vx, vy, ax, ay);
+		}
+	}
 
 	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
 		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
@@ -59,10 +76,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			qb->SetState(EMPTY_BLOCK_STATE);
 		}
 	}
-
-	float left, right, top, bottom;
-
-	e->obj->GetBoundingBox(left, top, right, bottom);
 
 	// If go end then reverse in walking state
 	if (state == KOOPA_STATE_WALKING) {
@@ -86,6 +99,9 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
+	if (shell_idle_to_rotate_start != -1 && GetTickCount64() - shell_idle_to_rotate_start > KOOPA_SHELL_TRANSFORM_ROTATE_TIME_OUT) {
+		// ay = KOOPA_GRAVITY;
+	}
 	if (state == KOOPA_STATE_SHELL_IDLE && shell_wait_rotate_start != -1 && GetTickCount64() - shell_wait_rotate_start > KOOPA_SHELL_WAIT_ROTATE_TIME_OUT) {
 		SetState(KOOPA_STATE_SHELL_TRANSFORM_WALKING);
 	}
@@ -132,8 +148,7 @@ void CKoopa::Render()
 }
 
 void CKoopa::SetState(int state)
-{
-	CGameObject::SetState(state);
+{	
 	switch (state)
 	{
 		case KOOPA_STATE_WALKING:
@@ -142,14 +157,18 @@ void CKoopa::SetState(int state)
 			vy = 0;
 			break;
 		case KOOPA_STATE_SHELL_IDLE:
+			if (this->state == KOOPA_STATE_SHELL_ROTATE) {
+				y -= 2;
+			}
 			vx = 0;
-			vy = -KOOPA_GRAVITY;
 			shell_wait_rotate_start = GetTickCount64();
 			break;
 		case KOOPA_STATE_SHELL_ROTATE:
+			if (this->state == KOOPA_STATE_SHELL_IDLE) {
+				y -= 2;
+			}
 			shell_wait_rotate_start = -1;
 			vx = -KOOPA_ROTATE_SPEED;
-			vy = -KOOPA_GRAVITY;
 			break;
 		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
 			shell_wait_rotate_start = -1;
@@ -157,4 +176,5 @@ void CKoopa::SetState(int state)
 			vx = -KOOPA_TRANSFORM_SPEED;
 			break;
 	}
+	CGameObject::SetState(state);
 }

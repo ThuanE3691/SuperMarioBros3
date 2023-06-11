@@ -152,6 +152,6 @@ int CPlatform::IsDirectionColliable(float nx, float ny)
 		else if (nx != 0 && this->GetSolid() == 0) {
 			return 1;
 		}
-	} 
+	}
 	return 0;
 }

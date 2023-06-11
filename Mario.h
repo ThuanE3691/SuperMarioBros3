@@ -36,7 +36,10 @@
 
 #define MARIO_STATE_KICK	700
 
-#define MARIO_STATE_TRANSFORM	800
+#define MARIO_STATE_HANDING	800
+#define MARIO_STATE_HANDING_RELEASE 801
+
+#define MARIO_STATE_TRANSFORM	900
 
 
 #pragma region ANIMATION_ID
@@ -68,6 +71,8 @@
 #define ID_ANI_MARIO_BIG_KICK_LEFT	1031
 #define ID_ANI_MARIO_BIG_KICK_RIGHT	1041
 
+#define ID_ANI_MARIO_BIG_HANDING_LEFT	1051
+#define ID_ANI_MARIO_BIG_HANDING_RIGHT	1061
 
 
 #define ID_ANI_MARIO_DIE 999
@@ -97,6 +102,12 @@
 #define ID_ANI_MARIO_SMALL_KICK_LEFT	1711
 #define ID_ANI_MARIO_SMALL_KICK_RIGHT	1721
 
+#define ID_ANI_MARIO_SMALL_HANDING_LEFT_IDLE	1731
+#define ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE	1741
+#define ID_ANI_MARIO_SMALL_HANDING_LEFT_WALK	1751
+#define ID_ANI_MARIO_SMALL_HANDING_RIGHT_WALK	1761
+#define ID_ANI_MARIO_SMALL_HANDING_LEFT_RUN	1771
+#define ID_ANI_MARIO_SMALL_HANDING_RIGHT_RUN	1781
 
 
 #pragma endregion
@@ -119,12 +130,14 @@
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-
+#define MARIO_KICK_TIME_OUT	100
 #define MARIO_UNTOUCHABLE_TIME 600
 
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
+	BOOLEAN isHanding;
+
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -132,6 +145,8 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	ULONGLONG kick_start;
+
 	BOOLEAN isTransform;
 	BOOLEAN isOnPlatform;
 	int coin; 
@@ -157,8 +172,11 @@ public:
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
+
+		kick_start = -1;
 		isOnPlatform = false;
 		isTransform = false;
+		isHanding = false;
 		coin = 0;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

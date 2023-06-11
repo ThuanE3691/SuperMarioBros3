@@ -40,6 +40,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		this->SetState(MARIO_STATE_TRANSFORM);
 	}
 
+	if (kick_start != -1 && GetTickCount64() - kick_start > MARIO_KICK_TIME_OUT)
+	{
+		kick_start = -1;
+	}
+	else if (kick_start != -1) {
+		this->SetState(MARIO_STATE_KICK);
+	}
+
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -126,6 +134,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 				koopa->SetState(KOOPA_STATE_SHELL_IDLE);
 			}
 			else if (koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
+				kick_start = GetTickCount64();
+				SetState(MARIO_STATE_KICK);
 				koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
 			}
 		}
@@ -135,6 +145,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 	} // Kick shell
 	else if (e->nx != 0 && koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
 		float vx, vy;
+		kick_start = GetTickCount64();
+		SetState(MARIO_STATE_KICK);
 		koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
 		koopa->GetSpeed(vx, vy);
 		if (e->nx < 0) {
@@ -224,6 +236,32 @@ int CMario::GetAniIdSmall()
 		else
 			aniId = ID_ANI_MARIO_SMALL_KICK_LEFT;
 	}
+	else if (isHanding) {
+		if (vx == 0) {
+			if (nx > 0)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE;
+			else
+				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_IDLE;
+		}
+		else if (vx > 0)
+		{
+			if (ax < 0)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE;
+			else if (ax == MARIO_ACCEL_RUN_X)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_RUN;
+			else if (ax == MARIO_ACCEL_WALK_X)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_WALK;
+		}
+		else // vx < 0
+		{
+			if (ax > 0)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_IDLE;
+			else if (ax == -MARIO_ACCEL_RUN_X)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_RUN;
+			else if (ax == -MARIO_ACCEL_WALK_X)
+				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_WALK;
+		}
+	}
 	else if (!isOnPlatform)
 	{
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
@@ -299,6 +337,12 @@ int CMario::GetAniIdBig()
 			aniId = ID_ANI_MARIO_BIG_KICK_RIGHT;
 		else
 			aniId = ID_ANI_MARIO_BIG_KICK_LEFT;
+	}
+	else if (isHanding) {
+		if (nx > 0)
+			aniId = ID_ANI_MARIO_BIG_HANDING_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_BIG_HANDING_LEFT;
 	}
 	else if (!isOnPlatform)
 	{
@@ -443,7 +487,15 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_KICK:
 		vx = 0.0f;
-		ax = 0.0f;
+		// ax = 0.0f;
+		break;
+
+	case MARIO_STATE_HANDING:
+		isHanding = true;
+		break;
+
+	case MARIO_STATE_HANDING_RELEASE:
+		isHanding = false;
 		break;
 
 	case MARIO_STATE_IDLE:

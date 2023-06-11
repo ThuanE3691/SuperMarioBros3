@@ -28,6 +28,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
+	case DIK_A:
+		mario->SetState(MARIO_STATE_HANDING);
+		break;
 	case DIK_R: // reset
 		CGame::GetInstance()->GetCurrentScene()->Reload();
 		break;
@@ -47,6 +50,8 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
+	case DIK_A:
+		mario->SetState(MARIO_STATE_HANDING_RELEASE);
 	}
 }
 

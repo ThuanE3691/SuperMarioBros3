@@ -138,6 +138,10 @@ class CMario : public CGameObject
 	BOOLEAN isSitting;
 	BOOLEAN isHanding;
 
+	BOOLEAN handingMode;
+
+	CGameObject* enemies;
+
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -150,6 +154,7 @@ class CMario : public CGameObject
 	BOOLEAN isTransform;
 	BOOLEAN isOnPlatform;
 	int coin; 
+
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
@@ -177,7 +182,11 @@ public:
 		isOnPlatform = false;
 		isTransform = false;
 		isHanding = false;
+
+		handingMode = false;
 		coin = 0;
+
+		enemies = NULL;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -197,4 +206,8 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	void SetHandingMode(bool handingMode) { this->handingMode = handingMode; }
+	bool GetHanding() { return isHanding; }
+
 };

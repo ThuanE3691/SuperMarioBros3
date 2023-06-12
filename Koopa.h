@@ -35,6 +35,10 @@ protected:
 	float ax;
 	float ay;
 
+	bool isOnHand;
+	float mario_x;
+	float mario_y;
+
 	ULONGLONG shell_wait_rotate_start;
 	ULONGLONG shell_transform_start;
 
@@ -52,5 +56,6 @@ protected:
 
 public:
 	CKoopa(float x, float y);
+	void SetOnHand(bool onHand) { this->isOnHand = onHand; }
 	virtual void SetState(int state);
 };

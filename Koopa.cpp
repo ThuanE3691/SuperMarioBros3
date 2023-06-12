@@ -7,6 +7,7 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	isOnHand = false;
 	shell_wait_rotate_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
@@ -44,8 +45,10 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CKoopa::OnNoCollision(DWORD dt)
 {
-	x += vx * dt;
-	y += vy * dt;
+	if (!isOnHand) {
+		x += vx * dt;
+		y += vy * dt;
+	}
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -56,6 +59,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	float left, right, top, bottom;
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
+
 
 	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
 		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
@@ -96,6 +100,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else if (state == KOOPA_STATE_SHELL_TRANSFORM_WALKING) {
 		vx = -vx;
 	}
+	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -153,6 +158,7 @@ void CKoopa::SetState(int state)
 			}
 			shell_wait_rotate_start = -1;
 			vx = -KOOPA_ROTATE_SPEED;
+			ay = KOOPA_GRAVITY;
 			break;
 		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
 			shell_wait_rotate_start = -1;

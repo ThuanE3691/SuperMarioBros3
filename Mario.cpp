@@ -16,8 +16,45 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (x < 10) x = 10;
+
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (isHanding) {
+		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
+			
+			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
+
+			if (enemies->GetNx() != nx) {
+				enemies->SetNx(nx);
+				
+			}
+			float direction = (nx >= 0) ? 1 : -1;
+			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
+			enemies->SetSpeed(vx, vy);
+		}
+		else {
+			enemies = NULL;
+		}
+	}
+	else{
+		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
+			dynamic_cast<CKoopa*>(enemies)->SetOnHand(false);
+			enemies->SetState(KOOPA_STATE_SHELL_ROTATE);
+			kick_start = GetTickCount64();
+			SetState(MARIO_STATE_KICK);
+			enemies->SetState(KOOPA_STATE_SHELL_ROTATE);
+			enemies->GetSpeed(vx, vy);
+			if (enemies->GetNx() < 0) {
+				if (vx < 0) enemies->SetSpeed(-vx, vy);
+			}
+			else if (enemies->GetNx() > 0) {
+				if (vx > 0) enemies->SetSpeed(-vx, vy);
+			}
+			enemies = NULL;
+		}
+	}
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
@@ -65,6 +102,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
+
+		if (enemies) {
+			if (dynamic_cast<CKoopa*>(enemies)) {
+				enemies->SetSpeed(vx, vy);
+			}
+		}
 	}
 	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
@@ -144,16 +187,27 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		}
 	} // Kick shell
 	else if (e->nx != 0 && koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
-		float vx, vy;
-		kick_start = GetTickCount64();
-		SetState(MARIO_STATE_KICK);
-		koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
-		koopa->GetSpeed(vx, vy);
-		if (e->nx < 0) {
-			if (vx < 0) koopa->SetSpeed(-vx, vy);
+		if (handingMode == false) {
+			koopa->SetOnHand(false);
+			float vx, vy;
+			kick_start = GetTickCount64();
+			SetState(MARIO_STATE_KICK);
+			koopa->SetState(KOOPA_STATE_SHELL_ROTATE);
+			koopa->GetSpeed(vx, vy);
+			if (e->nx < 0) {
+				if (vx < 0) koopa->SetSpeed(-vx, vy);
+			}
+			else if (e->nx > 0) {
+				if (vx > 0) koopa->SetSpeed(-vx, vy);
+			}
 		}
-		else if (e->nx > 0) {
-			if (vx > 0) koopa->SetSpeed(-vx, vy);
+		else {
+			enemies = koopa;
+			isHanding = true;
+			float direction = (nx >= 0) ? 1 : -1;
+			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
+			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
+			enemies->SetSpeed(vx, vy);
 		}
 	}
 	else  // hit by koopa

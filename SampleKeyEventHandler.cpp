@@ -28,6 +28,13 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
+	case DIK_NUMPAD1: // Print the current position and speed of mario
+		float x, y, vx, vy, nx;
+		mario->GetPosition(x, y);
+		mario->GetSpeed(vx, vy);
+		nx = mario->GetNx();
+		DebugOut(L"[INFO] MARIO - [POSITION] X: %f, Y: %f - [SPEED] VX: %f, VY = %f, NX = %f\n",x,y,vx,vy,nx);
+		break;
 	case DIK_R: // reset
 		CGame::GetInstance()->GetCurrentScene()->Reload();
 		break;

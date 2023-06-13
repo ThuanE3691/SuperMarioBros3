@@ -324,5 +324,8 @@
     <Image Include="textures\mario.png">
       <Filter>Resource Files\Textures\Others</Filter>
     </Image>
+    <Image Include="textures\enemiess.png">
+      <Filter>Resource Files\Textures\enemies</Filter>
+    </Image>
   </ItemGroup>
 </Project>

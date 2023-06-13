@@ -11,6 +11,10 @@
 #define GOOMBA_BBOX_HEIGHT 10
 #define GOOMBA_BBOX_HEIGHT_DIE 5
 
+#define GOOMBA_RED_WING_BBOX_WIDTH	16
+#define GOOMBA_RED_WING_BBOX_HEIGHT 15
+#define GOOMBA_RED_WING_BBOX_HEIGHT_DIE	5
+
 #define GOOMBA_DIE_TIMEOUT 200
 
 #define GOOMBA_STATE_WALKING 100
@@ -20,6 +24,9 @@
 #define ID_ANI_GOOMBA_DIE 5001
 
 #define ID_ANI_GOOMBA_RED_WING_WALK	5011
+#define ID_ANI_GOOMBA_RED_WING_WALK_PREPARE_TO_FLY	5012
+#define ID_ANI_GOOMBA_RED_WING_FLY	5013
+
 #define ID_ANI_GOOMBA_RED_WALK	5021
 #define ID_ANI_GOOMBA_RED_DIE	5031
 
@@ -30,6 +37,7 @@ protected:
 	float ay; 
 
 	int typeGoomba;
+	int level;
 
 	ULONGLONG die_start;
 
@@ -42,6 +50,7 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	virtual int GetAni();
 
 public: 	
 	CGoomba(float x, float y, int typeGoomba);

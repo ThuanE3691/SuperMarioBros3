@@ -7,23 +7,45 @@ CGoomba::CGoomba(float x, float y,int typeGoomba):CGameObject(x, y)
 	die_start = -1;
 	SetState(GOOMBA_STATE_WALKING);
 	this->typeGoomba = typeGoomba;
+	if (typeGoomba == GOOMBA_TYPE_NORMAL) level = 1;
+	else level = 2;
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	if (state == GOOMBA_STATE_DIE)
-	{
-		left = x - GOOMBA_BBOX_WIDTH/2;
-		top = y - GOOMBA_BBOX_HEIGHT_DIE/2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
-	}
-	else
-	{ 
-		left = x - GOOMBA_BBOX_WIDTH/2;
-		top = y - GOOMBA_BBOX_HEIGHT/2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
+	switch(typeGoomba){
+		case GOOMBA_TYPE_NORMAL:
+			if (state == GOOMBA_STATE_DIE)
+			{
+				left = x - GOOMBA_BBOX_WIDTH/2;
+				top = y - GOOMBA_BBOX_HEIGHT_DIE/2;
+				right = left + GOOMBA_BBOX_WIDTH;
+				bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
+			}
+			else
+			{ 
+				left = x - GOOMBA_BBOX_WIDTH/2;
+				top = y - GOOMBA_BBOX_HEIGHT/2;
+				right = left + GOOMBA_BBOX_WIDTH;
+				bottom = top + GOOMBA_BBOX_HEIGHT;
+			}
+			break;
+		case GOOMBA_TYPE_RED_WING:
+			if (state == GOOMBA_STATE_DIE)
+			{
+				left = x - GOOMBA_BBOX_WIDTH / 2;
+				top = y - GOOMBA_RED_WING_BBOX_HEIGHT_DIE / 2;
+				right = left + GOOMBA_BBOX_WIDTH;
+				bottom = top + GOOMBA_RED_WING_BBOX_HEIGHT_DIE;
+			}
+			else
+			{
+				left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
+				top = y - GOOMBA_RED_WING_BBOX_HEIGHT / 2;
+				right = left + GOOMBA_RED_WING_BBOX_WIDTH;
+				bottom = top + GOOMBA_RED_WING_BBOX_HEIGHT;
+			}
+			break;
 	}
 }
 
@@ -64,14 +86,31 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 }
 
 
+int CGoomba::GetAni() {
+	float aniId = -1;
+	switch(typeGoomba){
+		case GOOMBA_TYPE_NORMAL:
+			if (state == GOOMBA_STATE_DIE)
+			{
+				aniId = ID_ANI_GOOMBA_DIE;
+			}
+			else
+				aniId = ID_ANI_GOOMBA_WALKING;
+			break;
+		case GOOMBA_TYPE_RED_WING:
+			if (state == GOOMBA_STATE_DIE) {
+				aniId = ID_ANI_GOOMBA_RED_DIE;
+			}
+			else
+				aniId = ID_ANI_GOOMBA_RED_WING_WALK;
+			break;
+	}
+	return aniId;
+}
+
 void CGoomba::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
-	{
-		aniId = ID_ANI_GOOMBA_DIE;
-	}
-
+	int aniId = GetAni();
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
 	RenderBoundingBox();
 }
@@ -83,7 +122,14 @@ void CGoomba::SetState(int state)
 	{
 		case GOOMBA_STATE_DIE:
 			die_start = GetTickCount64();
-			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE)/2;
+			switch (typeGoomba) {
+			case GOOMBA_TYPE_NORMAL:
+				y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+				break;
+			case GOOMBA_TYPE_RED_WING:
+				y += (GOOMBA_RED_WING_BBOX_HEIGHT - GOOMBA_RED_WING_BBOX_HEIGHT_DIE) / 2;
+				break;
+			}
 			vx = 0;
 			vy = 0;
 			ay = 0; 

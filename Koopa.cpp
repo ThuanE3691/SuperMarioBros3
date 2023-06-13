@@ -45,10 +45,10 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CKoopa::OnNoCollision(DWORD dt)
 {
-	if (!isOnHand) {
+	
 		x += vx * dt;
 		y += vy * dt;
-	}
+	
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)

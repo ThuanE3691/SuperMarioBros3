@@ -21,19 +21,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (isHanding) {
+	if (isHolding) {
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
 			
 			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
 
-			if (enemies->GetNx() != nx) {
-				enemies->SetNx(nx);
-				
-			}
-			float direction = (nx >= 0) ? 1 : -1;
+			/*if (enemies->GetNx() != nx) {
+				enemies->SetNx(nx);	
+			}*/
+			float direction = (vx > 0) ? 1 : -1;
+			if (vx == 0) direction = (nx > 0) ? 1 : -1;
 			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
-			enemies->SetSpeed(vx, vy);
-		}
+	}
 		else {
 			enemies = NULL;
 		}
@@ -41,16 +40,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else{
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
 			dynamic_cast<CKoopa*>(enemies)->SetOnHand(false);
-			enemies->SetState(KOOPA_STATE_SHELL_ROTATE);
 			kick_start = GetTickCount64();
 			SetState(MARIO_STATE_KICK);
 			enemies->SetState(KOOPA_STATE_SHELL_ROTATE);
-			enemies->GetSpeed(vx, vy);
-			if (enemies->GetNx() < 0) {
-				if (vx < 0) enemies->SetSpeed(-vx, vy);
-			}
-			else if (enemies->GetNx() > 0) {
-				if (vx > 0) enemies->SetSpeed(-vx, vy);
+			float koopa_vx, koopa_vy;
+			enemies->GetSpeed(koopa_vx, koopa_vy);
+			if (nx > 0 && koopa_vx < 0) {
+				enemies->SetSpeed(-koopa_vx, koopa_vy);
 			}
 			enemies = NULL;
 		}
@@ -203,7 +199,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		}
 		else {
 			enemies = koopa;
-			isHanding = true;
+			isHolding = true;
 			float direction = (nx >= 0) ? 1 : -1;
 			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
 			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
@@ -290,7 +286,7 @@ int CMario::GetAniIdSmall()
 		else
 			aniId = ID_ANI_MARIO_SMALL_KICK_LEFT;
 	}
-	else if (isHanding) {
+	else if (isHolding) {
 		if (vx == 0) {
 			if (nx > 0)
 				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE;
@@ -392,7 +388,7 @@ int CMario::GetAniIdBig()
 		else
 			aniId = ID_ANI_MARIO_BIG_KICK_LEFT;
 	}
-	else if (isHanding) {
+	else if (isHolding) {
 		if (nx > 0)
 			aniId = ID_ANI_MARIO_BIG_HANDING_RIGHT;
 		else
@@ -545,11 +541,11 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_HANDING:
-		isHanding = true;
+		isHolding = true;
 		break;
 
 	case MARIO_STATE_HANDING_RELEASE:
-		isHanding = false;
+		isHolding = false;
 		break;
 
 	case MARIO_STATE_IDLE:

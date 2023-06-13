@@ -1,11 +1,22 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
+
+#-------------------------GOOMBA NORMAL----------------------------
+
 #WALK
 31001	5	14	20	31	10
 31002	25	14	40	31	10
 
 #DIE
 32001	44	21	61	30	10
+
+#-------------------------GOOMBA RED WING--------------------------
+
+# WALK WITH WING
+
+# WALK NO WING
+
+# DIE
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

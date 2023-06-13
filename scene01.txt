@@ -121,7 +121,9 @@ Assets/Platform/box.txt
 
 
 #Goomba
-2	120	175
+#TYPE	X	Y	GOOMBA_TYPE ; GOOMBA_TYPE[1: NORMAL,2:	RED_WING]
+
+2	120	175	1
 
 #Koopa
 3	560	141

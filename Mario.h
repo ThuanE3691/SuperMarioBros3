@@ -136,7 +136,7 @@
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
-	BOOLEAN isHanding;
+	BOOLEAN isHolding;
 
 	BOOLEAN handingMode;
 
@@ -181,7 +181,7 @@ public:
 		kick_start = -1;
 		isOnPlatform = false;
 		isTransform = false;
-		isHanding = false;
+		isHolding = false;
 
 		handingMode = false;
 		coin = 0;
@@ -208,6 +208,6 @@ public:
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
 	void SetHandingMode(bool handingMode) { this->handingMode = handingMode; }
-	bool GetHanding() { return isHanding; }
+	bool GetHolding() { return isHolding; }
 
 };

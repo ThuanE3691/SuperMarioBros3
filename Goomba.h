@@ -13,12 +13,14 @@
 
 #define GOOMBA_RED_WING_BBOX_WIDTH	16
 #define GOOMBA_RED_WING_BBOX_HEIGHT 15
+#define GOOMBA_RED_BBOX_HEIGHT	12
 #define GOOMBA_RED_WING_BBOX_HEIGHT_DIE	5
 
 #define GOOMBA_DIE_TIMEOUT 200
 
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
+#define GOOMBA_DECREASE_LEVEL 300
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
@@ -55,4 +57,6 @@ protected:
 public: 	
 	CGoomba(float x, float y, int typeGoomba);
 	virtual void SetState(int state);
+
+	virtual int GetLevel() { return level; }
 };

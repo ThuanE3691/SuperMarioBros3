@@ -38,12 +38,18 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 				right = left + GOOMBA_BBOX_WIDTH;
 				bottom = top + GOOMBA_RED_WING_BBOX_HEIGHT_DIE;
 			}
-			else
+			else if (level == 2)
 			{
 				left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
 				top = y - GOOMBA_RED_WING_BBOX_HEIGHT / 2;
 				right = left + GOOMBA_RED_WING_BBOX_WIDTH;
 				bottom = top + GOOMBA_RED_WING_BBOX_HEIGHT;
+			}
+			else {
+				left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
+				top = y - GOOMBA_RED_BBOX_HEIGHT / 2;
+				right = left + GOOMBA_RED_WING_BBOX_WIDTH;
+				bottom = top + GOOMBA_RED_BBOX_HEIGHT;
 			}
 			break;
 	}
@@ -101,8 +107,11 @@ int CGoomba::GetAni() {
 			if (state == GOOMBA_STATE_DIE) {
 				aniId = ID_ANI_GOOMBA_RED_DIE;
 			}
-			else
+			else if (level == 2) {
 				aniId = ID_ANI_GOOMBA_RED_WING_WALK;
+			}
+			else
+				aniId = ID_ANI_GOOMBA_RED_WALK;
 			break;
 	}
 	return aniId;
@@ -136,6 +145,9 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
+			break;
+		case GOOMBA_DECREASE_LEVEL:
+			level -= 1;
 			break;
 	}
 }

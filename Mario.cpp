@@ -23,16 +23,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (isHolding) {
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
-			
-			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
-
-			/*if (enemies->GetNx() != nx) {
-				enemies->SetNx(nx);	
-			}*/
-			float direction = (vx > 0) ? 1 : -1;
-			if (vx == 0) direction = (nx > 0) ? 1 : -1;
-			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
-	}
+			MarioHolding();
+		}
 		else {
 			enemies = NULL;
 		}
@@ -206,9 +198,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		else {
 			enemies = koopa;
 			isHolding = true;
-			float direction = (nx >= 0) ? 1 : -1;
-			dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
-			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y - MARIO_SMALL_BBOX_HEIGHT / 2);
+			MarioHolding();
 			enemies->SetSpeed(vx, vy);
 		}
 	}
@@ -232,6 +222,17 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		}
 	}
 	
+}
+
+void CMario::MarioHolding() {
+	float direction = (vx >= 0) ? 1 : -1;
+	if (vx == 0) direction = (nx >= 0) ? 1 : -1;
+	dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
+	switch (level) {
+		case MARIO_LEVEL_SMALL:
+			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y);
+			break;
+	}
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

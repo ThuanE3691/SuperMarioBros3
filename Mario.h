@@ -163,6 +163,8 @@ class CMario : public CGameObject
 	void OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e);
 	void OnCollisionWithPowerUp(LPCOLLISIONEVENT e);
 
+	void MarioHolding();
+
 	int GetAniIdBig();
 	int GetAniIdSmall();
 

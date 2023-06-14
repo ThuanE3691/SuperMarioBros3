@@ -5,10 +5,16 @@ CGoomba::CGoomba(float x, float y,int typeGoomba):CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
+	fly_start = -1;
+	jump_count = 0;
+	direction = 1;
 	SetState(GOOMBA_STATE_WALKING);
 	this->typeGoomba = typeGoomba;
 	if (typeGoomba == GOOMBA_TYPE_NORMAL) level = 1;
-	else level = 2;
+	else {
+		level = 2;
+		walk_start = GetTickCount64();
+	}
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -40,11 +46,20 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 			}
 			else if (level == 2)
 			{
-				left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
-				top = y - GOOMBA_RED_WING_OPEN_BBOX_HEIGHT / 2;
-				right = left + GOOMBA_RED_WING_BBOX_WIDTH;
-				bottom = top + GOOMBA_RED_WING_OPEN_BBOX_HEIGHT;
+				if (state == GOOMBA_STATE_WALKING) {
+					left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
+					top = y - GOOMBA_RED_WING_CLOSE_BBOX_HEIGHT / 2;
+					right = left + GOOMBA_RED_WING_BBOX_WIDTH;
+					bottom = top + GOOMBA_RED_WING_CLOSE_BBOX_HEIGHT;
+				}
+				else{
+					left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
+					top = y - GOOMBA_RED_WING_BBOX_HEIGHT / 2;
+					right = left + GOOMBA_RED_WING_BBOX_WIDTH;
+					bottom = top + GOOMBA_RED_WING_BBOX_HEIGHT;
+				}
 			}
+			// WALK WITH NO WING
 			else {
 				left = x - GOOMBA_RED_WING_BBOX_WIDTH / 2;
 				top = y - GOOMBA_RED_BBOX_HEIGHT / 2;
@@ -73,6 +88,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+		direction = -1;
 	}
 }
 
@@ -86,6 +102,32 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isDeleted = true;
 		return;
 	}
+
+	if (level == 2) {
+		if (state == GOOMBA_STATE_WALKING && GetTickCount64() - walk_start > GOOMBA_RED_WING_WALK_TIMEOUT) {
+			walk_start = -1;
+			SetState(GOOMBA_STATE_JUMPING);
+		}
+		else if (state == GOOMBA_STATE_JUMPING) {
+			if (jump_count >= 3) {
+				jump_count = 0;
+				SetState(GOOMBA_STATE_FLY);
+				fly_start = GetTickCount64();
+			}
+			else if (vy == ay * dt && GetTickCount64() - jump_start > GOOMBA_RED_WING_JUMP_TIMEOUT){
+				SetState(GOOMBA_STATE_JUMPING);
+			}
+		}
+		else if (state == GOOMBA_STATE_FLY) {
+			if (fly_start == -1) {
+				SetState(GOOMBA_STATE_WALKING);
+				walk_start = GetTickCount64();
+			}
+			else if (vy == ay * dt) fly_start = -1;
+			
+		}
+	}
+	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -108,7 +150,12 @@ int CGoomba::GetAni() {
 				aniId = ID_ANI_GOOMBA_RED_DIE;
 			}
 			else if (level == 2) {
-				aniId = ID_ANI_GOOMBA_RED_WING_WALK_PREPARE_TO_FLY;
+				if (state == GOOMBA_STATE_JUMPING)
+					aniId = ID_ANI_GOOMBA_RED_WING_JUMP;
+				else if (state == GOOMBA_STATE_FLY)
+					aniId = ID_ANI_GOOMBA_RED_WING_FLY;
+				else
+					aniId = ID_ANI_GOOMBA_RED_WING_WALK;
 			}
 			else
 				aniId = ID_ANI_GOOMBA_RED_WALK;
@@ -126,7 +173,6 @@ void CGoomba::Render()
 
 void CGoomba::SetState(int state)
 {
-	CGameObject::SetState(state);
 	switch (state)
 	{
 		case GOOMBA_STATE_DIE:
@@ -144,10 +190,26 @@ void CGoomba::SetState(int state)
 			ay = 0; 
 			break;
 		case GOOMBA_STATE_WALKING: 
-			vx = -GOOMBA_WALKING_SPEED;
+			vx = -GOOMBA_WALKING_SPEED * direction;
+			ay = GOOMBA_GRAVITY;
+			if (level == 2) {
+				walk_start = GetTickCount64();
+			}
 			break;
 		case GOOMBA_DECREASE_LEVEL:
 			level -= 1;
+			SetState(GOOMBA_STATE_WALKING);
+			return;
+		case GOOMBA_STATE_JUMPING:
+			y -= (GOOMBA_RED_WING_BBOX_HEIGHT - GOOMBA_RED_WING_CLOSE_BBOX_HEIGHT);
+			vy = -GOOMBA_JUMP_SPEED;
+			jump_start = GetTickCount64();
+			jump_count += 1;
+			break;
+		case GOOMBA_STATE_FLY:
+			vy = -GOOMBA_FLY_SPEED;
 			break;
 	}
+	CGameObject::SetState(state);
+
 }

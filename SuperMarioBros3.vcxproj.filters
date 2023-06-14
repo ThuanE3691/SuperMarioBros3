@@ -171,6 +171,9 @@
     <ClCompile Include="debug.cpp">
       <Filter>Source Files\GameManager\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Piranha.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationFrame.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Piranha.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

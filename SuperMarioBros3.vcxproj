@@ -136,6 +136,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="Pipe.h" />
+    <ClInclude Include="Piranha.h" />
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="Brick.h" />

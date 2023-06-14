@@ -56,7 +56,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_A: {
 		mario->SetHandingMode(false);
-		mario->SetState(MARIO_STATE_HANDING_RELEASE);
+		mario->SetState(MARIO_STATE_HOLDING_RELEASE);
 	}
 	}
 }

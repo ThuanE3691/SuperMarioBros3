@@ -18,9 +18,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	if (x < 10) x = 10;
 
-	vy += ay * dt;
-	vx += ax * dt;
-
 	if (isHolding) {
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
 			MarioHolding();
@@ -44,6 +41,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 	}
 
+	vy += ay * dt;
+	vx += ax * dt;
+
+	// Set max speed for mario
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
@@ -199,7 +200,6 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 			enemies = koopa;
 			isHolding = true;
 			MarioHolding();
-			enemies->SetSpeed(vx, vy);
 		}
 	}
 	else  // hit by koopa
@@ -228,9 +228,35 @@ void CMario::MarioHolding() {
 	float direction = (vx >= 0) ? 1 : -1;
 	if (vx == 0) direction = (nx >= 0) ? 1 : -1;
 	dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
+	enemies->SetSpeed(vx, vy);
 	switch (level) {
 		case MARIO_LEVEL_SMALL:
-			enemies->SetPosition(x + direction * MARIO_SMALL_BBOX_WIDTH / 2 + direction * KOOPA_BBOX_WIDTH / 2, y);
+			if (direction == 1) {
+				if (vx == 0) 
+					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 2) / 2, y);
+				else
+					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 8) / 2, y);
+			}
+			else {
+				if (vx == 0)
+					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 2) / 2, y);
+				else
+					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 6) / 2, y);
+			}
+			break;
+		case MARIO_LEVEL_BIG:
+			if (direction == 1) {
+				if (vx == 0)
+					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 3) / 2, y - 1);
+				else
+					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 5) / 2, y - 1);
+			}
+			else {
+				if (vx == 0)
+					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 6) / 2, y - 2);
+				else
+					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 3) / 2, y - 2);
+			}
 			break;
 	}
 }
@@ -296,27 +322,27 @@ int CMario::GetAniIdSmall()
 	else if (isHolding) {
 		if (vx == 0) {
 			if (nx > 0)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_RIGHT_IDLE;
 			else
-				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_IDLE;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_LEFT_IDLE;
 		}
 		else if (vx > 0)
 		{
 			if (ax < 0)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_IDLE;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_RIGHT_IDLE;
 			else if (ax == MARIO_ACCEL_RUN_X)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_RUN;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_RIGHT_RUN;
 			else if (ax == MARIO_ACCEL_WALK_X)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_RIGHT_WALK;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_RIGHT_WALK;
 		}
 		else // vx < 0
 		{
 			if (ax > 0)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_IDLE;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_LEFT_IDLE;
 			else if (ax == -MARIO_ACCEL_RUN_X)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_RUN;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_LEFT_RUN;
 			else if (ax == -MARIO_ACCEL_WALK_X)
-				aniId = ID_ANI_MARIO_SMALL_HANDING_LEFT_WALK;
+				aniId = ID_ANI_MARIO_SMALL_HOLDING_LEFT_WALK;
 		}
 	}
 	else if (!isOnPlatform)
@@ -396,10 +422,30 @@ int CMario::GetAniIdBig()
 			aniId = ID_ANI_MARIO_BIG_KICK_LEFT;
 	}
 	else if (isHolding) {
-		if (nx > 0)
-			aniId = ID_ANI_MARIO_BIG_HANDING_RIGHT;
-		else
-			aniId = ID_ANI_MARIO_BIG_HANDING_LEFT;
+		if (vx == 0) {
+			if (nx > 0)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_RIGHT_IDLE;
+			else
+				aniId = ID_ANI_MARIO_BIG_HOLDING_LEFT_IDLE;
+		}
+		else if (vx > 0)
+		{
+			if (ax < 0)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_RIGHT_IDLE;
+			else if (ax == MARIO_ACCEL_RUN_X)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_RIGHT_RUN;
+			else if (ax == MARIO_ACCEL_WALK_X)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_RIGHT_WALK;
+		}
+		else // vx < 0
+		{
+			if (ax > 0)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_LEFT_IDLE;
+			else if (ax == -MARIO_ACCEL_RUN_X)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_LEFT_RUN;
+			else if (ax == -MARIO_ACCEL_WALK_X)
+				aniId = ID_ANI_MARIO_BIG_HOLDING_LEFT_WALK;
+		}
 	}
 	else if (!isOnPlatform)
 	{
@@ -547,11 +593,11 @@ void CMario::SetState(int state)
 		// ax = 0.0f;
 		break;
 
-	case MARIO_STATE_HANDING:
+	case MARIO_STATE_HOLDING:
 		isHolding = true;
 		break;
 
-	case MARIO_STATE_HANDING_RELEASE:
+	case MARIO_STATE_HOLDING_RELEASE:
 		isHolding = false;
 		break;
 

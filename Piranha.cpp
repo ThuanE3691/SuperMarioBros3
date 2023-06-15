@@ -51,6 +51,7 @@ CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 	this->ay = 0;
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
 	bullet = NULL;
+	bullet_fire_start = -1;
 	rising_start = -1;
 	direction = 1;
 	SetState(PIRANHA_STATE_HIDDEN);
@@ -66,9 +67,7 @@ void CPiranha::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPiranha::OnNoCollision(DWORD dt)
 {
-	if (y >= maxY) {
-		y += vy * dt;
-	}
+	y += vy * dt;
 };
 
 void CPiranha::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -106,6 +105,11 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == PIRANHA_STATE_RISING && y < maxY) {
 		SetState(PIRANHA_STATE_SHOOT_FIRE);
+	}
+
+	if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
+		SetState(PIRANHA_STATE_HIDING);
+		bullet_fire_start = -1;
 	}
 
 	// JUST FOR FUN ONLY
@@ -155,7 +159,21 @@ int CPiranha::GetAni() {
 			}
 			break;
 		case PIRANHA_STATE_HIDING:
-			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+			if (x < mx) {
+				// MARIO IN BOTTOM RIGHT OF PIRANHA
+				if (y < my) {
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_RIGHT;
+				}
+				else
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_RIGHT;
+			} // MARIO IN LEFT OF PIRANHA
+			else {
+				if (y < my) {
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+				}
+				else
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+			}
 			break;
 		default:
 			break;

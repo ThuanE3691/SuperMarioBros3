@@ -32,6 +32,8 @@ void CPowerUp::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CPowerUp*>(e->obj)) return;
 
+	if (state == MUSHROOM_UP_STATE) return;
+
 	if (dynamic_cast<CMario*>(e->obj)) {
 		float m_x, m_y;// Mario x,y
 		e->obj->GetPosition(m_x, m_y);

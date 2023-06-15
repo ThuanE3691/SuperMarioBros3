@@ -9,7 +9,7 @@ CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
 	rising_start = -1;
 	direction = 1;
-	SetState(PIRANHA_STATE_RISING);
+	SetState(PIRANHA_STATE_HIDDEN);
 }
 
 void CPiranha::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -47,6 +47,19 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 
+	if (state == PIRANHA_STATE_HIDDEN) {
+		CGame* game = CGame::GetInstance();
+		float start_cx, cy, bbf_width;
+		game->GetCamPos(start_cx, cy);
+		bbf_width = game->GetBackBufferWidth();
+		float end_cx = start_cx + bbf_width;
+		float left, top, right, bottom;
+		GetBoundingBox(left, top, right, bottom);
+		if (left > start_cx && right < end_cx) {
+			SetState(PIRANHA_STATE_RISING);
+		}
+	}
+
 	if (state == PIRANHA_STATE_RISING && y < maxY) {
 		SetState(PIRANHA_STATE_SHOOT_FIRE);
 	}
@@ -57,17 +70,14 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 int CPiranha::GetAni() {
-	CGame* game = CGame::GetInstance();
 
-	float cx, cy;
-	game->GetCamPos(cx, cy);
 
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	float mx, my;
 	mario->GetPosition(mx, my);
 	
-	int aniId = -1;
+	int aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
 	switch (state)
 	{
 		case PIRANHA_STATE_RISING:
@@ -121,6 +131,9 @@ void CPiranha::SetState(int state)
 			break;
 		case PIRANHA_STATE_HIDING:
 			vy = PIRANHA_RISING_SPEED;
+			break;
+		case PIRANHA_STATE_HIDDEN:
+			vy = 0;
 			break;
 	}
 	CGameObject::SetState(state);

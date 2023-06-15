@@ -2,11 +2,37 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
+CFireBullet::CFireBullet(float x, float y, float target_x, float target_y) : CGameObject(x, y) {
+	this->target_x = target_x;
+	this->target_y = target_y;
+}
+
+void CFireBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - BULLET_BBOX_WIDTH / 2;
+	top = y - BULLET_BBOX_HEIGHT / 2;
+	right = left + BULLET_BBOX_WIDTH;
+	bottom = top + BULLET_BBOX_HEIGHT;
+}
+
+void CFireBullet::OnNoCollision(DWORD dt)
+{	
+	return;
+}
+
+void CFireBullet::Render() {
+	int aniId = ID_ANI_FIRE_BULLET_RIGHT;
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	RenderBoundingBox();
+}
+
+
 CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
+	bullet = NULL;
 	rising_start = -1;
 	direction = 1;
 	SetState(PIRANHA_STATE_HIDDEN);
@@ -120,6 +146,22 @@ void CPiranha::Render()
 	RenderBoundingBox();
 }
 
+void CPiranha::ShootMario() {
+	CGame* game = CGame::GetInstance();
+	LPPLAYSCENE current_scene = (LPPLAYSCENE)game->GetCurrentScene();
+	CMario* mario = (CMario*)current_scene->GetPlayer();
+
+	float mx, my;
+	mario->GetPosition(mx, my);
+
+	float left, top, right, bottom;
+	GetBoundingBox(left, top, right, bottom);
+
+	// bullet = new CFireBullet(x, y - BULLET_BBOX_HEIGHT, mx, my);
+	bullet = new CFireBullet(x, y - PIRANHA_BBOX_HEIGHT * 2, mx, my);
+	current_scene->AddObject(bullet);
+}
+
 void CPiranha::SetState(int state)
 {
 	switch (state) {
@@ -128,6 +170,7 @@ void CPiranha::SetState(int state)
 			break;
 		case PIRANHA_STATE_SHOOT_FIRE:
 			vy = 0;
+			ShootMario();
 			break;
 		case PIRANHA_STATE_HIDING:
 			vy = PIRANHA_RISING_SPEED;

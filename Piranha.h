@@ -16,6 +16,37 @@
 #define ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT	7003
 #define ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_RIGHT	7004
 
+
+#pragma region FIREBULLET
+
+#define BULLET_BBOX_WIDTH	5
+#define BULLET_BBOX_HEIGHT	5
+
+#define BULLET_SPEED	0.002f
+
+#define ID_ANI_FIRE_BULLET_LEFT	7010
+#define ID_ANI_FIRE_BULLET_RIGHT	7011
+
+#pragma endregion
+
+
+class CFireBullet : public CGameObject {
+protected:
+	float target_x;
+	float target_y;
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt) {}
+	virtual void Render();
+
+	virtual int IsCollidable() { return 1; }
+	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
+
+public:
+	CFireBullet(float x, float y, float target_x, float target_y);
+};
+
 class CPiranha : public CGameObject
 {
 protected:
@@ -28,6 +59,8 @@ protected:
 
 	ULONGLONG rising_start;
 
+	CFireBullet* bullet;
+
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
@@ -35,6 +68,8 @@ protected:
 	virtual int IsCollidable() { return 1; }
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
+
+	virtual void ShootMario();
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAni();
@@ -44,3 +79,4 @@ public:
 	virtual void SetState(int state);
 
 };
+

@@ -38,6 +38,8 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 
+	void AddObject(CGameObject* obj);
+
 	void Clear();
 	void PurgeDeletedObjects();
 

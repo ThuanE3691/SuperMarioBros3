@@ -56,7 +56,6 @@ CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 	bullet = NULL;
 	bullet_fire_start = -1;
 	hidden_start = -1;
-	shoot_start = -1;
 	direction = 1;
 	firstLoad = true;
 	SetState(PIRANHA_STATE_HIDDEN);
@@ -118,17 +117,11 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			hidden_start = GetTickCount64();
 		}
 
-		if (state == PIRANHA_STATE_SHOOT_FIRE) {
-			if (shoot_start != -1 && GetTickCount64() - shoot_start > PIRANHA_WAIT_TO_SHOOT_TIME_OUT) {
-				shoot_start = -1;
-				ShootMario();
-				bullet_fire_start = GetTickCount64();
-			}
-			else if (bullet_fire_start != -1 && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
-				SetState(PIRANHA_STATE_HIDING);
-				bullet_fire_start = -1;
-			}
+		if (state == PIRANHA_STATE_SHOOT_FIRE && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
+			SetState(PIRANHA_STATE_HIDING);
+			bullet_fire_start = -1;
 		}
+
 		// JUST FOR FUN ONLY
 		/*if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > 200) {
 			ShootMario();
@@ -246,11 +239,11 @@ void CPiranha::SetState(int state)
 			break;
 		case PIRANHA_STATE_SHOOT_FIRE:
 			vy = 0;
-			shoot_start = GetTickCount64();
+			ShootMario();
 			// IMPORTANT THE CODE BELOW IS JUST FOR FUN
 
 			// BEGIN
-			// bullet_fire_start = GetTickCount64();
+			bullet_fire_start = GetTickCount64();
 
 			// END
 			break;

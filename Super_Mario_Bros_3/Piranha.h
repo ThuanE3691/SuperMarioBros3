@@ -6,7 +6,6 @@
 #define PIRANHA_BBOX_WIDTH 16
 #define PIRANHA_BBOX_HEIGHT 33
 
-#define PIRANHA_WAIT_TO_SHOOT_TIME_OUT	500
 #define PIRANHA_SHOOT_TIME_OUT	500
 #define PIRANHA_HIDDEN_TIME_OUT	1000
 #define PIRANHA_DIE_TIME_OUT	200
@@ -72,8 +71,9 @@ protected:
 	int firstLoad;
 
 	ULONGLONG hidden_start;
-	ULONGLONG shoot_start;
+
 	ULONGLONG bullet_fire_start; // Create just for fun :>
+
 	ULONGLONG die_start;
 
 	CFireBullet* bullet;

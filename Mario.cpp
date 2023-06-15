@@ -158,7 +158,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 	else // hit by Goomba
 	{
-		if (untouchable == 0)
+		if (untouchable == 0 && goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK)
 		{
 			MarioIsAttacked();
 		}
@@ -258,7 +258,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 }
 
 void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e) {
-	MarioIsAttacked();
+	if (e->obj->GetState() != PIRANHA_STATE_DIE_BY_ATTACK)
+		MarioIsAttacked();
 }
 
 void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e) {

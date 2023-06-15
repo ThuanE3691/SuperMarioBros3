@@ -1,0 +1,30 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+# PIRANHA SHOOT
+
+# TOP LEFT
+102001	6	70	23	103	27
+
+# TOP RIGHT
+102002	624	70	641	103	27
+
+# BOTTOM LEFT
+102003	6	33	23	65	27
+
+# BOTTOM RIGHT
+102004	624	32	641	65	27
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#-------------------------------------VENUS TRAP FIRE-----------------------
+# TOP LEFT
+7001	102001	100
+
+# TOP RIGHT
+7002	102002	100
+
+# BOTTOM LEFT
+7003	102003	100
+
+# BOTTOM RIGHT
+7004	102004	100

@@ -268,12 +268,6 @@
     <Text Include="mario-sample.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Assets\koopa.txt">
-      <Filter>Resource Files\Assets\Enemies</Filter>
-    </Text>
-    <Text Include="Assets\goomba.txt">
-      <Filter>Resource Files\Assets\Enemies</Filter>
-    </Text>
     <Text Include="Assets\Platform\box.txt">
       <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
@@ -294,6 +288,15 @@
     </Text>
     <Text Include="Assets\Platform\cloud.txt">
       <Filter>Resource Files\Assets\Platform</Filter>
+    </Text>
+    <Text Include="piranha.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
+    </Text>
+    <Text Include="Assets\Enemies\goomba.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
+    </Text>
+    <Text Include="Assets\Enemies\koopa.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

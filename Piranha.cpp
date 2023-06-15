@@ -1,11 +1,13 @@
 #include "Piranha.h"
 
-CPiranha::CPiranha(float x, float y, int typeGoomba) :CGameObject(x, y)
+CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
+	this->maxY = y - PIRANHA_BBOX_HEIGHT;
 	rising_start = -1;
 	direction = 1;
+	SetState(PIRANHA_STATE_RISING);
 }
 
 void CPiranha::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -18,7 +20,9 @@ void CPiranha::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPiranha::OnNoCollision(DWORD dt)
 {
-	y += vy * dt;
+	if (y >= maxY) {
+		y += vy * dt;
+	}
 };
 
 void CPiranha::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -52,13 +56,13 @@ int CPiranha::GetAni() {
 	switch (state)
 	{
 	case PIRANHA_STATE_RISING:
-		aniId = PIRANHA_STATE_RISING;
+		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
 		break;
 	case PIRANHA_STATE_SHOOT_FIRE:
 		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
 		break;
 	case PIRANHA_STATE_HIDING:
-		aniId = PIRANHA_STATE_RISING;
+		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
 		break;
 	default:
 		break;

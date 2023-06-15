@@ -190,13 +190,14 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\goomba.txt" />
-    <Text Include="Assets\koopa.txt" />
+    <Text Include="Assets\Enemies\goomba.txt" />
+    <Text Include="Assets\Enemies\koopa.txt" />
     <Text Include="Assets\mario.txt" />
     <Text Include="Assets\Platform\box.txt" />
     <Text Include="Assets\Platform\cloud.txt" />
     <Text Include="Assets\Platform\ground.txt" />
     <Text Include="mario-sample.txt" />
+    <Text Include="piranha.txt" />
     <Text Include="scene0005.txt" />
     <Text Include="scene01.txt" />
     <Text Include="scene02.txt" />

@@ -3,12 +3,15 @@
 Assets/mario.txt
 Assets/brick.txt
 Assets/coin.txt
-Assets/goomba.txt
-Assets/koopa.txt
 Assets/qblock.txt
 Assets/powerup.txt
 Assets/background.txt
 Assets/pipe.txt
+#-----------------ENEMIES------------
+Assets/Enemies/goomba.txt
+Assets/Enemies/koopa.txt
+Assets/Enemies/piranha.txt
+#-----------------PLATFORM------------
 Assets/Platform/ground.txt
 Assets/Platform/cloud.txt
 Assets/Platform/box.txt
@@ -96,7 +99,7 @@ Assets/Platform/box.txt
 6	638	184	0	1	80300
 
 # Pipe
-9	370	163
+9	370	163	2
 
 #Goomba
 #TYPE	X	Y	GOOMBA_TYPE ; GOOMBA_TYPE[1: NORMAL,2:	RED_WING]
@@ -110,8 +113,8 @@ Assets/Platform/box.txt
 
 # MARIO
 #0	40	171
-#0	520	160
-0	710	160
+0	520	160
+#0	710	160
 
 # QUESTIONS BLOCK
 7	180	135	1

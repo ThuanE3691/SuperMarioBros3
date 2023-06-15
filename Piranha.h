@@ -6,7 +6,8 @@
 #define PIRANHA_BBOX_WIDTH 16
 #define PIRANHA_BBOX_HEIGHT 33
 
-#define PIRANHA_SHOOT_TIME_OUT	300
+#define PIRANHA_SHOOT_TIME_OUT	500
+#define PIRANHA_HIDDEN_TIME_OUT	1000
 
 #define PIRANHA_STATE_RISING 100
 #define PIRANHA_STATE_SHOOT_FIRE	200
@@ -61,10 +62,12 @@ protected:
 	float ay;
 
 	float maxY;
+	float minY;
 
 	int direction;
+	int firstLoad;
 
-	ULONGLONG rising_start;
+	ULONGLONG hidden_start;
 
 	ULONGLONG bullet_fire_start; // Create just for fun :>
 
@@ -80,7 +83,6 @@ protected:
 
 	virtual void ShootMario();
 
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual int GetAni();
 
 public:

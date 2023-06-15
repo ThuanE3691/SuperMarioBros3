@@ -50,10 +50,12 @@ CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = 0;
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
+	this->minY = y;
 	bullet = NULL;
 	bullet_fire_start = -1;
-	rising_start = -1;
+	hidden_start = -1;
 	direction = 1;
+	firstLoad = true;
 	SetState(PIRANHA_STATE_HIDDEN);
 }
 
@@ -70,53 +72,66 @@ void CPiranha::OnNoCollision(DWORD dt)
 	y += vy * dt;
 };
 
-void CPiranha::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CPiranha*>(e->obj)) return;
-
-	if (e->ny != 0)
-	{
-		vy = 0;
-	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-		direction = -1;
-	}
-}
-
 void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 
-	if (state == PIRANHA_STATE_HIDDEN) {
-		CGame* game = CGame::GetInstance();
-		float start_cx, cy, bbf_width;
-		game->GetCamPos(start_cx, cy);
-		bbf_width = game->GetBackBufferWidth();
-		float end_cx = start_cx + bbf_width;
-		float left, top, right, bottom;
-		GetBoundingBox(left, top, right, bottom);
-		if (left > start_cx && right < end_cx) {
-			SetState(PIRANHA_STATE_RISING);
+	bool inCamArea = false;
+	CGame* game = CGame::GetInstance();
+	float start_cx, cy, bbf_width;
+	game->GetCamPos(start_cx, cy);
+	bbf_width = game->GetBackBufferWidth();
+	float end_cx = start_cx + bbf_width;
+	float left, top, right, bottom;
+	GetBoundingBox(left, top, right, bottom);
+	if (left > start_cx && right < end_cx) {
+		inCamArea = true;
+	}
+
+	DebugOut(L"[INFO] - IN CAMERA AREA: %d - STATE: %d - VY : %f\n", inCamArea, state, vy);
+	
+	if (inCamArea) {
+
+		if (state == PIRANHA_STATE_HIDDEN) {
+			if (firstLoad || (hidden_start != -1 && GetTickCount64() - hidden_start > PIRANHA_HIDDEN_TIME_OUT)) {
+				hidden_start = -1;
+				firstLoad = false;
+				SetState(PIRANHA_STATE_RISING);
+			}
+			
+		}
+
+		if (state == PIRANHA_STATE_RISING && y < maxY) {
+			SetState(PIRANHA_STATE_SHOOT_FIRE);
+		}
+
+		if (state == PIRANHA_STATE_HIDING && y > minY) {
+			SetState(PIRANHA_STATE_HIDDEN);
+			hidden_start = GetTickCount64();
+		}
+
+		if (state == PIRANHA_STATE_SHOOT_FIRE && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
+			SetState(PIRANHA_STATE_HIDING);
+			bullet_fire_start = -1;
+		}
+
+		// JUST FOR FUN ONLY
+		/*if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > 200) {
+			ShootMario();
+			bullet_fire_start = GetTickCount64();
+		}*/
+	}
+	else {
+		firstLoad = true;
+		if (state != PIRANHA_STATE_HIDDEN) {
+			if (y < minY) {
+				SetState(PIRANHA_STATE_HIDING);
+			}
+			else {
+				SetState(PIRANHA_STATE_HIDDEN);
+			}
 		}
 	}
-
-	if (state == PIRANHA_STATE_RISING && y < maxY) {
-		SetState(PIRANHA_STATE_SHOOT_FIRE);
-	}
-
-	if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
-		SetState(PIRANHA_STATE_HIDING);
-		bullet_fire_start = -1;
-	}
-
-	// JUST FOR FUN ONLY
-	/*if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > 200) {
-		ShootMario();
-		bullet_fire_start = GetTickCount64();
-	}*/
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

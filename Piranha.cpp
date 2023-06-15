@@ -2,10 +2,7 @@
 #include "Mario.h"
 #include "PlayScene.h"
 
-CFireBullet::CFireBullet(float x, float y, float target_x, float target_y) : CGameObject(x, y) {
-	this->target_x = target_x;
-	this->target_y = target_y;
-}
+
 
 void CFireBullet::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -17,7 +14,28 @@ void CFireBullet::GetBoundingBox(float& left, float& top, float& right, float& b
 
 void CFireBullet::OnNoCollision(DWORD dt)
 {	
-	return;
+	x += vx * dt;
+	y += vy * dt;
+}
+
+void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CGame* game = CGame::GetInstance();
+	float start_cx, start_cy, bbf_width, bbf_height;
+	bbf_width = game->GetBackBufferWidth();
+	bbf_height = game->GetBackBufferHeight();
+	
+	game->GetCamPos(start_cx, start_cy);
+	float end_cx = start_cx + bbf_width;
+	float end_cy = start_cy + bbf_height;
+
+	if (!((x > start_cx && x < end_cx) && (y > start_cy && y < end_cy))) {
+		isDeleted = true;
+		return;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CFireBullet::Render() {
@@ -90,6 +108,12 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(PIRANHA_STATE_SHOOT_FIRE);
 	}
 
+	// JUST FOR FUN ONLY
+	/*if (state == PIRANHA_STATE_SHOOT_FIRE && bullet != NULL && GetTickCount64() - bullet_fire_start > 200) {
+		ShootMario();
+		bullet_fire_start = GetTickCount64();
+	}*/
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -156,10 +180,12 @@ void CPiranha::ShootMario() {
 
 	float left, top, right, bottom;
 	GetBoundingBox(left, top, right, bottom);
-
-	// bullet = new CFireBullet(x, y - BULLET_BBOX_HEIGHT, mx, my);
-	bullet = new CFireBullet(x, y - PIRANHA_BBOX_HEIGHT * 2, mx, my);
+	
+	// Position where bullet appear
+	bullet = new CFireBullet(x + 2, y - BULLET_BBOX_HEIGHT);
 	current_scene->AddObject(bullet);
+	
+	bullet->SetDirection(mx,my);
 }
 
 void CPiranha::SetState(int state)
@@ -171,6 +197,12 @@ void CPiranha::SetState(int state)
 		case PIRANHA_STATE_SHOOT_FIRE:
 			vy = 0;
 			ShootMario();
+			// IMPORTANT THE CODE BELOW IS JUST FOR FUN
+
+			// BEGIN
+			bullet_fire_start = GetTickCount64();
+
+			// END
 			break;
 		case PIRANHA_STATE_HIDING:
 			vy = PIRANHA_RISING_SPEED;

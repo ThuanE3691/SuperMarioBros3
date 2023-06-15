@@ -11,6 +11,7 @@
 #include "QuestionBlock.h"
 #include "PowerUp.h"
 #include "Koopa.h"
+#include "Piranha.h"
 
 #include "Collision.h"
 
@@ -79,6 +80,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
+void CMario::MarioIsAttacked() {
+	if (level > MARIO_LEVEL_SMALL)
+	{
+		StartUntouchable();
+		isTransform = true;
+		this->SetState(MARIO_STATE_TRANSFORM);
+	}
+	else
+	{
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+	}
+}
+
 void CMario::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
@@ -107,6 +122,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CPiranha*>(e->obj))
+		OnCollisionWithPiranha(e);
+	else if (dynamic_cast<CFireBullet*>(e->obj))
+		OnCollisionWithFireBullet(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -141,21 +160,45 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					StartUntouchable();
-					isTransform = true;
-					this->SetState(MARIO_STATE_TRANSFORM);
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
+			MarioIsAttacked();
 		}
+	}
+}
+
+void CMario::MarioHolding() {
+	float direction = (vx >= 0) ? 1 : -1;
+	if (vx == 0) direction = (nx >= 0) ? 1 : -1;
+	dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
+	enemies->SetSpeed(vx, vy);
+	switch (level) {
+	case MARIO_LEVEL_SMALL:
+		if (direction == 1) {
+			if (vx == 0)
+				enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 2) / 2, y);
+			else
+				enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 8) / 2, y);
+		}
+		else {
+			if (vx == 0)
+				enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 2) / 2, y);
+			else
+				enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 6) / 2, y);
+		}
+		break;
+	case MARIO_LEVEL_BIG:
+		if (direction == 1) {
+			if (vx == 0)
+				enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 3) / 2, y - 1);
+			else
+				enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 5) / 2, y - 1);
+		}
+		else {
+			if (vx == 0)
+				enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 6) / 2, y - 2);
+			else
+				enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 3) / 2, y - 2);
+		}
+		break;
 	}
 }
 
@@ -207,58 +250,20 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		if (untouchable == 0)
 		{
 			if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE && koopa->GetState() != KOOPA_STATE_SHELL_TRANSFORM_WALKING) {
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					StartUntouchable();
-					isTransform = true;
-					this->SetState(MARIO_STATE_TRANSFORM);
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				MarioIsAttacked();
 			}
 		}
 	}
 	
 }
 
-void CMario::MarioHolding() {
-	float direction = (vx >= 0) ? 1 : -1;
-	if (vx == 0) direction = (nx >= 0) ? 1 : -1;
-	dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
-	enemies->SetSpeed(vx, vy);
-	switch (level) {
-		case MARIO_LEVEL_SMALL:
-			if (direction == 1) {
-				if (vx == 0) 
-					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 2) / 2, y);
-				else
-					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 8) / 2, y);
-			}
-			else {
-				if (vx == 0)
-					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 2) / 2, y);
-				else
-					enemies->SetPosition(x + direction * (MARIO_SMALL_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 6) / 2, y);
-			}
-			break;
-		case MARIO_LEVEL_BIG:
-			if (direction == 1) {
-				if (vx == 0)
-					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 3) / 2, y - 1);
-				else
-					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 5) / 2, y - 1);
-			}
-			else {
-				if (vx == 0)
-					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH - 6) / 2, y - 2);
-				else
-					enemies->SetPosition(x + direction * (MARIO_BIG_BBOX_WIDTH + KOOPA_BBOX_WIDTH + 3) / 2, y - 2);
-			}
-			break;
-	}
+void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e) {
+	MarioIsAttacked();
+}
+
+void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e) {
+	e->obj->Delete();
+	MarioIsAttacked();
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

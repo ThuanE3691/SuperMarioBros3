@@ -22,8 +22,8 @@
 
 #pragma region FIREBULLET
 
-#define BULLET_BBOX_WIDTH	5
-#define BULLET_BBOX_HEIGHT	5
+#define BULLET_BBOX_WIDTH	8
+#define BULLET_BBOX_HEIGHT	8
 
 #define BULLET_SPEED_X	0.04f
 #define BULLET_SPEED_Y	0.04f

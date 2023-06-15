@@ -26,7 +26,7 @@ public:
 			piranha = NULL;
 			break;
 		case PIPE_VENUS:
-			piranha = new CPiranha(x, y - PIRANHA_BBOX_HEIGHT / 2);
+			piranha = new CPiranha(x - 1, y - PIRANHA_BBOX_HEIGHT / 2);
 			objects.push_back(piranha);
 			break;
 		default:

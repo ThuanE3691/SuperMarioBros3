@@ -44,7 +44,10 @@ void CPiranha::OnCollisionWith(LPCOLLISIONEVENT e)
 void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
-	vx += ax * dt;
+
+	if (state == PIRANHA_STATE_RISING && y < maxY) {
+		SetState(PIRANHA_STATE_SHOOT_FIRE);
+	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -52,20 +55,20 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 int CPiranha::GetAni() {
-	float aniId = -1;
+	int aniId = -1;
 	switch (state)
 	{
-	case PIRANHA_STATE_RISING:
-		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
-		break;
-	case PIRANHA_STATE_SHOOT_FIRE:
-		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
-		break;
-	case PIRANHA_STATE_HIDING:
-		aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
-		break;
-	default:
-		break;
+		case PIRANHA_STATE_RISING:
+			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+			break;
+		case PIRANHA_STATE_SHOOT_FIRE:
+			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+			break;
+		case PIRANHA_STATE_HIDING:
+			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+			break;
+		default:
+			break;
 	}
 	return aniId;
 }

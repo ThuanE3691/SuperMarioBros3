@@ -78,6 +78,11 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 
+	if (state == PIRANHA_STATE_DIE_BY_ATTACK && GetTickCount64() - die_start > PIRANHA_DIE_TIME_OUT) {
+		isDeleted = true;
+		return;
+	}
+
 	bool inCamArea = false;
 	CGame* game = CGame::GetInstance();
 	float start_cx, cy, bbf_width;
@@ -104,7 +109,8 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 		if (state == PIRANHA_STATE_RISING && y < maxY) {
-			SetState(PIRANHA_STATE_SHOOT_FIRE);
+			// SetState(PIRANHA_STATE_SHOOT_FIRE);
+			SetState(PIRANHA_STATE_DIE_BY_ATTACK);
 		}
 
 		if (state == PIRANHA_STATE_HIDING && y > minY) {
@@ -192,6 +198,9 @@ int CPiranha::GetAni() {
 					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
 			}
 			break;
+		case PIRANHA_STATE_DIE_BY_ATTACK:
+			aniId = ID_ANI_PIRANHA_DIE_BY_ATTACK;
+			break;
 		default:
 			break;
 	}
@@ -244,6 +253,10 @@ void CPiranha::SetState(int state)
 			break;
 		case PIRANHA_STATE_HIDDEN:
 			vy = 0;
+			break;
+		case PIRANHA_STATE_DIE_BY_ATTACK:
+			vy = 0;
+			die_start = GetTickCount64();
 			break;
 	}
 	CGameObject::SetState(state);

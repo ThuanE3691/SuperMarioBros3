@@ -103,6 +103,11 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		return;
 	}
 
+	if ((state == GOOMBA_STATE_DIE_BY_ATTACK) && (GetTickCount64() - die_start > GOOMBA_DIE_BY_ATTACK_TIMEOUT)) {
+		isDeleted = true;
+		return;
+	}
+
 	if (level == 2) {
 		if (state == GOOMBA_STATE_WALKING && GetTickCount64() - walk_start > GOOMBA_RED_WING_WALK_TIMEOUT) {
 			walk_start = -1;
@@ -138,12 +143,9 @@ int CGoomba::GetAni() {
 	float aniId = -1;
 	switch(typeGoomba){
 		case GOOMBA_TYPE_NORMAL:
-			if (state == GOOMBA_STATE_DIE)
-			{
-				aniId = ID_ANI_GOOMBA_DIE;
-			}
-			else
-				aniId = ID_ANI_GOOMBA_WALKING;
+			if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_GOOMBA_DIE;
+			else if (state == GOOMBA_STATE_DIE_BY_ATTACK) aniId = ID_ANI_GOOMBA_DIE_BY_ATTACK;
+			else aniId = ID_ANI_GOOMBA_WALKING;
 			break;
 		case GOOMBA_TYPE_RED_WING:
 			if (state == GOOMBA_STATE_DIE) {
@@ -208,6 +210,10 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_FLY:
 			vy = -GOOMBA_FLY_SPEED;
+			break;
+		case GOOMBA_STATE_DIE_BY_ATTACK:
+			vy = -GOOMBA_DIE_BY_ATTACK_SPEED;
+			die_start = GetTickCount64();
 			break;
 	}
 	CGameObject::SetState(state);

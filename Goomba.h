@@ -5,6 +5,7 @@
 #define GOOMBA_WALKING_SPEED 0.03f
 #define GOOMBA_JUMP_SPEED	0.08f
 #define GOOMBA_FLY_SPEED	0.3f
+#define GOOMBA_DIE_BY_ATTACK_SPEED	0.4f
 
 #define GOOMBA_TYPE_NORMAL	1
 #define GOOMBA_TYPE_RED_WING	2
@@ -21,6 +22,7 @@
 #define GOOMBA_RED_WING_BBOX_HEIGHT_DIE	5
 
 #define GOOMBA_DIE_TIMEOUT 200
+#define GOOMBA_DIE_BY_ATTACK_TIMEOUT	1000
 #define GOOMBA_RED_WING_WALK_TIMEOUT	1000
 #define GOOMBA_RED_WING_JUMP_TIMEOUT	100
 
@@ -31,9 +33,11 @@
 #define GOOMBA_STATE_WING_OPEN 500
 #define GOOMBA_STATE_JUMPING 600
 #define GOOMBA_STATE_FLY	700
+#define GOOMBA_STATE_DIE_BY_ATTACK	800
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
+#define ID_ANI_GOOMBA_DIE_BY_ATTACK	5002
 
 #define ID_ANI_GOOMBA_RED_WING_WALK	5011
 #define ID_ANI_GOOMBA_RED_WING_JUMP	5012
@@ -42,6 +46,7 @@
 
 #define ID_ANI_GOOMBA_RED_WALK	5021
 #define ID_ANI_GOOMBA_RED_DIE	5031
+#define ID_ANI_GOOMBA_RED_DIE_BY_ATTACK	5032
 
 class CGoomba : public CGameObject
 {
@@ -66,7 +71,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return state != GOOMBA_STATE_DIE_BY_ATTACK; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 

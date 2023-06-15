@@ -54,8 +54,6 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	
-
 	float left, right, top, bottom;
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
@@ -71,6 +69,9 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (state == KOOPA_STATE_SHELL_ROTATE) {
 		if (dynamic_cast<CPiranha*>(e->obj)) {
 			e->obj->SetState(PIRANHA_STATE_DIE_BY_ATTACK);
+		}
+		else if (dynamic_cast<CGoomba*>(e->obj)) {
+			e->obj->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
 		}
 	}
 

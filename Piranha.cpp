@@ -109,8 +109,7 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 		if (state == PIRANHA_STATE_RISING && y < maxY) {
-			// SetState(PIRANHA_STATE_SHOOT_FIRE);
-			SetState(PIRANHA_STATE_DIE_BY_ATTACK);
+			SetState(PIRANHA_STATE_SHOOT_FIRE);
 		}
 
 		if (state == PIRANHA_STATE_HIDING && y > minY) {

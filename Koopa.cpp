@@ -2,6 +2,9 @@
 #include "QuestionBlock.h"
 #include "Mario.h"
 #include "Platform.h"
+#include "Piranha.h"
+#include "Goomba.h"
+
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
@@ -45,16 +48,13 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 
 void CKoopa::OnNoCollision(DWORD dt)
 {
-	
-		x += vx * dt;
-		y += vy * dt;
-	
+	x += vx * dt;
+	y += vy * dt;	
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	
 
 	float left, right, top, bottom;
 
@@ -67,6 +67,15 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			qb->SetState(EMPTY_BLOCK_STATE);
 		}
 	}
+
+	if (state == KOOPA_STATE_SHELL_ROTATE) {
+		if (dynamic_cast<CPiranha*>(e->obj)) {
+			e->obj->SetState(PIRANHA_STATE_DIE_BY_ATTACK);
+		}
+	}
+
+	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	// If go end then reverse in walking state
 	if (state == KOOPA_STATE_WALKING) {

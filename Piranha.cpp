@@ -40,6 +40,8 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBullet::Render() {
 	int aniId = ID_ANI_FIRE_BULLET_RIGHT;
+	if (vx < 0)
+		aniId = ID_ANI_FIRE_BULLET_LEFT;
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }

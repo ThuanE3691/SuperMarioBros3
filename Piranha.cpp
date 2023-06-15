@@ -1,4 +1,6 @@
 #include "Piranha.h"
+#include "Mario.h"
+#include "PlayScene.h"
 
 CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 {
@@ -55,14 +57,42 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 int CPiranha::GetAni() {
+	CGame* game = CGame::GetInstance();
+
+	float cx, cy;
+	game->GetCamPos(cx, cy);
+
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	float mx, my;
+	mario->GetPosition(mx, my);
+	
 	int aniId = -1;
 	switch (state)
 	{
 		case PIRANHA_STATE_RISING:
-			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+			if (x > mx)
+				aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+			else
+				aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_RIGHT;
 			break;
 		case PIRANHA_STATE_SHOOT_FIRE:
-			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+			// MARIO IN RIGHT OF PIRANHA
+			if (x < mx) {
+				// MARIO IN BOTTOM RIGHT OF PIRANHA
+				if (y < my) {
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_RIGHT;
+				}
+				else
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_RIGHT;
+			} // MARIO IN LEFT OF PIRANHA
+			else {
+				if (y < my) {
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+				}
+				else
+					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+			}
 			break;
 		case PIRANHA_STATE_HIDING:
 			aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;

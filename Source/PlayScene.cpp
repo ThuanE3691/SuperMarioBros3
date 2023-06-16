@@ -239,7 +239,6 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 		}
 	}
-
 	f.close();
 
 	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);

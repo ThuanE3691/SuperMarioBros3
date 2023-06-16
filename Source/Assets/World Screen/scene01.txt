@@ -1,22 +1,24 @@
 # list of object assets to load in this scene
 [ASSETS]
-Assets/mario.txt
-Assets/brick.txt
-Assets/coin.txt
-Assets/qblock.txt
-Assets/powerup.txt
-Assets/background.txt
-Assets/pipe.txt
-#-----------------ENEMIES------------
-Assets/Enemies/goomba.txt
-Assets/Enemies/koopa.txt
-Assets/Enemies/piranha.txt
-#-----------------PLATFORM------------
-Assets/Platform/ground.txt
-Assets/Platform/cloud.txt
-Assets/Platform/box.txt
-90003	336	117	352	133	20
-#
+#---------------MARIO---------------
+Source/Assets/mario.txt
+#---------------BLOCK---------------
+Source/Assets/Block/brick.txt
+Source/Assets/Block/qblock.txt
+Source/Assets/Block/pipe.txt
+#---------------ITEMS---------------
+Source/Assets/Items/coin.txt
+Source/Assets/Items/powerup.txt
+#---------------ENEMIES-------------
+Source/Assets/Enemies/goomba.txt
+Source/Assets/Enemies/koopa.txt
+Source/Assets/Enemies/piranha.txt
+#---------------PLATFORM------------
+Source/Assets/background.txt
+Source/Assets/Platform/ground.txt
+Source/Assets/Platform/cloud.txt
+Source/Assets/Platform/box.txt
+#---------------END-----------------
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 4 = Coin, 5 = Platform, 6 = Background

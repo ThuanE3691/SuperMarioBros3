@@ -73,9 +73,6 @@
     <Filter Include="Header Files\Objects">
       <UniqueIdentifier>{3eb830ea-7038-42be-b9cb-786a404de27c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objects\Enemies">
-      <UniqueIdentifier>{a1be68a4-c915-4b08-9880-ef9e44f0641f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Objects\Block">
       <UniqueIdentifier>{53b530dc-3d34-4066-8da5-07387913918a}</UniqueIdentifier>
     </Filter>
@@ -91,250 +88,271 @@
     <Filter Include="Resource Files\Textures\Others">
       <UniqueIdentifier>{714efeb1-a8b2-4a05-9b83-4e0154c4ad43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects\Enemies">
+      <UniqueIdentifier>{d0526146-0d97-466c-99a7-fb7334316131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Assets\Items">
+      <UniqueIdentifier>{a69a90d0-70af-425c-b1e9-a78e03eda267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Assets\Block">
+      <UniqueIdentifier>{f724c5d6-1cdc-41e3-a4ce-de2f36a10324}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Source Files\GameManager\Animations</Filter>
+    <ClCompile Include="Source\Background.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Source Files\GameManager\Animations</Filter>
+    <ClCompile Include="Source\Brick.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files\GameManager\Sprites</Filter>
+    <ClCompile Include="Source\Pipe.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Source Files\GameManager\Sprites</Filter>
+    <ClCompile Include="Source\Platform.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>Source Files\GameManager\Scene</Filter>
+    <ClCompile Include="Source\QuestionBlock.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\GameManager\Scene</Filter>
+    <ClCompile Include="Source\Goomba.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
+    <ClCompile Include="Source\Koopa.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Piranha.cpp">
+      <Filter>Source Files\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mario.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Source Files\Objects\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopa.cpp">
-      <Filter>Source Files\Objects\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="QuestionBlock.cpp">
-      <Filter>Source Files\Objects\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Source Files\Objects\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files\Objects\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Source Files\Objects\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="Pipe.cpp">
-      <Filter>Source Files\Objects\Block</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerUp.cpp">
+    <ClCompile Include="Source\Coin.cpp">
       <Filter>Source Files\Objects\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
+    <ClCompile Include="Source\PowerUp.cpp">
       <Filter>Source Files\Objects\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source Files\GameManager\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animations.cpp">
+      <Filter>Source Files\GameManager\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
       <Filter>Source Files\GameManager\Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Source\debug.cpp">
       <Filter>Source Files\GameManager\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
+    <ClCompile Include="Source\Game.cpp">
       <Filter>Source Files\GameManager\Game</Filter>
     </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source Files\GameManager\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utils.cpp">
+      <Filter>Source Files\GameManager\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayScene.cpp">
       <Filter>Source Files\GameManager\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
+    <ClCompile Include="Source\SampleKeyEventHandler.cpp">
+      <Filter>Source Files\GameManager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source Files\GameManager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
       <Filter>Source Files\GameManager\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files\GameManager\Game</Filter>
+    <ClCompile Include="Source\Sprites.cpp">
+      <Filter>Source Files\GameManager\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Source Files\GameManager\Game</Filter>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Source Files\GameManager\Sprites</Filter>
     </ClCompile>
-    <ClCompile Include="Piranha.cpp">
-      <Filter>Source Files\Objects\Enemies</Filter>
+    <ClCompile Include="Source\Portal.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationFrame.h">
-      <Filter>Header Files\GameManager\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Header Files\GameManager\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Header Files\GameManager\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files\GameManager\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Header Files\GameManager\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\GameManager\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameManager\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="AssetIDs.h">
-      <Filter>Header Files\GameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Header Files\Objects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopa.h">
-      <Filter>Header Files\Objects\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
+    <ClInclude Include="Source\Background.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
+    <ClInclude Include="Source\Brick.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Pipe.h">
+    <ClInclude Include="Source\Pipe.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
-    <ClInclude Include="QuestionBlock.h">
+    <ClInclude Include="Source\Platform.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
+    <ClInclude Include="Source\Portal.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
+    <ClInclude Include="Source\QuestionBlock.h">
+      <Filter>Header Files\Objects\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coin.h">
       <Filter>Header Files\Objects\Items</Filter>
     </ClInclude>
-    <ClInclude Include="PowerUp.h">
+    <ClInclude Include="Source\PowerUp.h">
       <Filter>Header Files\Objects\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\GameManager\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
-      <Filter>Header Files\GameManager\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyEventHandler.h">
-      <Filter>Header Files\GameManager\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>Header Files\GameManager\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Header Files\GameManager\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files\GameManager\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files\GameManager\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Header Files\GameManager\Sprites</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
+    <ClInclude Include="Source\Mario.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Portal.h">
-      <Filter>Header Files\Objects\Block</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files\GameManager\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Piranha.h">
+    <ClInclude Include="Source\Goomba.h">
       <Filter>Header Files\Objects\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Koopa.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Piranha.h">
+      <Filter>Header Files\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetIDs.h">
+      <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Header Files\GameManager\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationFrame.h">
+      <Filter>Header Files\GameManager\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animations.h">
+      <Filter>Header Files\GameManager\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\debug.h">
+      <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game.h">
+      <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils.h">
+      <Filter>Header Files\GameManager\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\KeyEventHandler.h">
+      <Filter>Header Files\GameManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayScene.h">
+      <Filter>Header Files\GameManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SampleKeyEventHandler.h">
+      <Filter>Header Files\GameManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\GameManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Header Files\GameManager\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprites.h">
+      <Filter>Header Files\GameManager\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Header Files\GameManager\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Header Files\GameManager\Sprites</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="mario-sample.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="Assets\Platform\box.txt">
-      <Filter>Resource Files\Assets\Platform</Filter>
-    </Text>
-    <Text Include="scene01.txt">
+    <Text Include="Assets\World Screen\scene01.txt">
       <Filter>Resource Files\Scene</Filter>
     </Text>
-    <Text Include="scene02.txt">
+    <Text Include="Assets\World Screen\scene02.txt">
       <Filter>Resource Files\Scene</Filter>
     </Text>
-    <Text Include="scene0005.txt">
+    <Text Include="Assets\World Screen\scene0005.txt">
       <Filter>Resource Files\Scene</Filter>
     </Text>
-    <Text Include="Assets\mario.txt">
+    <Text Include="Source\Assets\Enemies\goomba.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
+    </Text>
+    <Text Include="Source\Assets\Enemies\koopa.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
+    </Text>
+    <Text Include="Source\Assets\Enemies\piranha.txt">
+      <Filter>Resource Files\Assets\Enemies</Filter>
+    </Text>
+    <Text Include="Source\Assets\mario.txt">
       <Filter>Resource Files\Assets</Filter>
     </Text>
-    <Text Include="Assets\Platform\ground.txt">
+    <Text Include="Source\Assets\Platform\box.txt">
       <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
-    <Text Include="Assets\Platform\cloud.txt">
+    <Text Include="Source\Assets\Platform\cloud.txt">
       <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
-    <Text Include="Assets\Enemies\goomba.txt">
-      <Filter>Resource Files\Assets\Enemies</Filter>
+    <Text Include="Source\Assets\Platform\ground.txt">
+      <Filter>Resource Files\Assets\Platform</Filter>
     </Text>
-    <Text Include="Assets\Enemies\koopa.txt">
-      <Filter>Resource Files\Assets\Enemies</Filter>
+    <Text Include="Source\mario-sample.txt">
+      <Filter>Resource Files\Textures</Filter>
     </Text>
-    <Text Include="Assets\Enemies\piranha.txt">
-      <Filter>Resource Files\Assets\Enemies</Filter>
+    <Text Include="Source\Assets\Platform\background.txt">
+      <Filter>Resource Files\Assets\Platform</Filter>
+    </Text>
+    <Text Include="Source\Assets\Items\coin.txt">
+      <Filter>Resource Files\Assets\Items</Filter>
+    </Text>
+    <Text Include="Source\Assets\Items\powerup.txt">
+      <Filter>Resource Files\Assets\Items</Filter>
+    </Text>
+    <Text Include="Source\Assets\Block\brick.txt">
+      <Filter>Resource Files\Assets\Block</Filter>
+    </Text>
+    <Text Include="Source\Assets\Block\pipe.txt">
+      <Filter>Resource Files\Assets\Block</Filter>
+    </Text>
+    <Text Include="Source\Assets\Block\qblock.txt">
+      <Filter>Resource Files\Assets\Block</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="textures\misc_1.png">
-      <Filter>Resource Files\Textures\misc</Filter>
-    </Image>
-    <Image Include="textures\misc_1_transparent.png">
-      <Filter>Resource Files\Textures\misc</Filter>
-    </Image>
-    <Image Include="textures\misc_2.png">
-      <Filter>Resource Files\Textures\misc</Filter>
-    </Image>
-    <Image Include="textures\misc_3.png">
-      <Filter>Resource Files\Textures\misc</Filter>
-    </Image>
-    <Image Include="textures\misc.png">
-      <Filter>Resource Files\Textures\misc</Filter>
-    </Image>
-    <Image Include="textures\enemies_2.png">
+    <Image Include="Source\textures\enemies\enemies.png">
       <Filter>Resource Files\Textures\enemies</Filter>
     </Image>
-    <Image Include="textures\enemies.png">
+    <Image Include="Source\textures\enemies\enemies_2.png">
       <Filter>Resource Files\Textures\enemies</Filter>
     </Image>
-    <Image Include="textures\enemies_3.png">
+    <Image Include="Source\textures\enemies\enemies_3.png">
       <Filter>Resource Files\Textures\enemies</Filter>
     </Image>
-    <Image Include="textures\ground.png">
+    <Image Include="Source\textures\enemies\enemiess.png">
+      <Filter>Resource Files\Textures\enemies</Filter>
+    </Image>
+    <Image Include="Source\textures\misc\misc.png">
       <Filter>Resource Files\Textures\misc</Filter>
     </Image>
-    <Image Include="textures\bbox.png">
+    <Image Include="Source\textures\misc\misc_1.png">
+      <Filter>Resource Files\Textures\misc</Filter>
+    </Image>
+    <Image Include="Source\textures\misc\misc_1_transparent.png">
+      <Filter>Resource Files\Textures\misc</Filter>
+    </Image>
+    <Image Include="Source\textures\misc\misc_2.png">
+      <Filter>Resource Files\Textures\misc</Filter>
+    </Image>
+    <Image Include="Source\textures\misc\misc_3.png">
+      <Filter>Resource Files\Textures\misc</Filter>
+    </Image>
+    <Image Include="Source\textures\bbox.png">
       <Filter>Resource Files\Textures\Others</Filter>
     </Image>
-    <Image Include="textures\mario.png">
+    <Image Include="Source\textures\mario.png">
       <Filter>Resource Files\Textures\Others</Filter>
-    </Image>
-    <Image Include="textures\enemiess.png">
-      <Filter>Resource Files\Textures\enemies</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -1,0 +1,25 @@
+[SETTINGS]
+start	1
+width	320
+height	240
+
+#id	type	file
+# type: 0: intro, 1: play scene 
+[SCENES]
+0	Source\Assets\World Screen\intro.txt
+1	Source\Assets\World Screen\scene01.txt
+2	Source\Assets\World Screen\scene02.txt
+5	Source\Assets\World Screen\scene0005.txt
+
+# id	file 
+[TEXTURES]
+#-100	Source\textures\bbox.png
+0	Source\textures\mario.png
+10	Source\textures\enemies\enemies.png
+20	Source\textures\misc\misc.png
+21	Source\textures\misc\misc_1.png
+22	Source\textures\misc\misc_2.png
+23	Source\textures\misc\misc_3.png
+25	Source\textures\enemies\enemies_3.png
+26	Source\textures\enemies\enemies_2.png
+27	Source\textures\enemies\enemiess.png

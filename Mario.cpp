@@ -21,7 +21,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (isHolding) {
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
-			MarioHolding();
+			if (enemies->GetState() != KOOPA_STATE_WALKING)
+				MarioHolding();
+			else {
+				dynamic_cast<CKoopa*>(enemies)->SetOnHand(false);
+				isHolding = false;
+				MarioIsAttacked();
+				enemies = NULL;
+			}
 		}
 		else {
 			enemies = NULL;

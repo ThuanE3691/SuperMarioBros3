@@ -71,7 +71,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			e->obj->SetState(PIRANHA_STATE_DIE_BY_ATTACK);
 		}
 		else if (dynamic_cast<CGoomba*>(e->obj)) {
-			e->obj->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			if (goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK) {
+				goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+			}
 		}
 	}
 

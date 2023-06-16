@@ -121,7 +121,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	if (level == 2) {
-		DebugOut(L"[INFO] GOOMBA - STATE: %d - VX: %f - VY: %f\n", state, vx, vy);
 		if (state == GOOMBA_STATE_WALKING && GetTickCount64() - walk_start > GOOMBA_RED_WING_WALK_TIMEOUT) {
 			walk_start = -1;
 			SetState(GOOMBA_STATE_JUMPING);

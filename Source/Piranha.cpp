@@ -52,7 +52,7 @@ CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = 0;
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
-	this->minY = y;
+	this->minY = y + PIRANHA_BBOX_HEIGHT / 2;
 	bullet = NULL;
 	bullet_fire_start = -1;
 	hidden_start = -1;
@@ -96,8 +96,6 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		inCamArea = true;
 	}
 
-	DebugOut(L"[INFO] - IN CAMERA AREA: %d - STATE: %d - VY : %f\n", inCamArea, state, vy);
-	
 	if (inCamArea) {
 
 		if (state == PIRANHA_STATE_HIDDEN) {
@@ -109,11 +107,11 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			
 		}
 
-		if (state == PIRANHA_STATE_RISING && y < maxY) {
+		if (state == PIRANHA_STATE_RISING && y <= maxY) {
 			SetState(PIRANHA_STATE_SHOOT_FIRE);
 		}
 
-		if (state == PIRANHA_STATE_HIDING && y > minY) {
+		if (state == PIRANHA_STATE_HIDING && y >= minY) {
 			SetState(PIRANHA_STATE_HIDDEN);
 			hidden_start = GetTickCount64();
 		}
@@ -138,7 +136,7 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else {
 		firstLoad = true;
 		if (state != PIRANHA_STATE_HIDDEN) {
-			if (y < minY) {
+			if (y <= minY) {
 				SetState(PIRANHA_STATE_HIDING);
 			}
 			else {

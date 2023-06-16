@@ -8,7 +8,7 @@
 
 #define PIRANHA_WAIT_TO_SHOOT_TIME_OUT	500
 #define PIRANHA_SHOOT_TIME_OUT	500
-#define PIRANHA_HIDDEN_TIME_OUT	1000
+#define PIRANHA_HIDDEN_TIME_OUT	2000
 #define PIRANHA_DIE_TIME_OUT	200
 
 #define PIRANHA_STATE_RISING 100
@@ -82,7 +82,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; }
+	virtual int IsCollidable() { return 0; }
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 

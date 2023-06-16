@@ -141,9 +141,9 @@ Source/Assets/Platform/box.txt
 3	560	141
 
 # MARIO
-#0	40	171
+0	40	171
 #0	520	160
-0	730	160
+#0	730	160
 
 # QUESTIONS BLOCK
 7	180	135	1

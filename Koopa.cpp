@@ -12,6 +12,7 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 	this->ay = KOOPA_GRAVITY;
 	isOnHand = false;
 	shell_wait_rotate_start = -1;
+	die_by_attacking_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -66,14 +67,20 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 	}
 
-	if (state == KOOPA_STATE_SHELL_ROTATE) {
+	if (state == KOOPA_STATE_SHELL_ROTATE || (isOnHand)) {
 		if (dynamic_cast<CPiranha*>(e->obj)) {
 			e->obj->SetState(PIRANHA_STATE_DIE_BY_ATTACK);
+			if (isOnHand) {
+				SetState(KOOPA_STATE_DIE_BY_ATTACKING);
+			}
 		}
 		else if (dynamic_cast<CGoomba*>(e->obj)) {
 			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 			if (goomba->GetState() != GOOMBA_STATE_DIE_BY_ATTACK) {
 				goomba->SetState(GOOMBA_STATE_DIE_BY_ATTACK);
+			}
+			if (isOnHand) {
+				SetState(KOOPA_STATE_DIE_BY_ATTACKING);
 			}
 		}
 	}
@@ -102,6 +109,11 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (state == KOOPA_STATE_DIE_BY_ATTACKING && GetTickCount64() - die_by_attacking_start > KOOPA_SHELL_DIE_TIME_OUT) {
+		isDeleted = true;
+		return;
+	}
 
 	if (state == KOOPA_STATE_SHELL_IDLE && shell_wait_rotate_start != -1 && GetTickCount64() - shell_wait_rotate_start > KOOPA_SHELL_WAIT_ROTATE_TIME_OUT) {
 		SetState(KOOPA_STATE_SHELL_TRANSFORM_WALKING);
@@ -136,6 +148,9 @@ int CKoopa::GetAni() {
 			break;
 		case KOOPA_STATE_SHELL_TRANSFORM_WALKING:
 			aniId = ID_ANI_KOOPA_SHELL_TRANSFORM_WALKING;
+			break;
+		case KOOPA_STATE_DIE_BY_ATTACKING:
+			aniId = ID_ANI_KOOPA_DIE_REVERSE_SHELL;
 			break;
 	}
 	return aniId;
@@ -177,6 +192,10 @@ void CKoopa::SetState(int state)
 			shell_wait_rotate_start = -1;
 			shell_transform_start = GetTickCount64();
 			vx = -KOOPA_TRANSFORM_SPEED;
+			break;
+		case KOOPA_STATE_DIE_BY_ATTACKING:
+			vy = -KOOPA_DIE_REVERSE_SPEED;
+			die_by_attacking_start = GetTickCount64();
 			break;
 	}
 	CGameObject::SetState(state);

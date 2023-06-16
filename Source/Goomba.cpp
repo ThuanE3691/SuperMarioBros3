@@ -197,7 +197,7 @@ void CGoomba::SetState(int state)
 				y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
 				break;
 			case GOOMBA_TYPE_RED_WING:
-				y += (GOOMBA_RED_WING_CLOSE_BBOX_HEIGHT - GOOMBA_RED_WING_BBOX_HEIGHT_DIE) / 2;
+				y += (GOOMBA_RED_BBOX_HEIGHT - GOOMBA_RED_WING_BBOX_HEIGHT_DIE) / 2;
 				break;
 			}
 			vx = 0;

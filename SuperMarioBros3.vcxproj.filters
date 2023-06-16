@@ -268,15 +268,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\World Screen\scene01.txt">
-      <Filter>Resource Files\Scene</Filter>
-    </Text>
-    <Text Include="Assets\World Screen\scene02.txt">
-      <Filter>Resource Files\Scene</Filter>
-    </Text>
-    <Text Include="Assets\World Screen\scene0005.txt">
-      <Filter>Resource Files\Scene</Filter>
-    </Text>
     <Text Include="Source\Assets\Enemies\goomba.txt">
       <Filter>Resource Files\Assets\Enemies</Filter>
     </Text>
@@ -301,9 +292,6 @@
     <Text Include="Source\mario-sample.txt">
       <Filter>Resource Files\Textures</Filter>
     </Text>
-    <Text Include="Source\Assets\Platform\background.txt">
-      <Filter>Resource Files\Assets\Platform</Filter>
-    </Text>
     <Text Include="Source\Assets\Items\coin.txt">
       <Filter>Resource Files\Assets\Items</Filter>
     </Text>
@@ -318,6 +306,18 @@
     </Text>
     <Text Include="Source\Assets\Block\qblock.txt">
       <Filter>Resource Files\Assets\Block</Filter>
+    </Text>
+    <Text Include="Source\Assets\World Screen\scene01.txt">
+      <Filter>Resource Files\Scene</Filter>
+    </Text>
+    <Text Include="Source\Assets\World Screen\scene02.txt">
+      <Filter>Resource Files\Scene</Filter>
+    </Text>
+    <Text Include="Source\Assets\World Screen\scene0005.txt">
+      <Filter>Resource Files\Scene</Filter>
+    </Text>
+    <Text Include="Source\Assets\background.txt">
+      <Filter>Resource Files\Assets</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +353,9 @@
     </Image>
     <Image Include="Source\textures\mario.png">
       <Filter>Resource Files\Textures\Others</Filter>
+    </Image>
+    <Image Include="Source\textures\map_1_1.png">
+      <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>
 </Project>

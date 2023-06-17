@@ -24,6 +24,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 {
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
+	isEnableRenderBoundingBox = false;
 }
 
 

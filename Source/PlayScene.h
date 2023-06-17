@@ -28,6 +28,8 @@ protected:
 	void _IsInCamera(LPGAMEOBJECT obj);
 
 	void LoadAssets(LPCWSTR assetFile);
+
+	bool isEnableRenderBoundingBox;
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
@@ -46,6 +48,9 @@ public:
 	void PurgeDeletedObjects();
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
+
+	void SetIsEnableRenderBoundingBox(bool enableRender) { this->isEnableRenderBoundingBox = enableRender; }
+	int GetIsEnableRenderBoundingBox() { return isEnableRenderBoundingBox; }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

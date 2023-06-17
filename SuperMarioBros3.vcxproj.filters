@@ -177,6 +177,9 @@
     <ClCompile Include="Source\Portal.cpp">
       <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
+    <ClCompile Include="Source\InvisibleWall.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Background.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="Source\Textures.h">
       <Filter>Header Files\GameManager\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InvisibleWall.h">
+      <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

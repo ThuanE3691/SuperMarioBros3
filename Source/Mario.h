@@ -216,4 +216,6 @@ public:
 	void SetHandingMode(bool handingMode) { this->handingMode = handingMode; }
 	bool GetHolding() { return isHolding; }
 
+	bool GetIsTransform() { return isTransform; }
+
 };

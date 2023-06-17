@@ -311,7 +311,14 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		_IsInCamera(objects[i]);
-		if (objects[i]->GetFirstLoad()) objects[i]->Update(dt, &coObjects);
+
+		if (player == NULL ||\
+			dynamic_cast<CMario*>(player)->GetIsTransform() == false ||\
+			dynamic_cast<CMario*>(objects[i])) \
+		{
+			if (objects[i]->GetFirstLoad())
+				objects[i]->Update(dt, &coObjects);
+		}
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

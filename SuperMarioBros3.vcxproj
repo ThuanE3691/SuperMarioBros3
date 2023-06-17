@@ -221,6 +221,7 @@
     <Image Include="Source\textures\misc\misc_1_transparent.png" />
     <Image Include="Source\textures\misc\misc_2.png" />
     <Image Include="Source\textures\misc\misc_3.png" />
+    <Image Include="Source\textures\misc\misc_4.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

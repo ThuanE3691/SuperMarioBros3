@@ -152,6 +152,13 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance)
 
 	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
 
+	D3DX10CreateFont(pD3DDevice, SCREEN_TEXT_FONT, 0, FW_NORMAL, 1, FALSE, DEFAULT_CHARSET,
+		OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE,
+		L"Arial", &pFont);
+
+	// Convert the player's position to a string
+
+
 	return;
 }
 
@@ -316,6 +323,22 @@ LPTEXTURE CGame::LoadTexture(LPCWSTR texturePath)
 	DebugOut(L"[INFO] Texture loaded Ok from file: %s \n", texturePath);
 
 	return new CTexture(tex, gSpriteTextureRV);
+}
+
+void CGame::DrawTextOnScreen(wstring text) {
+	D3DXVECTOR2 draw_position(5.0f, 5.0f);
+	RECT textRect = { 0, 0, 0, 0 };
+	pFont->DrawText(NULL, text.c_str(), -1, &textRect, DT_CALCRECT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	// Draw the player's position
+	RECT rect_justify = {
+		static_cast<LONG>(draw_position.x),
+		static_cast<LONG>(draw_position.y),
+		static_cast<LONG>(draw_position.x + textRect.right - textRect.left + 1),
+		static_cast<LONG>(draw_position.y + textRect.bottom - textRect.top + 1)
+	};
+
+	pFont->DrawText(NULL, text.c_str(), -1, &rect_justify, DT_LEFT | DT_TOP, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 int CGame::IsKeyDown(int KeyCode)

@@ -163,9 +163,9 @@ int CPiranha::GetAni() {
 	{
 		case PIRANHA_STATE_RISING:
 			if (x > mx)
-				aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+				aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
 			else
-				aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_RIGHT;
+				aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
 			break;
 		case PIRANHA_STATE_SHOOT_FIRE:
 			// MARIO IN RIGHT OF PIRANHA
@@ -189,17 +189,17 @@ int CPiranha::GetAni() {
 			if (x < mx) {
 				// MARIO IN BOTTOM RIGHT OF PIRANHA
 				if (y < my) {
-					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_RIGHT;
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_RIGHT;
 				}
 				else
-					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_RIGHT;
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
 			} // MARIO IN LEFT OF PIRANHA
 			else {
 				if (y < my) {
-					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_BOTTOM_LEFT;
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_LEFT;
 				}
 				else
-					aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
 			}
 			break;
 		case PIRANHA_STATE_DIE_BY_ATTACK:

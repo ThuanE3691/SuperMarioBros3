@@ -9,6 +9,7 @@
 #include "Textures.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "PlayScene.h"
 
 #include "Mario.h"
 #include "Brick.h"
@@ -16,6 +17,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Background.h"
+
 
 #include "SampleKeyEventHandler.h"
 
@@ -63,6 +65,7 @@ void Render()
 	IDXGISwapChain* pSwapChain = g->GetSwapChain();
 	ID3D10RenderTargetView* pRenderTargetView = g->GetRenderTargetView();
 	ID3DX10Sprite* spriteHandler = g->GetSpriteHandler();
+	ID3DX10Font* pFont = g->GetDirectFont();
 
 	pD3DDevice->ClearRenderTargetView(pRenderTargetView, BACKGROUND_COLOR);
 
@@ -72,6 +75,19 @@ void Render()
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 	CGame::GetInstance()->GetCurrentScene()->Render();
+
+	//
+
+	//CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	//float mx, my;
+	//mario->GetPosition(mx, my);
+
+	//std::wstring playerPositionString = L"Mario [X,Y]: " + std::to_wstring(mx) + L", " + std::to_wstring(my);
+
+	//g->DrawTextOnScreen(playerPositionString);
+
+	//
 
 	spriteHandler->End();
 	pSwapChain->Present(0, 0);

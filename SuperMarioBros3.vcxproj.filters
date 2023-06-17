@@ -357,5 +357,8 @@
     <Image Include="Source\textures\map_1_1.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+    <Image Include="Source\textures\enemies\enemies-4.png">
+      <Filter>Resource Files\Textures\enemies</Filter>
+    </Image>
   </ItemGroup>
 </Project>

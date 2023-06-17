@@ -17,6 +17,7 @@ using namespace std;
 #define MAX_FRAME_RATE 100
 #define KEYBOARD_BUFFER_SIZE 1024
 #define KEYBOARD_STATE_SIZE 256
+#define SCREEN_TEXT_FONT	14
 
 
 
@@ -52,6 +53,8 @@ class CGame
 	HINSTANCE hInstance;
 
 	ID3D10SamplerState* pPointSamplerState;
+
+	ID3DX10Font* pFont = nullptr;
 
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
@@ -97,12 +100,16 @@ public:
 
 	ID3D10BlendState* GetAlphaBlending() { return pBlendStateAlpha; };
 
+	ID3DX10Font* GetDirectFont() { return pFont; }
+
 	int GetBackBufferWidth() { return backBufferWidth; }
 	int GetBackBufferHeight() { return backBufferHeight; }
 
 	static CGame* GetInstance();
 
 	void SetPointSamplerState();
+
+	void DrawTextOnScreen(wstring text);
 
 	void SetCamPos(float x, float y) { cam_x = x; cam_y = y; }
 	void GetCamPos(float& x, float& y) { x = cam_x; y = cam_y; }

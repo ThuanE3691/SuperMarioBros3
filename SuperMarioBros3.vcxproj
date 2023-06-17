@@ -207,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\textures\bbox.png" />
+    <Image Include="Source\textures\enemies\enemies-4.png" />
     <Image Include="Source\textures\enemies\enemies.png" />
     <Image Include="Source\textures\enemies\enemiess.png" />
     <Image Include="Source\textures\enemies\enemies_2.png" />

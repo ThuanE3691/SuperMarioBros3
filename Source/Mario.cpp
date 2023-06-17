@@ -270,13 +270,17 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 }
 
 void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e) {
-	if (e->obj->GetState() != PIRANHA_STATE_DIE_BY_ATTACK)
-		MarioIsAttacked();
+	if (untouchable == 0) {
+		if (e->obj->GetState() != PIRANHA_STATE_DIE_BY_ATTACK)
+			MarioIsAttacked();
+	}
 }
 
 void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e) {
-	e->obj->Delete();
-	MarioIsAttacked();
+	if (untouchable == 0) {
+		e->obj->Delete();
+		MarioIsAttacked();
+	}
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

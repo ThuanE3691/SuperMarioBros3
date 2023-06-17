@@ -58,8 +58,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
-		if (isTransform) {
+		untouchable_start = 0;
+		untouchable = 0;
+	}
+	
+	if (isTransform) {
+		if (GetTickCount64() - transform_start > MARIO_TRANSFORM_TIME_OUT) {
 			isTransform = false;
+			transform_start = -1;
 			if (level == MARIO_LEVEL_SMALL) {
 				level = MARIO_LEVEL_BIG;
 			}
@@ -67,11 +73,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				level = MARIO_LEVEL_SMALL;
 			}
 		}
-		untouchable_start = 0;
-		untouchable = 0;
-	}
-	else if (isTransform) {
-		this->SetState(MARIO_STATE_TRANSFORM);
+		else this->SetState(MARIO_STATE_TRANSFORM);
 	}
 
 	if (kick_start != -1 && GetTickCount64() - kick_start > MARIO_KICK_TIME_OUT)
@@ -92,6 +94,7 @@ void CMario::MarioIsAttacked() {
 	{
 		StartUntouchable();
 		isTransform = true;
+		transform_start = GetTickCount64();
 		this->SetState(MARIO_STATE_TRANSFORM);
 	}
 	else
@@ -309,8 +312,8 @@ void CMario::OnCollisionWithPowerUp(LPCOLLISIONEVENT e) {
 	CPowerUp* pu = (CPowerUp*)e->obj;
 	if (pu->GetState() == MUSHROOM_WALKING_STATE) {
 		if (level == MARIO_LEVEL_SMALL) {
-			StartUntouchable();
 			isTransform = true;
+			transform_start = GetTickCount64();
 			this->SetState(MARIO_STATE_TRANSFORM);
 			SetLevel(MARIO_LEVEL_BIG);
 		}
@@ -530,10 +533,14 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
-	animations->Get(aniId)->Render(x, y);
+
+	if (untouchable && GetTickCount64() % 2 == 0)
+		animations->Get(aniId)->Render(x, y);
+	else if (!untouchable) 
+		animations->Get(aniId)->Render(x, y);
 
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

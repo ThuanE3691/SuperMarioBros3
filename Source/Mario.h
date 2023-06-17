@@ -132,7 +132,8 @@
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 #define MARIO_KICK_TIME_OUT	100
-#define MARIO_UNTOUCHABLE_TIME 600
+#define MARIO_TRANSFORM_TIME_OUT	500
+#define MARIO_UNTOUCHABLE_TIME 2000
 
 class CMario : public CGameObject
 {
@@ -151,6 +152,7 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG kick_start;
+	ULONGLONG transform_start;
 
 	BOOLEAN isTransform;
 	BOOLEAN isOnPlatform;
@@ -183,6 +185,8 @@ public:
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
+
+		transform_start = -1;
 
 		kick_start = -1;
 		isOnPlatform = false;

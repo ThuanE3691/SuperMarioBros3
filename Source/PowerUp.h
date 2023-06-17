@@ -15,7 +15,7 @@
 #define MUSHROOM_UP_SPEED 0.02f
 
 #define MUSHROOM_BBOX_WIDTH 14
-#define MUSHROOM_BBOX_HEIGHT 11
+#define MUSHROOM_BBOX_HEIGHT 14
 
 class CPowerUp : public CGameObject
 {

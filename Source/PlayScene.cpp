@@ -118,6 +118,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			return;
 		}
 		obj = new CMario(x, y);
+
+		obj->SetFirstLoad(true);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
@@ -279,6 +281,20 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
+void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
+	if (obj->GetFirstLoad() == false);
+	CGame* game = CGame::GetInstance();
+	float start_cx, cy, bbf_width;
+	game->GetCamPos(start_cx, cy);
+	bbf_width = game->GetBackBufferWidth();
+	float end_cx = start_cx + bbf_width;
+	float left, top, right, bottom;
+	obj->GetBoundingBox(left, top, right, bottom);
+	if (left > start_cx && right - 100 < end_cx) {
+		obj->SetFirstLoad(true);
+	}
+}
+
 void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
@@ -287,12 +303,14 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
+		_IsInCamera(objects[i]);
 		coObjects.push_back(objects[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
+		_IsInCamera(objects[i]);
+		if (objects[i]->GetFirstLoad()) objects[i]->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

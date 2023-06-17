@@ -25,6 +25,8 @@ protected:
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
 
+	void _IsInCamera(LPGAMEOBJECT obj);
+
 	void LoadAssets(LPCWSTR assetFile);
 	
 public: 

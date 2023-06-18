@@ -1,6 +1,7 @@
 #pragma once
 
 #include "InvisibleWall.h"
+#include "Platform.h"
 
 void CInvisibleWall::GetBoundingBox(float& l, float& t, float& r, float& b) {
 	l = x - width / 2;
@@ -11,10 +12,13 @@ void CInvisibleWall::GetBoundingBox(float& l, float& t, float& r, float& b) {
 
 void CInvisibleWall::OnCollisionWith(LPCOLLISIONEVENT e) {
 
-	if (e->ny != 0 && e->obj->IsBlocking()) {
+	if (e->ny != 0 && e->obj->IsBlocking() && dynamic_cast<CPlatform*>(e->obj)) {
 		vy = 0;
 		if (e->ny < 0) {
 			isOnPlatform = true;
+		}
+		else {
+			isOnPlatform = false;
 		}
 	}
 	else if (e->nx < 0) {

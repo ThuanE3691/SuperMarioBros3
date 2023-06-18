@@ -4,16 +4,25 @@
 #include "Platform.h"
 #include "Piranha.h"
 #include "Goomba.h"
+#include "PlayScene.h"
 
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+
 	isOnHand = false;
 	shell_wait_rotate_start = -1;
 	die_by_attacking_start = -1;
 	SetState(KOOPA_STATE_WALKING);
+
+	float direction = nx > 0 ? 1 : -1;
+
+	wall = new CInvisibleWall(x + direction * KOOPA_BBOX_WIDTH, y, KOOPA_BBOX_WIDTH, KOOPA_BBOX_HEIGHT);
+
+	wall->SetSpeed(vx, KOOPA_WALKING_SPEED);
+	((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(wall);
 }
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -51,6 +60,8 @@ void CKoopa::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;	
+
+	
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -58,6 +69,8 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	float left, right, top, bottom;
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
+
+	if (dynamic_cast<CInvisibleWall*>(e->obj)) return;
 
 
 	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
@@ -92,7 +105,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (state == KOOPA_STATE_WALKING) {
 		if ((x < left && vx < 0) || (x > right && vx > 0)) {
 			vx = -vx;
-		}
+		}	
 	}
 
 	if (e->ny != 0)

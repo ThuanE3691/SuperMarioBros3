@@ -369,5 +369,8 @@
     <Image Include="Source\textures\misc\misc_4.png">
       <Filter>Resource Files\Textures\misc</Filter>
     </Image>
+    <Image Include="Source\textures\grid.png">
+      <Filter>Resource Files\Textures\Others</Filter>
+    </Image>
   </ItemGroup>
 </Project>

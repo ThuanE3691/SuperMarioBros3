@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "InvisibleWall.h"
 
 #define KOOPA_GRAVITY 0.002f
 #define KOOPA_WALKING_SPEED 0.03f
@@ -46,6 +47,10 @@ protected:
 	ULONGLONG shell_wait_rotate_start;
 	ULONGLONG shell_transform_start;
 	ULONGLONG die_by_attacking_start;
+
+	CInvisibleWall* wall;
+
+	int direction;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

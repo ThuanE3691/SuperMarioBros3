@@ -159,7 +159,7 @@ int CPlatform::IsDirectionColliable(float nx, float ny)
 			return 1;
 		}
 		// Second case with platform has type not solid (can only stand on platform, can't go through from any side)
-		else if (nx != 0 && this->GetSolid() == 0 || ny == 1) {
+		else if (this->GetSolid() == 0 && (nx != 0 || ny == 1)) {
 			return 1;
 		}
 	}

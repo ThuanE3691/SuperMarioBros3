@@ -10,6 +10,8 @@
 65000	460	171	477	188	23
 66000	477	171	494	188	23
 
+# BLOCK WOOD
+21000	253	187	270	204	29
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]

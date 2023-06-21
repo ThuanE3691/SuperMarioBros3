@@ -152,9 +152,6 @@ int CPlatform::IsDirectionColliable(float nx, float ny)
 	// First case with platform has type solid (can go through from 2 side and bottom)
 	if (canStanding) {
 
-		if (spriteIdBegin == ID_SPRITE_WOOD_BLOCK)
-			DebugOut(L"[INFO] NX:%f , NY: %f\n", nx ,ny);
-
 		if (nx == 0 && ny == -1) {
 			return 1;
 		}

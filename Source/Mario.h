@@ -154,7 +154,7 @@ class CMario : public CGameObject
 	ULONGLONG kick_start;
 	ULONGLONG transform_start;
 
-	BOOLEAN isTransform;
+	bool isTransform;
 	BOOLEAN isOnPlatform;
 	int coin; 
 

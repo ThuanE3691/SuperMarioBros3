@@ -58,8 +58,8 @@ public:
 	CFireBullet(float x, float y) : CGameObject(x, y) {}
 	void SetDirection(float mx, float my) {
 
-		float direction_x = x < mx ? 1 : -1;
-		float direction_y = y < my ? 1 : -1;
+		int direction_x = x < mx ? 1 : -1;
+		int direction_y = y < my ? 1 : -1;
 		vx = BULLET_SPEED_X * direction_x;
 		vy = BULLET_SPEED_Y * direction_y;
 	}

@@ -16,21 +16,23 @@
 class CPipe : public CGameObject {
 protected:
 	int typePipe;
+	int length;
+	bool isHaveHole;
 	CPiranha* piranha;
 public:
-	CPipe(float x, float y, int typePipe, vector<LPGAMEOBJECT>& objects) : CGameObject(x, y) {
+	CPipe(float x, float y, int typePipe, int length, bool isHaveHole, vector<LPGAMEOBJECT>& objects) : CGameObject(x, y) {
 		this->typePipe = typePipe; 
 		switch (this->typePipe)
 		{
-		case PIPE_NORMAL:
-			piranha = NULL;
-			break;
-		case PIPE_VENUS:
-			piranha = new CPiranha(x - 1, y - (PIPE_BBOX_HEIGHT - PIRANHA_BBOX_HEIGHT) / 2);
-			objects.push_back(piranha);
-			break;
-		default:
-			break;
+			case PIPE_NORMAL:
+				piranha = NULL;
+				break;
+			case PIPE_VENUS:
+				piranha = new CPiranha(x - 1, y - (PIPE_BBOX_HEIGHT - PIRANHA_BBOX_HEIGHT) / 2);
+				objects.push_back(piranha);
+				break;
+			default:
+				break;
 		}
 	}
 	void Render();

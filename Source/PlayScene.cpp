@@ -135,7 +135,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_PIPE: {
 		int typePipe = int(atoi(tokens[3].c_str()));
-		obj = new CPipe(x, y, typePipe, objects); 
+		int length = int(atoi(tokens[4].c_str()));
+		int isHaveHole = bool(atoi(tokens[5].c_str()));
+		obj = new CPipe(x, y, typePipe, length, isHaveHole, objects); 
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BLOCK:
@@ -283,9 +285,10 @@ void CPlayScene::Load()
 }
 
 void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
-	if (obj->GetFirstLoad() == false);
+	if (obj->GetFirstLoad() == false) return;
 	CGame* game = CGame::GetInstance();
-	float start_cx, cy, bbf_width;
+	float start_cx, cy;
+	int bbf_width;
 	game->GetCamPos(start_cx, cy);
 	bbf_width = game->GetBackBufferWidth();
 	float end_cx = start_cx + bbf_width;

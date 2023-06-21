@@ -176,7 +176,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 }
 
 void CMario::MarioHolding() {
-	float direction = (vx >= 0) ? 1 : -1;
+	int direction = (vx >= 0) ? 1 : -1;
 	if (vx == 0) direction = (nx >= 0) ? 1 : -1;
 	dynamic_cast<CKoopa*>(enemies)->SetOnHand(true);
 	enemies->SetSpeed(vx, vy);

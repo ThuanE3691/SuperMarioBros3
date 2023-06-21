@@ -33,7 +33,8 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_DIE);
 		break;
 	case DIK_NUMPAD1: // Print the current position and speed of mario
-		float x, y, vx, vy, nx;
+		float x, y, vx, vy;
+		int	nx;
 		mario->GetPosition(x, y);
 		mario->GetSpeed(vx, vy);
 		nx = mario->GetNx();

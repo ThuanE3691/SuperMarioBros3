@@ -43,6 +43,8 @@ Source/Assets/Platform/box.txt
 
 6	1208	179	16	3	71000
 
+6	1752	179	16	3	71000
+
 ## CLOUD WITH EYES
 6	145	65	0	1	55000
 
@@ -141,7 +143,7 @@ Source/Assets/Platform/box.txt
 6	1396	178	16	1	80200	2
 
 # Pipe
-9	368	164	2
+9	368	164	2	2	1
 
 
 # WOOD BLOCK

@@ -21,7 +21,8 @@ void CFireBullet::OnNoCollision(DWORD dt)
 void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGame* game = CGame::GetInstance();
-	float start_cx, start_cy, bbf_width, bbf_height;
+	float start_cx, start_cy;
+	int bbf_width, bbf_height;
 	bbf_width = game->GetBackBufferWidth();
 	bbf_height = game->GetBackBufferHeight();
 	
@@ -86,7 +87,8 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	bool inCamArea = false;
 	CGame* game = CGame::GetInstance();
-	float start_cx, cy, bbf_width;
+	float start_cx, cy;
+	int	bbf_width;
 	game->GetCamPos(start_cx, cy);
 	bbf_width = game->GetBackBufferWidth();
 	float end_cx = start_cx + bbf_width;

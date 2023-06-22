@@ -4,14 +4,14 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "Piranha.h"
+#include "AssetIDs.h"
 
 #define PIPE_NORMAL	1
 #define PIPE_VENUS	2
 
-#define ID_ANI_PIPE 15000
 #define PIPE_WIDTH 32
 #define PIPE_BBOX_WIDTH 32
-#define PIPE_BBOX_HEIGHT 48
+#define PIPE_BBOX_HEIGHT 16
 
 class CPipe : public CGameObject {
 protected:
@@ -22,13 +22,15 @@ protected:
 public:
 	CPipe(float x, float y, int typePipe, int length, bool isHaveHole, vector<LPGAMEOBJECT>& objects) : CGameObject(x, y) {
 		this->typePipe = typePipe; 
+		this->length = length;
+		this->isHaveHole = isHaveHole;
 		switch (this->typePipe)
 		{
 			case PIPE_NORMAL:
 				piranha = NULL;
 				break;
 			case PIPE_VENUS:
-				piranha = new CPiranha(x - 1, y - (PIPE_BBOX_HEIGHT - PIRANHA_BBOX_HEIGHT) / 2);
+				piranha = new CPiranha(x - 1, y + 11);
 				objects.push_back(piranha);
 				break;
 			default:
@@ -36,6 +38,7 @@ public:
 		}
 	}
 	void Render();
+	void RenderBoundingBox();
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

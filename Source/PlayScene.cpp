@@ -285,7 +285,7 @@ void CPlayScene::Load()
 }
 
 void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
-	if (obj->GetFirstLoad() == false) return;
+	if (obj->GetFirstLoad() == true) return;
 	CGame* game = CGame::GetInstance();
 	float start_cx, cy;
 	int bbf_width;

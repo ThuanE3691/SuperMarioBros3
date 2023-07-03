@@ -5,6 +5,7 @@
 #include "Piranha.h"
 #include "Goomba.h"
 #include "PlayScene.h"
+#include "Brick.h"
 
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
@@ -93,6 +94,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (isOnHand) {
 				SetState(KOOPA_STATE_DIE_BY_ATTACKING);
 			}
+		}
+		else if (dynamic_cast<CBrick*>(e->obj)) {
+			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+			brick->SetState(BRICK_STATE_BREAK);
 		}
 	}
 

@@ -95,7 +95,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetState(KOOPA_STATE_DIE_BY_ATTACKING);
 			}
 		}
-		else if (dynamic_cast<CBrick*>(e->obj)) {
+		else if (dynamic_cast<CBrick*>(e->obj) && !isOnHand) {
 			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 			brick->SetState(BRICK_STATE_BREAK);
 		}

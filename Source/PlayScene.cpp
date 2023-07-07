@@ -109,6 +109,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	float y = (float)atof(tokens[2].c_str());
 
 	CGameObject *obj = NULL;
+	CShapeBrick* shape = NULL;
 
 	switch (object_type)
 	{
@@ -130,7 +131,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CGoomba(x, y, typeGoomba); 
 		break;
 	}
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
+	case OBJECT_TYPE_BRICK: {
+		obj = new CBrick(x, y, objects); 
+		break; 
+	}
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopa(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_PIPE: {
@@ -294,9 +298,10 @@ void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
 	float end_cx = start_cx + bbf_width;
 	float left, top, right, bottom;
 	obj->GetBoundingBox(left, top, right, bottom);
-	if (left > start_cx && right - 100 < end_cx) {
+	obj->SetFirstLoad(true);
+	/*if (left > start_cx && right - 100 < end_cx) {
 		obj->SetFirstLoad(true);
-	}
+	}*/
 }
 
 void CPlayScene::Update(DWORD dt)

@@ -8,6 +8,7 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 	CGameObject::SetState(QUESTION_BLOCK_STATE);
 	coin = NULL;
 	pu = NULL;
+	bu = NULL;
 	switch (type_block) {
 		case QBLOCK_TYPE_COIN:
 			coin = new CCoin(x, y - 20);
@@ -20,7 +21,9 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 			objects.push_back(pu);
 			break;
 		case BRICK_BLOCK_STATE:
+			bu = new CButton(x, y - QBLOCK_BBOX_HEIGHT);
 			CGameObject::SetState(BRICK_BLOCK_STATE);
+			objects.push_back(bu);
 			break;
 	}
 }
@@ -42,12 +45,16 @@ void CQuestionBlock::SetState(int state) {
 }
 
 void CQuestionBlock::ActiveEvents() {
+
 	switch (this->type_block) {
 	case QBLOCK_TYPE_COIN:
 		coin->SetState(COIN_UP_STATE);
 		break;
 	case QBLOCK_TYPE_POWERUP:
 		pu->SetState(MUSHROOM_UP_STATE);
+		break;
+	case BRICK_BLOCK_STATE:
+		bu->SetState(BUTTON_STATE_APPEAR);
 		break;
 	}
 }
@@ -78,7 +85,7 @@ void CQuestionBlock::Render()
 {
 	int id_ani = ID_ANI_QUESTION_BLOCK;
 	if (state == BRICK_BLOCK_STATE) {
-		id_ani = ID_ANI_BRICK_GLASS;
+		id_ani = ID_ANI_BRICK;
 	}
 	else if (state == EMPTY_BLOCK_STATE) {
 		id_ani = ID_ANI_EMPTY_BLOCK;

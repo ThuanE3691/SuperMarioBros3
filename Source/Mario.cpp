@@ -12,6 +12,7 @@
 #include "PowerUp.h"
 #include "Koopa.h"
 #include "Piranha.h"
+#include "Button.h"
 
 #include "Collision.h"
 
@@ -142,6 +143,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CQuestionBlock*>(e->obj))
 		OnCollisionWithQuestionBlock(e);
+	else if (dynamic_cast<CButton*>(e->obj)) {
+		OnCollisionWithButton(e);
+	}
 	else if (dynamic_cast<CPowerUp*>(e->obj)) {
 		OnCollisionWithPowerUp(e);
 	}
@@ -280,6 +284,12 @@ void CMario::OnCollisionWithFireBullet(LPCOLLISIONEVENT e) {
 	if (untouchable == 0) {
 		e->obj->Delete();
 		MarioIsAttacked();
+	}
+}
+
+void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e) {
+	if (e->ny < 0) {
+		e->obj->SetState(BUTTON_STATE_JUMP_ON);
 	}
 }
 

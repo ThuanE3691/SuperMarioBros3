@@ -6,6 +6,7 @@ Source/Assets/mario.txt
 Source/Assets/Block/brick.txt
 Source/Assets/Block/qblock.txt
 Source/Assets/Block/pipe.txt
+Source/Assets/Block/button.txt
 #---------------ITEMS---------------
 Source/Assets/Items/coin.txt
 Source/Assets/Items/powerup.txt

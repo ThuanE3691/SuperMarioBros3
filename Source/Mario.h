@@ -93,6 +93,8 @@ class CMario : public CGameObject
 	void OnCollisionWithPowerUp(LPCOLLISIONEVENT e);
 	void OnCollisionWithPiranha(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireBullet(LPCOLLISIONEVENT e);
+	void OnCollisionWithButton(LPCOLLISIONEVENT e);
+
 
 	void MarioHolding();
 	void MarioIsAttacked();

@@ -135,9 +135,14 @@
 
 #define ID_ANI_QUESTION_BLOCK 12000
 #define ID_ANI_EMPTY_BLOCK 13000
-#define ID_ANI_BRICK_GLASS 10000
 
 
 // -------------------- POWER UP -----------------
 
 #define ID_ANI_MUSHROOM 14000
+
+// -------------------- BUTTON -------------------
+
+#define ID_ANI_BUTTON_APPEAR 15000
+#define ID_ANI_BUTTON_NORMAL 15100
+#define ID_ANI_BUTTON_JUMP_ON	15200

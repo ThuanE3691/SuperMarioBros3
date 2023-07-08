@@ -194,6 +194,7 @@
   <ItemGroup>
     <Text Include="Source\Assets\background.txt" />
     <Text Include="Source\Assets\Block\brick.txt" />
+    <Text Include="Source\Assets\Block\button.txt" />
     <Text Include="Source\Assets\Block\pipe.txt" />
     <Text Include="Source\Assets\Block\qblock.txt" />
     <Text Include="Source\Assets\Enemies\goomba.txt" />

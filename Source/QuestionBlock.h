@@ -4,9 +4,11 @@
 #include "Animation.h"
 #include "Coin.h"
 #include "PowerUp.h"
+#include "Button.h"
 
 #include "Animations.h"
 #include "AnimationIDs.h"
+#include "PlayScene.h"
 
 #define QUESTION_BLOCK_GRAVITY	0.0002f
 #define QUESTION_BLOCK_DEFLECT_SPEED	0.2f
@@ -35,6 +37,7 @@ private:
 
 	CCoin* coin;
 	CPowerUp* pu;
+	CButton* bu;
 	ULONGLONG up_start;
 	int type_block;
 public:

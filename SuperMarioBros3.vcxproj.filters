@@ -334,6 +334,9 @@
     <Text Include="Source\Assets\background.txt">
       <Filter>Resource Files\Assets</Filter>
     </Text>
+    <Text Include="Source\Assets\Block\button.txt">
+      <Filter>Resource Files\Assets\Block</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\textures\enemies\enemies.png">

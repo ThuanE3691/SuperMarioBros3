@@ -3,10 +3,8 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "AnimationIDs.h"
 
-#define ID_ANI_COIN 11000
-
-#define ID_ANI_COIN_DISAPPEAR 11100
 
 #define COIN_NORMAL_STATE 1
 #define COIN_HIDDEN_STATE 2

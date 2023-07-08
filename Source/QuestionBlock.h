@@ -6,10 +6,7 @@
 #include "PowerUp.h"
 
 #include "Animations.h"
-
-#define ID_ANI_QUESTION_BLOCK 12000
-#define ID_ANI_EMPTY_BLOCK 13000
-#define ID_ANI_BRICK_GLASS 10000
+#include "AnimationIDs.h"
 
 #define QUESTION_BLOCK_GRAVITY	0.0002f
 #define QUESTION_BLOCK_DEFLECT_SPEED	0.2f

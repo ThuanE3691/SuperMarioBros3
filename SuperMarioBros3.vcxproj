@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AnimationFrame.h" />
+    <ClInclude Include="Source\AnimationIDs.h" />
     <ClInclude Include="Source\Animations.h" />
     <ClInclude Include="Source\AssetIDs.h" />
     <ClInclude Include="Source\Background.h" />

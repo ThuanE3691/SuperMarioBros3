@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "InvisibleWall.h"
+#include "AnimationIDs.h"
 
 #define KOOPA_GRAVITY 0.002f
 #define KOOPA_WALKING_SPEED 0.03f
@@ -26,12 +27,7 @@
 #define KOOPA_STATE_SHELL_TRANSFORM_WALKING	400
 #define KOOPA_STATE_DIE_BY_ATTACKING	500
 
-#define ID_ANI_KOOPA_WALKING_LEFT 6000
-#define ID_ANI_KOOPA_WALKING_RIGHT 6001
-#define ID_ANI_KOOPA_SHELL_IDLE 6002
-#define ID_ANI_KOOPA_SHELL_ROTATE 6003
-#define ID_ANI_KOOPA_SHELL_TRANSFORM_WALKING 6004
-#define ID_ANI_KOOPA_DIE_REVERSE_SHELL	6005
+
 
 
 class CKoopa : public CGameObject

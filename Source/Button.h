@@ -6,7 +6,7 @@
 #include "Animations.h"
 #include "PlayScene.h"
 
-#define ID_ANI_BRICK 10000
+#define ID_ANI_BUTTON 10000
 #define BUTTON_WIDTH 16
 #define BUTTON_BBOX_WIDTH 16
 #define BUTTON_BBOX_HEIGHT 16

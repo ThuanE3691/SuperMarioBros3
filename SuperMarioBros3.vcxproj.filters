@@ -278,6 +278,9 @@
     <ClInclude Include="Source\Button.h">
       <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimationIDs.h">
+      <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\Assets\Enemies\goomba.txt">

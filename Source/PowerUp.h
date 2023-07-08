@@ -1,11 +1,10 @@
 #pragma once
 #include "GameObject.h"
-
+#include "AnimationIDs.h"
 
 #define MUSHROOM_GRAVITY 0.002f
 #define POWER_UP_DIRECTION 1
 
-#define ID_ANI_MUSHROOM 14000
 
 #define MUSHROOM_WALKING_STATE	1
 #define POWER_UP_HIDDEN_STATE 2

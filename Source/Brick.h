@@ -12,6 +12,8 @@
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
 
+#define COIN_BBOX_WIDTH 10
+#define COIN_BBOX_HEIGHT 16
 
 #define BRICK_STATE_NORMAL	1
 #define BRICK_STATE_BREAK	2
@@ -71,5 +73,6 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 
 	void SetState(int state);
+	int IsBlocking() { return state != BRICK_STATE_TO_COIN; }
 };
 

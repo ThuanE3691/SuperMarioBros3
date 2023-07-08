@@ -143,12 +143,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CQuestionBlock*>(e->obj))
 		OnCollisionWithQuestionBlock(e);
-	else if (dynamic_cast<CButton*>(e->obj)) {
+	else if (dynamic_cast<CButton*>(e->obj))
 		OnCollisionWithButton(e);
-	}
-	else if (dynamic_cast<CPowerUp*>(e->obj)) {
+	else if (dynamic_cast<CPowerUp*>(e->obj))
 		OnCollisionWithPowerUp(e);
-	}
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -332,6 +332,14 @@ void CMario::OnCollisionWithPowerUp(LPCOLLISIONEVENT e) {
 			SetLevel(MARIO_LEVEL_BIG);
 		}
 		pu->Delete();
+	}
+}
+
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e) {
+	CBrick* brick = (CBrick*)e->obj;
+	if (brick->GetState() == BRICK_STATE_TO_COIN) {
+		brick->Delete();
+		coin++;
 	}
 }
 

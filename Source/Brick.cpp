@@ -4,8 +4,17 @@
 
 void CBrick::Render()
 {
+	int aniId = ID_ANI_BRICK;
+	switch (state)
+	{
+	case BRICK_STATE_TO_COIN:
+		aniId = ID_ANI_COIN_STATIC;
+		break;
+	default:
+		break;
+	}
 	CAnimations* animations = CAnimations::GetInstance();
-	 animations->Get(ID_ANI_BRICK)->Render(x, y);
+	animations->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
 
@@ -37,10 +46,20 @@ void CBrick::SetState(int state) {
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 {
-	l = x - BRICK_BBOX_WIDTH/2;
-	t = y - BRICK_BBOX_HEIGHT/2;
-	r = l + BRICK_BBOX_WIDTH;
-	b = t + BRICK_BBOX_HEIGHT;
+	switch (state) {
+	case BRICK_STATE_TO_COIN:
+		l = x - COIN_BBOX_WIDTH / 2;
+		t = y - COIN_BBOX_HEIGHT / 2;
+		r = l + COIN_BBOX_WIDTH;
+		b = t + COIN_BBOX_HEIGHT;
+		break;
+	default:
+		l = x - BRICK_BBOX_WIDTH / 2;
+		t = y - BRICK_BBOX_HEIGHT / 2;
+		r = l + BRICK_BBOX_WIDTH;
+		b = t + BRICK_BBOX_HEIGHT;
+		break;
+	}
 }
 
 

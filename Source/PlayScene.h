@@ -42,6 +42,7 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 
+	vector<LPGAMEOBJECT> GetObjects() { return objects; }
 	void AddObject(CGameObject* obj);
 
 	void Clear();

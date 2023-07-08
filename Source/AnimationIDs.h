@@ -130,6 +130,7 @@
 
 #define ID_ANI_COIN 11000
 #define ID_ANI_COIN_DISAPPEAR 11100
+#define ID_ANI_COIN_STATIC	11200
 
 // -------------------- QUESTION BLOCK -----------------
 

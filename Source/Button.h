@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Animations.h"
 #include "AnimationIDs.h"
+#include "PlayScene.h"
 
 #define BUTTON_WIDTH 16
 #define BUTTON_BBOX_WIDTH 16
@@ -16,7 +17,14 @@
 #define BUTTON_STATE_HIDDEN	4
 
 #define BUTTON_APPEAR_TIME_OUT	200
-#define BUTTON_JUMP_ON_TIME_OUT	2000
+#define BUTTON_JUMP_ON_TIME_OUT	6000
+
+#define EVENT_TURN_BRICK_TO_COIN	1
+#define EVENT_TURN_COIN_TO_BRICK	2
+
+#define EVENT_RANGE_X	100
+#define EVENT_RANGE_Y	100
+
 
 class CButton : public CGameObject {
 private:
@@ -33,5 +41,6 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void SetState(int state);
+	void ActiveEvents(int event);
 };
 

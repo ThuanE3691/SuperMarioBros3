@@ -93,7 +93,9 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		else if (!isOnHand && e->ny == 0) {
 			if (dynamic_cast<CBrick*>(e->obj) && !isOnHand) {
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				brick->SetState(BRICK_STATE_BREAK);
+				if (brick->GetState() != BRICK_STATE_TO_COIN) {
+					brick->SetState(BRICK_STATE_BREAK);
+				}
 			}
 			else if (dynamic_cast<CQuestionBlock*>(e->obj)) {
 				CQuestionBlock* qb = (CQuestionBlock*)e->obj;

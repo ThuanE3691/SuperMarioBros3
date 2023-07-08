@@ -22,14 +22,49 @@ void CButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	if (state == BUTTON_STATE_APPEAR && GetTickCount64() - start_appear > BUTTON_APPEAR_TIME_OUT) {
 		SetState(BUTTON_STATE_NORMAL);
 	}
-	else if (state == BUTTON_STATE_JUMP_ON && GetTickCount64() - start_jump_on > BUTTON_JUMP_ON_TIME_OUT) {
-
+	else if (state == BUTTON_STATE_JUMP_ON && start_jump_on != -1 && GetTickCount64() - start_jump_on > BUTTON_JUMP_ON_TIME_OUT) {
+		ActiveEvents(EVENT_TURN_COIN_TO_BRICK);
+		start_jump_on = -1;
 	}
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 }
+
+bool IsInAxis(float start_axis, float end_axis, float axis_check) {
+	return axis_check > start_axis && axis_check < end_axis;
+}
+
+void CButton::ActiveEvents(int events) {
+	CGame* game = CGame::GetInstance();
+	LPPLAYSCENE current_scene = (LPPLAYSCENE)game->GetCurrentScene();
+	vector<LPGAMEOBJECT> objects = current_scene->GetObjects();
+
+	float left_event = x - EVENT_RANGE_X;
+	float right_event = x + EVENT_RANGE_X;
+	float top_event = y - EVENT_RANGE_Y;
+	float bottom_event = y + EVENT_RANGE_Y;
+
+
+	for (int i = 0; i < objects.size(); i++) {
+		float obj_x, obj_y;
+		objects[i]->GetPosition(obj_x, obj_y);
+
+		if (dynamic_cast<CBrick*>(objects[i])) {
+			CBrick* brick = (CBrick*)objects[i];
+			if (IsInAxis(left_event, right_event, obj_x) && IsInAxis(top_event, bottom_event, obj_y)) {
+				if (events == EVENT_TURN_BRICK_TO_COIN && brick->GetState() == BRICK_STATE_NORMAL) {
+					brick->SetState(BRICK_STATE_TO_COIN);
+				}
+				else if (events == EVENT_TURN_COIN_TO_BRICK && brick->GetState() == BRICK_STATE_TO_COIN) {
+					brick->SetState(BRICK_STATE_NORMAL);
+				}
+			}
+		}
+	}
+}
+
 void CButton::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	switch (state)
 	{
@@ -55,6 +90,7 @@ void CButton::SetState(int state) {
 	case BUTTON_STATE_JUMP_ON:
 		y += BUTTON_BBOX_HEIGHT / 4 + 1;
 		start_jump_on = GetTickCount64();
+		ActiveEvents(EVENT_TURN_BRICK_TO_COIN);
 		break;
 	}
 	CGameObject::SetState(state);

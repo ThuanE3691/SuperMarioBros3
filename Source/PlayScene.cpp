@@ -132,7 +132,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_BRICK: {
-		obj = new CBrick(x, y, objects); 
+		int type = 1;
+		if (tokens.size() == 3) {
+			type = int(atoi(tokens[2].c_str()));
+		}
+		obj = new CBrick(x, y, type); 
 		break; 
 	}
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopa(x, y); break;
@@ -299,9 +303,9 @@ void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
 	float left, top, right, bottom;
 	obj->GetBoundingBox(left, top, right, bottom);
 	obj->SetFirstLoad(true);
-	/*if (left > start_cx && right - 100 < end_cx) {
+	if (left > start_cx && right - 100 < end_cx) {
 		obj->SetFirstLoad(true);
-	}*/
+	}
 }
 
 void CPlayScene::Update(DWORD dt)

@@ -72,12 +72,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	e->obj->GetBoundingBox(left, top, right, bottom);
 
 
-	if (dynamic_cast<CQuestionBlock*>(e->obj)) {
-		CQuestionBlock* qb = (CQuestionBlock*)e->obj;
-		if (state == KOOPA_STATE_SHELL_ROTATE) {
-			qb->SetState(EMPTY_BLOCK_STATE);
-		}
-	}
+	
 
 	if (state == KOOPA_STATE_SHELL_ROTATE || (isOnHand)) {
 		if (dynamic_cast<CPiranha*>(e->obj)) {
@@ -95,9 +90,17 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetState(KOOPA_STATE_DIE_BY_ATTACKING);
 			}
 		}
-		else if (dynamic_cast<CBrick*>(e->obj) && !isOnHand) {
-			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-			brick->SetState(BRICK_STATE_BREAK);
+		else if (!isOnHand && e->ny == 0) {
+			if (dynamic_cast<CBrick*>(e->obj) && !isOnHand) {
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+				brick->SetState(BRICK_STATE_BREAK);
+			}
+			else if (dynamic_cast<CQuestionBlock*>(e->obj)) {
+				CQuestionBlock* qb = (CQuestionBlock*)e->obj;
+				if (state == KOOPA_STATE_SHELL_ROTATE) {
+					qb->SetState(EMPTY_BLOCK_STATE);
+				}
+			}
 		}
 	}
 

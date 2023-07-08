@@ -17,6 +17,7 @@ CGameObject::CGameObject()
 	state = -1;
 	isDeleted = false;
 	isSolid = false;
+	isFirstLoad = false;
 }
 
 void CGameObject::RenderBoundingBox()

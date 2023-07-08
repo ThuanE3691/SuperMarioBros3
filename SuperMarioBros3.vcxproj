@@ -132,6 +132,7 @@
     <ClCompile Include="Source\Animations.cpp" />
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\Brick.cpp" />
+    <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\debug.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Source\AssetIDs.h" />
     <ClInclude Include="Source\Background.h" />
     <ClInclude Include="Source\Brick.h" />
+    <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\debug.h" />

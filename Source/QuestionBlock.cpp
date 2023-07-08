@@ -19,7 +19,9 @@ CQuestionBlock::CQuestionBlock(float x, float y, vector<LPGAMEOBJECT>& objects,i
 			pu->SetState(POWER_UP_HIDDEN_STATE);
 			objects.push_back(pu);
 			break;
-			
+		case BRICK_BLOCK_STATE:
+			CGameObject::SetState(BRICK_BLOCK_STATE);
+			break;
 	}
 }
 
@@ -31,11 +33,10 @@ void CQuestionBlock::SetState(int state) {
 	int old_state = this->state;
 	CGameObject::SetState(state);
 
-	if (old_state == QUESTION_BLOCK_STATE && state == EMPTY_BLOCK_STATE) {
+	if ((old_state == QUESTION_BLOCK_STATE || old_state == BRICK_BLOCK_STATE) && state == EMPTY_BLOCK_STATE) {
 		vy = -QUESTION_BLOCK_DEFLECT_SPEED;
 		ay = QUESTION_BLOCK_GRAVITY;
 		up_start = GetTickCount64();
-		
 	}
 	
 }
@@ -76,7 +77,10 @@ void CQuestionBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 void CQuestionBlock::Render()
 {
 	int id_ani = ID_ANI_QUESTION_BLOCK;
-	if (state == EMPTY_BLOCK_STATE) {
+	if (state == BRICK_BLOCK_STATE) {
+		id_ani = ID_ANI_BRICK_GLASS;
+	}
+	else if (state == EMPTY_BLOCK_STATE) {
 		id_ani = ID_ANI_EMPTY_BLOCK;
 	}
 	CAnimations* animations = CAnimations::GetInstance();

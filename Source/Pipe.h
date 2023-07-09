@@ -39,7 +39,7 @@ public:
 				objects.push_back(piranha);
 				break;
 			case PIPE_VENUS_GREEN:
-				piranha = new CPiranha(x - 1, y + PIRANHA_VENUS_BBOX_HEIGHT / 2, PIRANHA_TYPE_VENUS);
+				piranha = new CPiranha(x - 1, y - 2, PIRANHA_TYPE_VENUS);
 				objects.push_back(piranha);
 				break;
 			default:

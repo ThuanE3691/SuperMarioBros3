@@ -17,12 +17,14 @@
 #define PIRANHA_SHOOT_TIME_OUT	500
 #define PIRANHA_HIDDEN_TIME_OUT	2000
 #define PIRANHA_DIE_TIME_OUT	200
+#define PIRANHA_WAIT_TIME_OUT	500
 
 #define PIRANHA_STATE_RISING 100
 #define PIRANHA_STATE_SHOOT_FIRE	200
 #define PIRANHA_STATE_HIDING	300
 #define PIRANHA_STATE_HIDDEN	400
 #define PIRANHA_STATE_DIE_BY_ATTACK	500
+#define PIRANHA_STATE_WAIT	600
 
 
 #define PIRANHA_TYPE_PIRANHA	1
@@ -82,6 +84,8 @@ protected:
 	ULONGLONG shoot_start;
 	ULONGLONG bullet_fire_start; // Create just for fun :>
 	ULONGLONG die_start;
+
+	ULONGLONG wait_start;
 
 	CFireBullet* bullet;
 

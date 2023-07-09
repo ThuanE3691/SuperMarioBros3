@@ -142,7 +142,10 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 		if (state == PIRANHA_STATE_RISING && y <= maxY) {
-			SetState(PIRANHA_STATE_SHOOT_FIRE);
+			if (type != PIRANHA_TYPE_VENUS)	SetState(PIRANHA_STATE_SHOOT_FIRE);
+			else {
+				SetState(PIRANHA_STATE_WAIT);
+			}
 		}
 
 		if (state == PIRANHA_STATE_HIDING && y >= minY) {
@@ -159,6 +162,13 @@ void CPiranha::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (bullet_fire_start != -1 && GetTickCount64() - bullet_fire_start > PIRANHA_SHOOT_TIME_OUT) {
 				SetState(PIRANHA_STATE_HIDING);
 				bullet_fire_start = -1;
+			}
+		}
+
+		if (state == PIRANHA_STATE_WAIT) {
+			if (wait_start != -1 && GetTickCount64() - wait_start > PIRANHA_WAIT_TIME_OUT) {
+				wait_start = -1;
+				SetState(PIRANHA_STATE_HIDING);
 			}
 		}
 		// JUST FOR FUN ONLY
@@ -192,14 +202,19 @@ int CPiranha::GetAni() {
 	float mx, my;
 	mario->GetPosition(mx, my);
 	
-	int aniId = ID_ANI_PIRANHA_SHOOT_FIRE_TOP_LEFT;
+	int aniId = -1;
 	switch (state)
 	{
 		case PIRANHA_STATE_RISING:
-			if (x > mx)
-				aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
-			else
-				aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
+			if (type != PIRANHA_TYPE_VENUS) {
+				if (x > mx)
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
+				else
+					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
+			}
+			else {
+				aniId = ID_ANI_VENUS_MOVE;
+			}
 			break;
 		case PIRANHA_STATE_SHOOT_FIRE:
 			// MARIO IN RIGHT OF PIRANHA
@@ -220,24 +235,32 @@ int CPiranha::GetAni() {
 			}
 			break;
 		case PIRANHA_STATE_HIDING:
-			if (x < mx) {
-				// MARIO IN BOTTOM RIGHT OF PIRANHA
-				if (y < my) {
-					aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_RIGHT;
+			if (type != PIRANHA_TYPE_VENUS) {
+				if (x < mx) {
+					// MARIO IN BOTTOM RIGHT OF PIRANHA
+					if (y < my) {
+						aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_RIGHT;
+					}
+					else
+						aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
+				} // MARIO IN LEFT OF PIRANHA
+				else {
+					if (y < my) {
+						aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_LEFT;
+					}
+					else
+						aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
 				}
-				else
-					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_RIGHT;
-			} // MARIO IN LEFT OF PIRANHA
+			}
 			else {
-				if (y < my) {
-					aniId = ID_ANI_PIRANHA_MOVE_HEAD_BOTTOM_LEFT;
-				}
-				else
-					aniId = ID_ANI_PIRANHA_MOVE_HEAD_TOP_LEFT;
+				aniId = ID_ANI_VENUS_MOVE;
 			}
 			break;
 		case PIRANHA_STATE_DIE_BY_ATTACK:
 			aniId = ID_ANI_PIRANHA_DIE_BY_ATTACK;
+			break;
+		case PIRANHA_STATE_WAIT:
+			aniId = ID_ANI_VENUS_MOVE;
 			break;
 		default:
 			break;
@@ -252,7 +275,8 @@ int CPiranha::GetAni() {
 void CPiranha::Render()
 {
 	int aniId = GetAni();
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+
+	if (state != PIRANHA_STATE_HIDDEN)	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
@@ -299,6 +323,10 @@ void CPiranha::SetState(int state)
 		case PIRANHA_STATE_DIE_BY_ATTACK:
 			vy = 0;
 			die_start = GetTickCount64();
+			break;
+		case PIRANHA_STATE_WAIT:
+			vy = 0;
+			wait_start = GetTickCount64();
 			break;
 	}
 	CGameObject::SetState(state);

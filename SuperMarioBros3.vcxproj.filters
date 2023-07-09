@@ -387,5 +387,8 @@
     <Image Include="Source\textures\enemies\enemies_5.png">
       <Filter>Resource Files\Textures\enemies</Filter>
     </Image>
+    <Image Include="Source\textures\enemies\enemies_6.png">
+      <Filter>Resource Files\Textures\enemies</Filter>
+    </Image>
   </ItemGroup>
 </Project>

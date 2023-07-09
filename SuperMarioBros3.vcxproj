@@ -219,6 +219,7 @@
     <Image Include="Source\textures\enemies\enemies_2.png" />
     <Image Include="Source\textures\enemies\enemies_3.png" />
     <Image Include="Source\textures\enemies\enemies_5.png" />
+    <Image Include="Source\textures\enemies\enemies_6.png" />
     <Image Include="Source\textures\grid.png" />
     <Image Include="Source\textures\map_1_1.png" />
     <Image Include="Source\textures\mario.png" />

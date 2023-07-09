@@ -8,10 +8,11 @@
 #include "Brick.h"
 
 
-CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
+CKoopa::CKoopa(float x, float y,int type) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	this->type = type;
 
 	isOnHand = false;
 	shell_wait_rotate_start = -1;
@@ -178,6 +179,8 @@ int CKoopa::GetAni() {
 			aniId = ID_ANI_KOOPA_DIE_REVERSE_SHELL;
 			break;
 	}
+
+	if (type == KOOPA_TYPE_GREEN) aniId += 100; // GREEN LIKE RED HAS ANIID = RED + 100
 	return aniId;
 }
 

@@ -27,6 +27,10 @@
 #define KOOPA_STATE_SHELL_TRANSFORM_WALKING	400
 #define KOOPA_STATE_DIE_BY_ATTACKING	500
 
+#define KOOPA_TYPE_RED	1
+#define KOOPA_TYPE_GREEN	2
+#define KOOPA_TYPE_GREEN_WING	3
+
 
 
 
@@ -47,6 +51,7 @@ protected:
 	CInvisibleWall* wall;
 
 	int direction;
+	int type;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -61,7 +66,7 @@ protected:
 	int GetAni();
 
 public:
-	CKoopa(float x, float y);
+	CKoopa(float x, float y,int type);
 	void SetOnHand(bool onHand) { this->isOnHand = onHand; }
 	virtual void SetState(int state);
 };

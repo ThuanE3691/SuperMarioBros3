@@ -48,12 +48,14 @@ void CFireBullet::Render() {
 }
 
 
-CPiranha::CPiranha(float x, float y) :CGameObject(x, y)
+CPiranha::CPiranha(float x, float y,int type = 1) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
 	this->maxY = y - PIRANHA_BBOX_HEIGHT;
 	this->minY = y + PIRANHA_BBOX_HEIGHT / 2;
+	this->type = type;
+
 	bullet = NULL;
 	bullet_fire_start = -1;
 	hidden_start = -1;
@@ -209,6 +211,10 @@ int CPiranha::GetAni() {
 			break;
 		default:
 			break;
+	}
+
+	if (type == PIRANHA_TYPE_PIRANHA_GREEN && state != PIRANHA_STATE_DIE_BY_ATTACK) {
+		aniId += 100;
 	}
 	return aniId;
 }

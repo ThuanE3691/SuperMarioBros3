@@ -24,13 +24,11 @@ public:
 		this->typePipe = typePipe; 
 		this->length = length;
 		this->isHaveHole = isHaveHole;
+		piranha = NULL;
 		switch (this->typePipe)
 		{
-			case PIPE_NORMAL:
-				piranha = NULL;
-				break;
 			case PIPE_VENUS:
-				piranha = new CPiranha(x - 1, y + 11);
+				piranha = new CPiranha(x - 1, y + 11, 2);
 				objects.push_back(piranha);
 				break;
 			default:

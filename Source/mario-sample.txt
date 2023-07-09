@@ -24,5 +24,6 @@ height	240
 25	Source\textures\enemies\enemies_3.png
 26	Source\textures\enemies\enemies_2.png
 27	Source\textures\enemies\enemiess.png
-28	Source\textures\enemies\enemies-4.png
+28	Source\textures\enemies\enemies_4.png
 29	Source\textures\misc\misc_4.png
+30	Source\textures\enemies\enemies_5.png

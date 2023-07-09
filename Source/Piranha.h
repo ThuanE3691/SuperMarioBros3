@@ -7,6 +7,9 @@
 #define PIRANHA_BBOX_WIDTH 16
 #define PIRANHA_BBOX_HEIGHT 33
 
+#define VENUS_BBOX_WIDTH	16
+#define VENUS_BBOX_HEIGHT	16
+
 #define PIRANHA_WAIT_TO_SHOOT_TIME_OUT	500
 #define PIRANHA_SHOOT_TIME_OUT	500
 #define PIRANHA_HIDDEN_TIME_OUT	2000
@@ -19,6 +22,9 @@
 #define PIRANHA_STATE_DIE_BY_ATTACK	500
 
 
+#define PIRANHA_TYPE_PIRANHA	1
+#define PIRANHA_TYPE_PIRANHA_GREEN	2
+#define PIRANHA_TYPE_VENUS	3
 
 
 #pragma region FIREBULLET
@@ -29,8 +35,7 @@
 #define BULLET_SPEED_X	0.04f
 #define BULLET_SPEED_Y	0.04f
 
-#define ID_ANI_FIRE_BULLET_LEFT	7020
-#define ID_ANI_FIRE_BULLET_RIGHT	7021
+
 
 #pragma endregion
 
@@ -68,6 +73,8 @@ protected:
 	int direction;
 	int firstLoad;
 
+	int type;
+
 	ULONGLONG hidden_start;
 	ULONGLONG shoot_start;
 	ULONGLONG bullet_fire_start; // Create just for fun :>
@@ -88,7 +95,7 @@ protected:
 	virtual int GetAni();
 
 public:
-	CPiranha(float x, float y);
+	CPiranha(float x, float y, int type);
 	virtual void SetState(int state);
 
 };

@@ -182,6 +182,8 @@
 // -------------------- POWER UP -----------------
 
 #define ID_ANI_MUSHROOM 14000
+#define ID_ANI_LEAF_FLY_LEFT	14100
+#define ID_ANI_LEAF_FLY_RIGHT	14200
 
 // -------------------- BUTTON -------------------
 

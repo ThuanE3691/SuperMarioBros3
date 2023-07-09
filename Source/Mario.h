@@ -150,5 +150,6 @@ public:
 	bool GetHolding() { return isHolding; }
 
 	bool GetIsTransform() { return isTransform; }
+	int GetLevel() { return level; }
 
 };

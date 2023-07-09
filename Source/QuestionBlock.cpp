@@ -45,13 +45,16 @@ void CQuestionBlock::SetState(int state) {
 }
 
 void CQuestionBlock::ActiveEvents() {
-
+	LPPLAYSCENE current_scene = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene());
+	CMario* mario = (CMario*)current_scene->GetPlayer();
+	int current_level = mario->GetLevel();
 	switch (this->type_block) {
 	case QBLOCK_TYPE_COIN:
 		coin->SetState(COIN_UP_STATE);
 		break;
 	case QBLOCK_TYPE_POWERUP:
-		pu->SetState(MUSHROOM_UP_STATE);
+		if (current_level <= 1)	pu->SetState(MUSHROOM_UP_STATE);
+		else pu->SetState(LEAF_UP_STATE);
 		break;
 	case BRICK_BLOCK_STATE:
 		bu->SetState(BUTTON_STATE_APPEAR);

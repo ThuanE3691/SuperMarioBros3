@@ -187,6 +187,8 @@
 
 #define ID_SPRITE_MUSHRROM 92000
 
+#define ID_SPRITE_LEAF	93000
+
 #pragma endregion
 
 #define ID_SPRITE_PIPE 100000

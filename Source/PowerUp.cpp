@@ -3,9 +3,9 @@
 
 CPowerUp::CPowerUp(float x, float y) : CGameObject(x,y) {
 	this->ax = 0;
-	this->ay = MUSHROOM_GRAVITY;
+	this->ay = 0;
 	y_target = -1;
-	SetState(MUSHROOM_WALKING_STATE);
+	SetState(POWER_UP_HIDDEN_STATE);
 }
 
 void CPowerUp::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -18,13 +18,8 @@ void CPowerUp::GetBoundingBox(float& left, float& top, float& right, float& bott
 
 void CPowerUp::OnNoCollision(DWORD dt)
 {
-	if (state == MUSHROOM_WALKING_STATE) {
-		x += vx * dt;
-		y += vy * dt;
-	}
-	else if (state == MUSHROOM_UP_STATE) {
-		y += vy * dt;
-	}
+	x += vx * dt;
+	y += vy * dt;
 };
 
 void CPowerUp::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -60,8 +55,18 @@ void CPowerUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx += ax * dt;
 	}
 
-	if (y_target != -1 && state == MUSHROOM_UP_STATE && y <= y_target) {
-		SetState(MUSHROOM_WALKING_STATE);
+	if (y_target != -1  && y <= y_target) {
+		switch (state)
+		{
+		case MUSHROOM_UP_STATE:
+			SetState(MUSHROOM_WALKING_STATE);
+			break;
+		case LEAF_UP_STATE:
+			SetState(LEAF_DOWN_STATE);
+			break;
+		default:
+			break;
+		}
 	}
 
 	
@@ -73,6 +78,16 @@ void CPowerUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CPowerUp::Render()
 {
 	int aniId = ID_ANI_MUSHROOM;
+
+	if (state == LEAF_UP_STATE) {
+		aniId = ID_ANI_LEAF_FLY_RIGHT;
+	}
+	else if (state == LEAF_DOWN_STATE) {
+		if (vx < 0)
+			aniId = ID_ANI_LEAF_FLY_LEFT;
+		else
+			aniId = ID_ANI_LEAF_FLY_RIGHT;
+	}
 
 	if (state != POWER_UP_HIDDEN_STATE) {
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -86,6 +101,12 @@ void CPowerUp::SetState(int state)
 	
 	switch (state)
 	{
+		case POWER_UP_HIDDEN_STATE:
+			vx = 0;
+			vy = 0;
+			ax = 0;
+			ay = 0;
+			break;
 		case MUSHROOM_WALKING_STATE:
 			vx = -MUSHROOM_WALKING_SPEED * power_up_direction;
 			ay = MUSHROOM_GRAVITY;
@@ -95,6 +116,17 @@ void CPowerUp::SetState(int state)
 			vx = 0;
 			vy = -MUSHROOM_UP_SPEED;
 			y_target = y - MUSHROOM_BBOX_HEIGHT;
+			break;
+		case LEAF_UP_STATE:
+			vy = -LEAF_SPEED_UP;
+			y_target = y - 3 * LEAF_BBOX_HEIGHT;
+			ay = 0;
+			vx = 0;
+			break;
+		case LEAF_DOWN_STATE:
+			vy = 0;
+			vx = -LEAF_FLOAT_SPEED;
+			ay = LEAF_GRAVITY;
 			break;
 	}
 }

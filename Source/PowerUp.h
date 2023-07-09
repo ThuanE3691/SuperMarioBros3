@@ -10,11 +10,21 @@
 #define POWER_UP_HIDDEN_STATE 2
 #define MUSHROOM_UP_STATE 3
 
+#define LEAF_UP_STATE	4
+#define LEAF_DOWN_STATE	5
+
 #define MUSHROOM_WALKING_SPEED	0.05f
 #define MUSHROOM_UP_SPEED 0.02f
 
+#define LEAF_GRAVITY	0.0001f
+#define LEAF_SPEED_UP	0.02f
+
+#define LEAF_FLOAT_SPEED	0.05f
+
 #define MUSHROOM_BBOX_WIDTH 14
 #define MUSHROOM_BBOX_HEIGHT 12
+
+#define LEAF_BBOX_HEIGHT	13
 
 class CPowerUp : public CGameObject
 {

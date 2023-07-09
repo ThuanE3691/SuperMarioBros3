@@ -17,7 +17,10 @@ CKoopa::CKoopa(float x, float y,int type) :CGameObject(x, y)
 	isOnHand = false;
 	shell_wait_rotate_start = -1;
 	die_by_attacking_start = -1;
-	SetState(KOOPA_STATE_WALKING);
+
+	if (type != KOOPA_TYPE_GREEN_WING)	SetState(KOOPA_STATE_WALKING);
+	else SetState(KOOPA_STATE_FLY);
+
 
 	/*float direction = nx > 0 ? 1 : -1;
 
@@ -36,6 +39,12 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			top = y - KOOPA_BBOX_HEIGHT / 2;
 			right = left + KOOPA_BBOX_WIDTH;
 			bottom = top + KOOPA_BBOX_HEIGHT ;
+			break;
+		case KOOPA_STATE_FLY:
+			left = x - KOOPA_BBOX_WIDTH / 2;
+			top = y - KOOPA_BBOX_HEIGHT_FLY / 2;
+			right = left + KOOPA_BBOX_WIDTH;
+			bottom = top + KOOPA_BBOX_HEIGHT_FLY;
 			break;
 		case KOOPA_STATE_SHELL_IDLE:
 			left = x - KOOPA_BBOX_WIDTH / 2;
@@ -62,8 +71,6 @@ void CKoopa::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;	
-
-	
 };
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -71,9 +78,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	float left, right, top, bottom;
 
 	e->obj->GetBoundingBox(left, top, right, bottom);
-
-
-	
 
 	if (state == KOOPA_STATE_SHELL_ROTATE || (isOnHand)) {
 		if (dynamic_cast<CPiranha*>(e->obj)) {
@@ -124,6 +128,9 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (e->ny != 0)
 	{
 		vy = 0;
+		if (e->ny < 0 && state == KOOPA_STATE_FLY) {
+			SetState(KOOPA_STATE_FLY);
+		}
 	}
 	else if (e->nx != 0)
 	{
@@ -166,6 +173,12 @@ int CKoopa::GetAni() {
 			else 
 				aniId = ID_ANI_KOOPA_WALKING_RIGHT;
 			break;
+		case KOOPA_STATE_FLY:
+			if (vx < 0)
+				aniId = ID_ANI_KOOPA_GREEN_FLY_LEFT;
+			else
+				aniId = ID_ANI_KOOPA_GREEN_FLY_RIGHT;
+			break;
 		case KOOPA_STATE_SHELL_IDLE:
 			aniId = ID_ANI_KOOPA_SHELL_IDLE;
 			break;
@@ -180,7 +193,7 @@ int CKoopa::GetAni() {
 			break;
 	}
 
-	if (type == KOOPA_TYPE_GREEN) aniId += 100; // GREEN LIKE RED HAS ANIID = RED + 100
+	if (type == KOOPA_TYPE_GREEN || (type == KOOPA_TYPE_GREEN_WING && state != KOOPA_STATE_FLY)) aniId += 100; // GREEN LIKE RED HAS ANIID = RED + 100
 	return aniId;
 }
 
@@ -200,6 +213,13 @@ void CKoopa::SetState(int state)
 			shell_transform_start = -1;
 			vx = -KOOPA_WALKING_SPEED;
 			vy = 0;
+			ay = KOOPA_GRAVITY;
+			break;
+		case KOOPA_STATE_FLY:
+			shell_transform_start = -1;
+			vx = -KOOPA_WALKING_FLOAT_SPEED;
+			vy = -KOOPA_FLY_SPEED;
+			ay = KOOPA_FLOAT_GRAVITY;
 			break;
 		case KOOPA_STATE_SHELL_IDLE:
 			if (this->state == KOOPA_STATE_SHELL_ROTATE) {

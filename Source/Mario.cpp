@@ -228,7 +228,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e) {
 		if (koopa->GetState() != KOOPA_STATE_SHELL_ROTATE) {
 			if (koopa->GetState() != KOOPA_STATE_SHELL_IDLE)
 			{
-				koopa->SetState(KOOPA_STATE_SHELL_IDLE);
+				if (koopa->GetState() == KOOPA_STATE_FLY) koopa->SetState(KOOPA_STATE_WALKING);
+				else koopa->SetState(KOOPA_STATE_SHELL_IDLE);
 			}
 			else if (koopa->GetState() == KOOPA_STATE_SHELL_IDLE) {
 				kick_start = GetTickCount64();

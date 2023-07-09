@@ -52,9 +52,23 @@ CPiranha::CPiranha(float x, float y,int type = 1) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
-	this->maxY = y - PIRANHA_BBOX_HEIGHT;
-	this->minY = y + PIRANHA_BBOX_HEIGHT / 2;
 	this->type = type;
+
+	switch (type)
+	{
+	case PIRANHA_TYPE_PIRANHA:
+		this->maxY = y - PIRANHA_BBOX_HEIGHT;
+		this->minY = y + PIRANHA_BBOX_HEIGHT / 2;
+		break;
+	case PIRANHA_TYPE_PIRANHA_GREEN:
+		this->maxY = y - PIRANHA_GREEN_BBOX_HEIGHT;
+		this->minY = y + PIRANHA_GREEN_BBOX_HEIGHT / 2;
+		break;
+	case PIRANHA_TYPE_VENUS:
+		this->maxY = y - PIRANHA_VENUS_BBOX_HEIGHT;
+		this->minY = y + PIRANHA_VENUS_BBOX_HEIGHT / 2;
+		break;
+	}
 
 	bullet = NULL;
 	bullet_fire_start = -1;
@@ -67,10 +81,26 @@ CPiranha::CPiranha(float x, float y,int type = 1) :CGameObject(x, y)
 
 void CPiranha::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - PIRANHA_BBOX_WIDTH / 2;
-	top = y - PIRANHA_BBOX_HEIGHT / 2;
-	right = left + PIRANHA_BBOX_WIDTH;
-	bottom = top + PIRANHA_BBOX_HEIGHT;
+	switch (type) {
+	case PIRANHA_TYPE_PIRANHA:
+		left = x - PIRANHA_BBOX_WIDTH / 2;
+		top = y - PIRANHA_BBOX_HEIGHT / 2;
+		right = left + PIRANHA_BBOX_WIDTH;
+		bottom = top + PIRANHA_BBOX_HEIGHT;
+		break;
+	case PIRANHA_TYPE_PIRANHA_GREEN:
+		left = x - PIRANHA_BBOX_WIDTH / 2;
+		top = y - PIRANHA_GREEN_BBOX_HEIGHT / 2;
+		right = left + PIRANHA_BBOX_WIDTH;
+		bottom = top + PIRANHA_GREEN_BBOX_HEIGHT;
+		break;
+	case PIRANHA_TYPE_VENUS:
+		left = x - PIRANHA_BBOX_WIDTH / 2;
+		top = y - PIRANHA_VENUS_BBOX_HEIGHT / 2;
+		right = left + PIRANHA_BBOX_WIDTH;
+		bottom = top + PIRANHA_VENUS_BBOX_HEIGHT;
+		break;
+	}
 }
 
 void CPiranha::OnNoCollision(DWORD dt)

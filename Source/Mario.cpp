@@ -325,7 +325,7 @@ void CMario::OnCollisionWithQuestionBlock(LPCOLLISIONEVENT e) {
 
 void CMario::OnCollisionWithPowerUp(LPCOLLISIONEVENT e) {
 	CPowerUp* pu = (CPowerUp*)e->obj;
-	if (pu->GetState() == MUSHROOM_WALKING_STATE) {
+	if (pu->GetState() != POWER_UP_HIDDEN_STATE && pu->GetState() != MUSHROOM_UP_STATE) {
 		if (level == MARIO_LEVEL_SMALL) {
 			isTransform = true;
 			transform_start = GetTickCount64();

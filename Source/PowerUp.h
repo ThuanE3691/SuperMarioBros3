@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "AnimationIDs.h"
+#include "PlayScene.h"
 
 #define MUSHROOM_GRAVITY 0.002f
 #define POWER_UP_DIRECTION 1
@@ -16,10 +17,10 @@
 #define MUSHROOM_WALKING_SPEED	0.05f
 #define MUSHROOM_UP_SPEED 0.02f
 
-#define LEAF_GRAVITY	0.0001f
-#define LEAF_SPEED_UP	0.02f
+#define LEAF_GRAVITY	0.00015f
+#define LEAF_SPEED_UP	0.08f
 
-#define LEAF_FLOAT_SPEED	0.05f
+#define LEAF_FLOAT_SPEED	0.07f
 
 #define MUSHROOM_BBOX_WIDTH 14
 #define MUSHROOM_BBOX_HEIGHT 12
@@ -30,6 +31,8 @@ class CPowerUp : public CGameObject
 {
 protected:
 	float y_target;
+	float x_target;
+	float x_init;
 	float ax;
 	float ay;
 	int power_up_direction = 1;
@@ -38,7 +41,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return state != POWER_UP_HIDDEN_STATE && state != MUSHROOM_UP_STATE; };
+	virtual int IsCollidable() { return state != POWER_UP_HIDDEN_STATE && state != MUSHROOM_UP_STATE && state != LEAF_DOWN_STATE; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
@@ -47,4 +50,5 @@ protected:
 public:
 	CPowerUp(float x, float y);
 	virtual void SetState(int state);
+	void DirectionOfPowerUp();
 };

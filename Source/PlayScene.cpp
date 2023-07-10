@@ -401,6 +401,16 @@ void CPlayScene::AddObject(CGameObject* obj) {
 	objects.push_back(obj);
 }
 
+void CPlayScene::DeleteObject(CGameObject* obj) {
+	vector<LPGAMEOBJECT>::iterator it;
+	for (it = objects.begin(); it != objects.end(); it++)
+	{
+		if (*it == obj) {
+			delete(*it);
+		}
+	}
+}
+
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
 
 void CPlayScene::PurgeDeletedObjects()

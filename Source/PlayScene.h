@@ -44,6 +44,7 @@ public:
 
 	vector<LPGAMEOBJECT> GetObjects() { return objects; }
 	void AddObject(CGameObject* obj);
+	void DeleteObject(CGameObject* obj);
 
 	void Clear();
 	void PurgeDeletedObjects();

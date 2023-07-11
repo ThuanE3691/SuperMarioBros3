@@ -223,6 +223,7 @@
     <Image Include="Source\textures\grid.png" />
     <Image Include="Source\textures\map_1_1.png" />
     <Image Include="Source\textures\mario.png" />
+    <Image Include="Source\textures\mario_racoon.png" />
     <Image Include="Source\textures\misc\misc.png" />
     <Image Include="Source\textures\misc\misc_1.png" />
     <Image Include="Source\textures\misc\misc_1_transparent.png" />

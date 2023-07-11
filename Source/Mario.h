@@ -21,6 +21,7 @@
 #define MARIO_DIE_DEFLECT_SPEED	0.6f
 
 #define MARIO_STATE_DIE				-10
+#define MARIO_STATE_WAIT_DIE		-11
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
 #define MARIO_STATE_WALKING_LEFT	200
@@ -67,6 +68,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 #define MARIO_KICK_TIME_OUT	100
+#define MARIO_WAIT_DIE_TIME_OUT	500
 #define MARIO_TRANSFORM_TIME_OUT	500
 #define MARIO_UNTOUCHABLE_TIME 2000
 
@@ -88,6 +90,7 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	ULONGLONG kick_start;
 	ULONGLONG transform_start;
+	ULONGLONG start_die;
 
 	bool isTransform;
 	BOOLEAN isOnPlatform;
@@ -124,7 +127,7 @@ public:
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
-
+		start_die = -1;
 		transform_start = -1;
 
 		kick_start = -1;
@@ -136,6 +139,8 @@ public:
 		coin = 0;
 
 		enemies = NULL;
+
+		SetState(MARIO_STATE_IDLE);
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

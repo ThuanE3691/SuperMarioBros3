@@ -69,17 +69,33 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	
 	if (isTransform) {
-		if (GetTickCount64() - transform_start > MARIO_TRANSFORM_TIME_OUT) {
-			isTransform = false;
-			transform_start = -1;
-			if (level == MARIO_LEVEL_SMALL) {
-				level = MARIO_LEVEL_BIG;
+
+		if (transformType == MARIO_STATE_TRANSFORM) {
+			if (GetTickCount64() - transform_start > MARIO_TRANSFORM_TIME_OUT) {
+				isTransform = false;
+				transform_start = -1;
+				if (level == MARIO_LEVEL_SMALL) {
+					level = MARIO_LEVEL_BIG;
+				}
+				else if (level == MARIO_LEVEL_BIG) {
+					level = MARIO_LEVEL_SMALL;
+				}
 			}
-			else if (level == MARIO_LEVEL_BIG) {
-				level = MARIO_LEVEL_SMALL;
-			}
+			else this->SetState(MARIO_STATE_TRANSFORM);
 		}
-		else this->SetState(MARIO_STATE_TRANSFORM);
+		else if (transformType == MARIO_STATE_RACOON_TRANSFORM) {
+			if (GetTickCount64() - transform_start > MARIO_RACOON_TRANSFORM_TIME_OUT) {
+				isTransform = false;
+				transform_start = -1;
+				if (level == MARIO_LEVEL_RACOON) {
+					level = MARIO_LEVEL_BIG;
+				}
+				else if (level == MARIO_LEVEL_BIG) {
+					level = MARIO_LEVEL_RACOON;
+				}
+			}
+			else this->SetState(MARIO_STATE_RACOON_TRANSFORM);
+		}
 	}
 
 	if (kick_start != -1 && GetTickCount64() - kick_start > MARIO_KICK_TIME_OUT)
@@ -101,7 +117,14 @@ void CMario::MarioIsAttacked() {
 		StartUntouchable();
 		isTransform = true;
 		transform_start = GetTickCount64();
-		this->SetState(MARIO_STATE_TRANSFORM);
+		if (level == MARIO_LEVEL_BIG) {
+			transformType = MARIO_STATE_TRANSFORM;
+			this->SetState(MARIO_STATE_TRANSFORM);
+		}
+		else {
+			transformType = MARIO_STATE_RACOON_TRANSFORM;
+			this->SetState(MARIO_STATE_RACOON_TRANSFORM);
+		}
 	}
 	else
 	{
@@ -348,8 +371,16 @@ void CMario::OnCollisionWithPowerUp(LPCOLLISIONEVENT e) {
 		if (level == MARIO_LEVEL_SMALL) {
 			isTransform = true;
 			transform_start = GetTickCount64();
+			transformType = MARIO_STATE_TRANSFORM;
 			this->SetState(MARIO_STATE_TRANSFORM);
 			SetLevel(MARIO_LEVEL_BIG);
+		}
+		else if (level == MARIO_LEVEL_BIG) {
+			isTransform = true;
+			transform_start = GetTickCount64();
+			transformType = MARIO_STATE_RACOON_TRANSFORM;
+			this->SetState(MARIO_STATE_RACOON_TRANSFORM);
+			SetLevel(MARIO_LEVEL_RACOON);
 		}
 		pu->Delete();
 	}
@@ -476,6 +507,9 @@ int CMario::GetAniIdBig()
 		else
 			aniId = ID_ANI_MARIO_BIG_TRANSFORM_TO_SMALL_LEFT;
 	}
+	else if (state == MARIO_STATE_RACOON_TRANSFORM) {
+		aniId = ID_ANI_MARIO_RACOON_TRANSFORM_TO_BIG;
+	}
 	else if (this->state == MARIO_STATE_KICK) {
 		if (nx > 0)
 			aniId = ID_ANI_MARIO_BIG_KICK_RIGHT;
@@ -571,13 +605,10 @@ int CMario::GetAniIdBig()
 
 int CMario::GetAniIdRacoon() {
 	int aniId = -1;
-	/*if (this->state == MARIO_STATE_TRANSFORM) {
-		if (nx > 0)
-			aniId = ID_ANI_MARIO_RACOON_TRANSFORM_TO_SMALL_RIGHT;
-		else
-			aniId = ID_ANI_MARIO_RACOON_TRANSFORM_TO_SMALL_LEFT;
-	}*/
-	if (this->state == MARIO_STATE_KICK) {
+	if (this->state == MARIO_STATE_RACOON_TRANSFORM) {
+		aniId = ID_ANI_MARIO_RACOON_TRANSFORM_TO_BIG;
+	}
+	else if (this->state == MARIO_STATE_KICK) {
 		if (nx > 0)
 			aniId = ID_ANI_MARIO_RACOON_KICK_RIGHT;
 		else
@@ -808,6 +839,11 @@ void CMario::SetState(int state)
 		ax = 0;
 		break;
 	case MARIO_STATE_TRANSFORM:
+		vy = 0;
+		vx = 0;
+		ax = 0;
+		break;
+	case MARIO_STATE_RACOON_TRANSFORM:
 		vy = 0;
 		vx = 0;
 		ax = 0;

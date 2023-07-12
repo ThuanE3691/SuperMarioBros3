@@ -41,6 +41,7 @@
 #define MARIO_STATE_HOLDING_RELEASE 801
 
 #define MARIO_STATE_TRANSFORM	900
+#define MARIO_STATE_RACOON_TRANSFORM	950
 
 #define GROUND_Y 160.0f
 
@@ -70,6 +71,7 @@
 #define MARIO_KICK_TIME_OUT	100
 #define MARIO_WAIT_DIE_TIME_OUT	500
 #define MARIO_TRANSFORM_TIME_OUT	500
+#define MARIO_RACOON_TRANSFORM_TIME_OUT	300
 #define MARIO_UNTOUCHABLE_TIME 2000
 
 class CMario : public CGameObject
@@ -93,6 +95,7 @@ class CMario : public CGameObject
 	ULONGLONG start_die;
 
 	bool isTransform;
+	int transformType;
 	BOOLEAN isOnPlatform;
 	int coin; 
 
@@ -129,11 +132,13 @@ public:
 		untouchable_start = -1;
 		start_die = -1;
 		transform_start = -1;
-
 		kick_start = -1;
+
 		isOnPlatform = false;
 		isTransform = false;
 		isHolding = false;
+
+		transformType = -1;
 
 		handingMode = false;
 		coin = 0;

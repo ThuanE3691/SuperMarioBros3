@@ -114,6 +114,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	switch (object_type)
 	{
+	case OBJECT_TYPE_WALL_UPDATE_AREA:
+		obj = new CWallUpdateArea(x, y);
+
+		list_wall.push_back((CWallUpdateArea*)obj);
+		break;
 	case OBJECT_TYPE_MARIO:
 		if (player != NULL)
 		{
@@ -122,7 +127,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CMario(x, y);
 
-		obj->SetFirstLoad(true);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
@@ -297,20 +301,48 @@ void CPlayScene::Load()
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
-void CPlayScene::_IsInCamera(LPGAMEOBJECT obj) {
-	if (obj->GetFirstLoad() == true) return;
+void CPlayScene::SetUpdateArea() {
 	CGame* game = CGame::GetInstance();
 	float start_cx, cy;
 	int bbf_width;
 	game->GetCamPos(start_cx, cy);
 	bbf_width = game->GetBackBufferWidth();
 	float end_cx = start_cx + bbf_width;
-	float left, top, right, bottom;
-	obj->GetBoundingBox(left, top, right, bottom);
-	obj->SetFirstLoad(true);
-	if (left > start_cx && right - 100 < end_cx) {
-		obj->SetFirstLoad(true);
+
+	bool isFirstLeft = false;
+	bool isFirstRight = false;
+
+	for (int i = 0; i < list_wall.size(); i++) {
+		// Set left wall
+
+		if (isFirstLeft && isFirstRight) return;
+
+		float wx, wy;
+		list_wall[i]->GetPosition(wx, wy);
+
+		if (wx <= start_cx && !isFirstLeft) {
+			left_wall = list_wall[i];
+		}
+		else if (wx > end_cx && !isFirstRight) {
+			isFirstLeft = true;
+			right_wall = list_wall[i];
+			isFirstRight = true;
+		}
 	}
+}
+
+bool CPlayScene::_IsInUpdateArea(LPGAMEOBJECT obj) {
+	float lw, ly;
+	float rw, ry;
+
+	left_wall->GetPosition(lw,ly);
+	right_wall->GetPosition(rw, ry);
+
+	float left, top, right, bottom;
+
+	obj->GetBoundingBox(left, top, right, bottom);
+
+	return left > lw && right < rw;
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -318,22 +350,30 @@ void CPlayScene::Update(DWORD dt)
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
+
+	SetUpdateArea();
+
+	float lw_x, lw_y;
+	float rw_x, rw_y;
+
+	left_wall->GetPosition(lw_x, lw_y);
+	right_wall->GetPosition(rw_x, rw_y);
+
+	DebugOut(L"LEFT X: %f, RIGHT X: %f\n", lw_x, rw_x);
+
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		_IsInCamera(objects[i]);
 		coObjects.push_back(objects[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		_IsInCamera(objects[i]);
-
 		if (player == NULL ||\
 			dynamic_cast<CMario*>(player)->GetIsTransform() == false ||\
 			dynamic_cast<CMario*>(objects[i])) \
 		{
-			if (objects[i]->GetFirstLoad())
+			if (_IsInUpdateArea(objects[i]))
 				objects[i]->Update(dt, &coObjects);
 		}
 	}

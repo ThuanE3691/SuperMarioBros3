@@ -18,7 +18,7 @@ CKoopa::CKoopa(float x, float y,int type) :CGameObject(x, y)
 	shell_wait_rotate_start = -1;
 	die_by_attacking_start = -1;
 
-	float direction = vx > 0 ? 1 : -1;
+	int direction = vx > 0.0 ? 1 : -1;
 	if (vx == 0) direction = nx > 0 ? 1 : -1;
 	wall = new CInvisibleWall(x + direction * KOOPA_BBOX_WIDTH, y + 2, KOOPA_BBOX_WIDTH, KOOPA_BBOX_HEIGHT);
 

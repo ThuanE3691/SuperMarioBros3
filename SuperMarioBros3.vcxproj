@@ -156,6 +156,7 @@
     <ClCompile Include="Source\Sprites.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Utils.cpp" />
+    <ClCompile Include="Source\WallUpdateArea.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Utils.h" />
+    <ClInclude Include="Source\WallUpdateArea.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\Assets\background.txt" />

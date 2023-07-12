@@ -11,7 +11,7 @@ void CBackground::Render()
 	// Draw LEFT TO RIGHT
 	if (this->drawDirection == 1) {
 
-		int xx = x + this->cell;
+		float xx = x + this->cell;
 
 		for (int i = 1; i < this->length; i++)
 		{
@@ -20,7 +20,7 @@ void CBackground::Render()
 		}
 	} // DRAW TOP TO BOTTOM
 	else {
-		int yy = y + this->cell;
+		float yy = y + this->cell;
 		for (int i = 1; i < this->length; i++)
 		{
 			s->Get(this->spriteIdBackground)->Draw(x, yy);

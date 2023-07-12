@@ -6,6 +6,7 @@
 #include "Brick.h"
 #include "Mario.h"
 #include "Goomba.h"
+#include "WallUpdateArea.h"
 
 //#include "Koopas.h"
 
@@ -19,13 +20,20 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 
+	CWallUpdateArea* left_wall;
+	CWallUpdateArea* right_wall;
+
+	vector<CWallUpdateArea*> list_wall;
+
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 
 	void _ParseSection_ASSETS(string line);
 	void _ParseSection_OBJECTS(string line);
 
-	void _IsInCamera(LPGAMEOBJECT obj);
+
+	void SetUpdateArea();
+	bool _IsInUpdateArea(LPGAMEOBJECT obj);
 
 	void LoadAssets(LPCWSTR assetFile);
 

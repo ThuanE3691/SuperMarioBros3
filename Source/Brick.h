@@ -27,6 +27,9 @@
 #define ID_SPRITE_SHAPE_BRICK	20100
 #define ID_ANI_SHAPE	10001
 
+#define SHAPE_BBOX_WIDTH	8
+#define SHAPE_BBOX_HEIGHT	8
+
 #define SHAPE_SPEED	0.06f
 #define SHAPE_GRAVITY	0.0015f
 
@@ -55,6 +58,8 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void OnNoCollision(DWORD dt);
+
+	int IsBlocking() { return 0; }
 	void SetState(int state);
 };
 

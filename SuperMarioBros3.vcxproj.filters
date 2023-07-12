@@ -183,6 +183,9 @@
     <ClCompile Include="Source\Button.cpp">
       <Filter>Source Files\Objects\Block</Filter>
     </ClCompile>
+    <ClCompile Include="Source\WallUpdateArea.cpp">
+      <Filter>Source Files\Objects\Block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Background.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Source\AnimationIDs.h">
       <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WallUpdateArea.h">
+      <Filter>Header Files\Objects\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

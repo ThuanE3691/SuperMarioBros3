@@ -87,7 +87,10 @@ void CShapeBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 
 void CShapeBrick::GetBoundingBox(float& l, float& t, float& r, float& b) {
-	l = t = r = b = 0;
+	l = x - SHAPE_BBOX_WIDTH / 2;
+	t = x - SHAPE_BBOX_HEIGHT / 2;
+	r = l + SHAPE_BBOX_WIDTH;
+	b = t + SHAPE_BBOX_HEIGHT;
 }
 
 void CShapeBrick::SetState(int state) {

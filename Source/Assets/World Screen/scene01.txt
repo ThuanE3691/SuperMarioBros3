@@ -22,9 +22,24 @@ Source/Assets/Platform/box.txt
 #---------------END-----------------
 [OBJECTS]
 # type	x	y	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 4 = Coin, 5 = Platform, 6 = Background
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 4 = Coin, 5 = Platform, 6 = Background, 100 = WALL_AREA
 # See OBJECT_TYPE constants in AssetIDs.h
 
+
+# WALL AREA
+
+100	0	0
+100	400	0
+100	800	0
+100	1200	0
+100	1600	0
+100	2400	0
+100	2800	0
+100	3200	0
+100	3600	0
+100	4000	0
+100	4400	0
+100	4800	0
 
 # Background
 # extra: cell_width	length	sprite_id_background
@@ -274,11 +289,11 @@ Source/Assets/Platform/box.txt
 
 # MARIO
 #0	40	171
-0	520	160
+#0	520	160
 #0	730	160
 #0	1200	171
 #0	1800	171
-#0	2200	171
+0	2200	171
 #0	2150	171
 
 

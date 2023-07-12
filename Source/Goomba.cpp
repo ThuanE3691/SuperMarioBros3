@@ -145,7 +145,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 
 int CGoomba::GetAni() {
-	float aniId = -1;
+	int aniId = -1;
 	switch(typeGoomba){
 		case GOOMBA_TYPE_NORMAL:
 			if (state == GOOMBA_STATE_DIE) aniId = ID_ANI_GOOMBA_DIE;

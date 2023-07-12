@@ -71,6 +71,8 @@ protected:
 
 	int GetAni();
 
+	void SetInvisibleWall();
+
 public:
 	CKoopa(float x, float y,int type);
 	void SetOnHand(bool onHand) { this->isOnHand = onHand; }

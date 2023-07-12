@@ -11,18 +11,8 @@ void CInvisibleWall::GetBoundingBox(float& l, float& t, float& r, float& b) {
 }
 
 void CInvisibleWall::OnCollisionWith(LPCOLLISIONEVENT e) {
-
-	if (e->ny != 0 && e->obj->IsBlocking() && dynamic_cast<CPlatform*>(e->obj)) {
+	if (e->ny != 0 && e->obj->IsBlocking()) {
 		vy = 0;
-		if (e->ny < 0) {
-			isOnPlatform = true;
-		}
-		else {
-			isOnPlatform = false;
-		}
-	}
-	else if (e->nx < 0) {
-		vx = -vx;
 	}
 }
 

@@ -18,16 +18,24 @@ CKoopa::CKoopa(float x, float y,int type) :CGameObject(x, y)
 	shell_wait_rotate_start = -1;
 	die_by_attacking_start = -1;
 
+	float direction = vx > 0 ? 1 : -1;
+	if (vx == 0) direction = nx > 0 ? 1 : -1;
+	wall = new CInvisibleWall(x + direction * KOOPA_BBOX_WIDTH, y + 2, KOOPA_BBOX_WIDTH, KOOPA_BBOX_HEIGHT);
+
 	if (type != KOOPA_TYPE_GREEN_WING)	SetState(KOOPA_STATE_WALKING);
 	else SetState(KOOPA_STATE_FLY);
+
+	
+	wall->SetSpeed(vx, vy);
+
+
+	((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(wall);
 
 
 	/*float direction = nx > 0 ? 1 : -1;
 
-	wall = new CInvisibleWall(x + direction * KOOPA_BBOX_WIDTH, y, KOOPA_BBOX_WIDTH, KOOPA_BBOX_HEIGHT);
 
-	wall->SetSpeed(vx, KOOPA_WALKING_SPEED);*/
-	// ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(wall);
+	// ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->AddObject(wall); */
 }
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -65,6 +73,12 @@ void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			bottom = top + KOOPA_BBOX_HEIGHT_SHELL_TRANSFORM;
 			break;
 	}
+}
+
+void CKoopa::SetInvisibleWall() {
+	direction = vx > 0 ? 1 : -1;
+	if (vx == 0) direction = nx > 0 ? 1 : -1;
+	wall->SetPosition(x + direction * KOOPA_BBOX_WIDTH, y);
 }
 
 void CKoopa::OnNoCollision(DWORD dt)
@@ -115,17 +129,23 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	// If go end then reverse in walking state
-	if (state == KOOPA_STATE_WALKING) {
+	/*if (state == KOOPA_STATE_WALKING) {
 		if ((x < left && vx < 0) || (x > right && vx > 0)) {
 			vx = -vx;
 		}
+	}*/
 
-		/*if (wall->GetOnPlatform() == false) {
-			vx = -vx;
-		}*/
+	float wx, wy;
+	wall->GetPosition(wx,wy);
+
+	if (wy - y > 10 && state == KOOPA_STATE_WALKING) {
+		vx = -vx;
+		SetInvisibleWall();
 	}
 
-	if (e->ny != 0)
+	wall->SetSpeed(vx, 1);
+
+	if (e->ny != 0 )
 	{
 		vy = 0;
 		if (e->ny < 0 && state == KOOPA_STATE_FLY) {
@@ -135,6 +155,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+		SetInvisibleWall();
 	}
 }
 
@@ -145,6 +166,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == KOOPA_STATE_DIE_BY_ATTACKING && GetTickCount64() - die_by_attacking_start > KOOPA_SHELL_DIE_TIME_OUT) {
 		isDeleted = true;
+		wall->Delete();
 		return;
 	}
 
@@ -214,6 +236,7 @@ void CKoopa::SetState(int state)
 			vx = -KOOPA_WALKING_SPEED;
 			vy = 0;
 			ay = KOOPA_GRAVITY;
+			SetInvisibleWall();
 			break;
 		case KOOPA_STATE_FLY:
 			shell_transform_start = -1;

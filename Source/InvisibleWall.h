@@ -7,20 +7,20 @@
 #define COLLIABLE_STATE	1
 #define	NO_COLLIABLE_STATE	2
 
+#define INVISIBLE_WALL_GRAVITY	0.0001f
+
 class CInvisibleWall : public CGameObject {
 protected:
 
 	float ax, ay;
 	int width, height;
 
-	bool isOnPlatform;
 public:
 	CInvisibleWall(float x, float y, int width, int height) : CGameObject(x, y) {
 		this->width = width;
 		this->height = height;
 		ax = 0;
-		ay = 0.0002f;
-		isOnPlatform = false;
+		ay = INVISIBLE_WALL_GRAVITY;
 		SetState(COLLIABLE_STATE);
 	}
 	void Render() { RenderBoundingBox(); }
@@ -35,7 +35,4 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetState(int state);
-	
-	bool SetOnPlatform(bool isOnPlatform) { this->isOnPlatform = isOnPlatform; }
-	bool GetOnPlatform() { return isOnPlatform; }
 };

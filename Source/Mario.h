@@ -15,7 +15,10 @@
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
+#define MARIO_FLOAT_SPEED_Y	0.06f
+
 #define MARIO_GRAVITY			0.002f
+
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 #define MARIO_DIE_DEFLECT_SPEED	0.6f
@@ -42,6 +45,10 @@
 
 #define MARIO_STATE_TRANSFORM	900
 #define MARIO_STATE_RACOON_TRANSFORM	950
+
+#define MARIO_STATE_FLOAT	1000
+#define MARIO_STATE_RELEASE_FLOAT	1050
+
 
 #define GROUND_Y 160.0f
 
@@ -79,6 +86,8 @@ class CMario : public CGameObject
 	BOOLEAN isSitting;
 	BOOLEAN isHolding;
 
+	bool isFloating;
+
 	BOOLEAN handingMode;
 
 	CGameObject* enemies;
@@ -93,6 +102,7 @@ class CMario : public CGameObject
 	ULONGLONG kick_start;
 	ULONGLONG transform_start;
 	ULONGLONG start_die;
+
 
 	bool isTransform;
 	int transformType;
@@ -137,6 +147,7 @@ public:
 		isOnPlatform = false;
 		isTransform = false;
 		isHolding = false;
+		isFloating = false;
 
 		transformType = -1;
 
@@ -168,6 +179,9 @@ public:
 
 	void SetHandingMode(bool handingMode) { this->handingMode = handingMode; }
 	bool GetHolding() { return isHolding; }
+
+	bool IsOnPlatform() { return isOnPlatform; }
+	bool IsFloating() {return isFloating; }
 
 	bool GetIsTransform() { return isTransform; }
 	int GetLevel() { return level; }

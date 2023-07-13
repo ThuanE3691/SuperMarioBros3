@@ -15,6 +15,7 @@ height	240
 [TEXTURES]
 -100	Source\textures\bbox.png
 0	Source\textures\mario.png
+1	Source\textures\mario_racoon_rmbg.png
 10	Source\textures\enemies\enemies.png
 20	Source\textures\misc\misc.png
 21	Source\textures\misc\misc_1.png

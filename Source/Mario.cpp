@@ -18,7 +18,15 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+
+
 	if (x < 10) x = 10;
+
+	vy += ay * dt;
+	vx += ax * dt;
+
+	// Set max speed for mario
+	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	if (isHolding) {
 		if (enemies && dynamic_cast<CKoopa*>(enemies)) {
@@ -49,12 +57,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			enemies = NULL;
 		}
 	}
-
-	vy += ay * dt;
-	vx += ax * dt;
-
-	// Set max speed for mario
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -106,8 +108,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		this->SetState(MARIO_STATE_KICK);
 	}
 
-	isOnPlatform = false;
+	if (isOnPlatform) isFloating = false;
 
+	DebugOut(L"AY:%f, VY:%f, IsOnPlatform:%d, IsFloating:%d\n", ay, vy, isOnPlatform, isFloating);
+
+	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -141,6 +146,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -645,25 +651,27 @@ int CMario::GetAniIdRacoon() {
 		if (abs(ax) == MARIO_ACCEL_RUN_X)
 		{
 			if (nx >= 0) {
-				if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_UP_RIGHT;
+				if (isFloating) aniId = ID_ANI_MARIO_RACOON_FLOATING_RUN_RIGHT;
+				else if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_UP_RIGHT;
 				else aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_DOWN_RIGHT;
 			}
 			else {
-				if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_UP_LEFT;
+				if (isFloating) aniId = ID_ANI_MARIO_RACOON_FLOATING_RUN_LEFT;
+				else if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_UP_LEFT;
 				else aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_DOWN_LEFT;
 			}
 		}
 		else
 		{
 			if (nx >= 0) {
-				if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_UP_RIGHT;
+				if (isFloating) aniId = ID_ANI_MARIO_RACOON_FLOATING_WALK_RIGHT;
+				else if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_UP_RIGHT;
 				else aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_DOWN_RIGHT;
 			}
 			else {
-				{
-					if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_UP_LEFT;
-					else aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_DOWN_LEFT;
-				}
+				if (isFloating) aniId = ID_ANI_MARIO_RACOON_FLOATING_WALK_LEFT;
+				else if (vy < 0) aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_UP_LEFT;
+				else aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_DOWN_LEFT;
 			}
 		}
 	}
@@ -725,6 +733,7 @@ void CMario::Render()
 		animations->Get(aniId)->Render(x, y);
 
 
+
 	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
@@ -733,12 +742,11 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE) return;
 
 	if (this->state == MARIO_STATE_WAIT_DIE) {
 		if (GetTickCount64() - start_die > MARIO_WAIT_DIE_TIME_OUT) {
 			vy = -MARIO_DIE_DEFLECT_SPEED;
-			ay = MARIO_GRAVITY;
 			vx = 0;
 			ax = 0;
 			CGameObject::SetState(MARIO_STATE_DIE);
@@ -847,6 +855,15 @@ void CMario::SetState(int state)
 		vy = 0;
 		vx = 0;
 		ax = 0;
+		break;
+	case MARIO_STATE_FLOAT:
+		if (isSitting || level != MARIO_LEVEL_RACOON) break;
+		vy = -MARIO_FLOAT_SPEED_Y;
+		isFloating = true;
+		break;
+	case MARIO_STATE_RELEASE_FLOAT:
+		if (vy > 0) vy = 0;
+		isFloating = false;
 		break;
 	}
 

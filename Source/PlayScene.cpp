@@ -353,14 +353,6 @@ void CPlayScene::Update(DWORD dt)
 
 	SetUpdateArea();
 
-	float lw_x, lw_y;
-	float rw_x, rw_y;
-
-	left_wall->GetPosition(lw_x, lw_y);
-	right_wall->GetPosition(rw_x, rw_y);
-
-	DebugOut(L"LEFT X: %f, RIGHT X: %f\n", lw_x, rw_x);
-
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
